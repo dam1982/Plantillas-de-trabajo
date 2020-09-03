@@ -1,0 +1,69 @@
+
+
+
+drop type ObjetomasivoPersonas
+
+GO
+
+CREATE TYPE ObjetomasivoPersonas AS TABLE
+(
+ID_REGISTRO	INT,
+COD_RAMO	INT, 
+ID_ASOCIADOR VARCHAR(10), 
+TIPO_DOCUMENTO INT, 
+NUMERO_DE_DOCUMENTO	 VARCHAR(20),
+PRIMER_APELLIDO	VARCHAR(50),
+TXT_SEXO VARCHAR(1),
+COD_ESTADO_CIVIL INT, 
+FEC_NAC SMALLDATETIME,
+COD_CIUDAD_LUGAR_NAC  INT,	
+COD_TIPO_DIRECCIÓN	INT, 
+DIRECCION VARCHAR(50),
+COD_MUNICIPIO INT,
+COD_TIPO_DE_TELEFONO INT,
+TELEFONO	VARCHAR(20),
+COD_OCUPACION INT,
+COD_CONDICION varchar(1),
+SN_ONEROSO INT
+
+)
+
+
+
+
+GO
+
+DROP TYPE ObjetoTPersonaAsociada 
+
+
+GO
+
+CREATE TYPE ObjetoTPersonaAsociada AS TABLE
+(
+
+ID_REGISTRO	INT, 
+cod_tipo_doc INT, 
+nro_doc VARCHAR(10), 
+txt_apellido1	 VARCHAR(50),
+txt_apellido2	VARCHAR(50),
+txt_nombre VARCHAR(50),
+txt_nombre2 VARCHAR(50), 
+cod_tipo_Asoc INT,
+porc_particip INT 
+)
+
+
+
+
+DROP TYPE ObjetoTPersonaMarcas
+
+
+GO
+
+CREATE TYPE ObjetoTPersonaMarcas AS TABLE
+(
+ID_REGISTRO	INT, 
+cod_marca INT, 
+sn_activa INT
+)
+

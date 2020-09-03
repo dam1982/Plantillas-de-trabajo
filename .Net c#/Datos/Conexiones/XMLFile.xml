@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+  <BD>
+ <conexion app="SISE" cadena="Data Source=192.1.2.97;Initial Catalog=solidaria_desarrollo_pol;user id = webusercon_sql; password = WEB*2008+Trabajo">
+    </conexion> 
+	
+ <!--   <conexion app="SISE" cadena="Data Source=192.1.2.135;Initial Catalog=solidaria_proyectos_polizas;user id = webusercon_sql; password = WEB*2008+Trabajo">
+    </conexion>	 -->
+	
+  </BD>
+</config>

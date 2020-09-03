@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<configuration>
+  <appSettings>
+    <add key="aspnet:UseTaskFriendlySynchronizationContext" value="true"/>
+    <add key="CuentaCorreo" value="tupoliza@solidaria.com.co"/>
+    <add key="UsuarioCorreo" value="TUPOLIZA"/>
+    <add key="ClaveCorreo" value="Tp12082019*"/>
+  </appSettings>
+  <!--
+    Para obtener una descripción de los cambios de web.config, vea http://go.microsoft.com/fwlink/?LinkId=235367.
+
+    Los siguientes atributos se pueden establecer en la etiqueta <httpRuntime>.
+      <system.Web>
+        <httpRuntime targetFramework="4.5" />
+      </system.Web>
+  -->
+  <system.web>
+    <compilation debug="true" targetFramework="4.6.1"/>
+    <httpRuntime targetFramework="4.5"/>
+    <customErrors mode="Off"></customErrors>
+  </system.web>
+  <system.serviceModel>
+    <bindings>
+      <basicHttpBinding>
+        <binding name="BasicHttpBinding_IWCFSolidariaUtilidades" maxBufferPoolSize="2147483647"
+                 openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647" />
+      </basicHttpBinding>
+    </bindings>
+    
+    <client>
+      <endpoint address="http://192.1.3.183:8084/WCFSolidariaUtilidades/WCFSolidariaUtilidades.svc"
+        binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IWCFSolidariaUtilidades"
+        contract="ServicioDeUtilidades.IWCFSolidariaUtilidades" name="BasicHttpBinding_IWCFSolidariaUtilidades" />
+    </client>
+    <behaviors>
+      <serviceBehaviors>
+        <behavior>
+          <!-- Para evitar revelar información de los metadatos, establezca los valores siguientes en false antes de la implementación -->
+          <serviceMetadata httpGetEnabled="true" httpsGetEnabled="true"/>
+          <!-- Para recibir detalles de las excepciones en los fallos, con el fin de poder realizar la depuración, establezca el valor siguiente en true. Para no revelar información sobre las excepciones, establézcalo en false antes de la implementación -->
+          <serviceDebug includeExceptionDetailInFaults="true"/>
+        </behavior>
+      </serviceBehaviors>
+    </behaviors>
+    <protocolMapping>
+      <add binding="basicHttpsBinding" scheme="https"/>
+    </protocolMapping>
+    <serviceHostingEnvironment aspNetCompatibilityEnabled="true" multipleSiteBindingsEnabled="true"/>
+  </system.serviceModel>
+  <system.webServer>
+    <modules runAllManagedModulesForAllRequests="true"/>
+    <!--
+        Para examinar el directorio raíz de la aplicación web durante la depuración, establezca el valor siguiente en true.
+        Establézcalo en false antes de la implementación para evitar revelar información sobre la carpeta de aplicación web.
+      -->
+    <directoryBrowse enabled="false"/>
+  </system.webServer>
+</configuration>

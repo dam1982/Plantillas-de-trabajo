@@ -1,0 +1,215 @@
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
+using InterfazSoatApi.Api.Models.Autenticate;
+using Microsoft.IdentityModel.Tokens;
+using InterfazSoatApi.Api.Models.Proceso_Autenticate;
+
+
+namespace InterfazSoatApi.Api.Controllers
+{
+   // [AllowAnonymous]
+   [RoutePrefix("api/Authenticacion_api")]
+    public class Authenticacion_apiController : ApiController
+    {
+
+        [HttpGet]
+        [Route("echoping")]
+        public IHttpActionResult EchoPing()
+        {
+            return Ok(true);
+        }
+
+        [HttpGet]
+        [Route("echouser")]
+        public IHttpActionResult EchoUser()
+        {
+            var identity = Thread.CurrentPrincipal.Identity;
+            return Ok($" IPrincipal-user: {identity.Name} - IsAuthenticated: {identity.IsAuthenticated}");
+        }
+
+        [HttpPost]
+        [Route("authenticate")]
+        public IHttpActionResult Authenticate(Authenticar_apikey login)
+        {
+            if (login == null)
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+
+            //TODO: Validate credentials Correctly, this code is only for demo !!
+            bool isCredentialValid = (login.Username == "Admin");
+            if (isCredentialValid)
+            {
+                var token = Token_user.GenerateTokenJwt(login.Username);
+                return Ok(token);
+            }
+            else
+            {
+                return Unauthorized();
+            }
+        }
+
+
+    }
+}
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace InterfazSoatApi.Api.Models.Autenticate
+{
+    public class Authenticar_apikey
+    {
+        public string Username { get; set; }
+        public string Paword { get; set; }
+    }
+}
+
+----------------------------------------------
+
+
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web;
+using Microsoft.IdentityModel.Tokens;
+
+namespace InterfazSoatApi.Api.Models.Proceso_Autenticate
+{
+    public class Control_authenticate : DelegatingHandler
+    {
+
+
+        private static bool TryRetrieveToken(HttpRequestMessage request, out string token)
+        {
+            token = null;
+            IEnumerable<string> authzHeaders;
+            if (!request.Headers.TryGetValues("Authorization", out authzHeaders) || authzHeaders.Count() > 1)
+            {
+                return false;
+            }
+            var bearerToken = authzHeaders.ElementAt(0);
+            token = bearerToken.StartsWith("Bearer ") ? bearerToken.Substring(7) : bearerToken;
+            return true;
+        }
+
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            HttpStatusCode statusCode;
+            string token;
+
+            // determine whether a jwt exists or not
+            if (!TryRetrieveToken(request, out token))
+            {
+                statusCode = HttpStatusCode.Unauthorized;
+                return base.SendAsync(request, cancellationToken);
+            }
+
+            try
+            {
+                var secretKey = ConfigurationManager.AppSettings["JWT_SECRET_KEY"];
+                var audienceToken = ConfigurationManager.AppSettings["JWT_AUDIENCE_TOKEN"];
+                var issuerToken = ConfigurationManager.AppSettings["JWT_ISSUER_TOKEN"];
+                var securityKey = new SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(secretKey));
+
+                var tokenHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
+                TokenValidationParameters validationParameters = new TokenValidationParameters()
+                {
+                    ValidAudience = audienceToken,
+                    ValidIssuer = issuerToken,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    LifetimeValidator = this.LifetimeValidator,
+                    IssuerSigningKey = securityKey
+                };
+
+                // Extract and assign Current Principal and user
+                Thread.CurrentPrincipal = tokenHandler.ValidateToken(token, validationParameters, out SecurityToken securityToken);
+                HttpContext.Current.User = tokenHandler.ValidateToken(token, validationParameters, out securityToken);
+
+                return base.SendAsync(request, cancellationToken);
+            }
+            catch (SecurityTokenValidationException)
+            {
+                statusCode = HttpStatusCode.Unauthorized;
+            }
+            catch (Exception)
+            {
+                statusCode = HttpStatusCode.InternalServerError;
+            }
+            return Task<HttpResponseMessage>.Factory.StartNew(() => new HttpResponseMessage(statusCode) { });
+        }
+
+        public bool LifetimeValidator(DateTime? notBefore, DateTime? expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+        {
+            if (expires != null)
+            {
+                if (DateTime.UtcNow < expires) return true;
+            }
+            return false;
+        }
+    }
+}
+
+-----------
+
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Security.Claims;
+using System.Web;
+
+namespace InterfazSoatApi.Api.Models.Proceso_Autenticate
+{
+    public class Token_user
+    {
+
+        public static string GenerateTokenJwt(string username)
+        {
+            // appsetting for Token JWT
+            var secretKey = ConfigurationManager.AppSettings["JWT_SECRET_KEY"];
+            var audienceToken = ConfigurationManager.AppSettings["JWT_AUDIENCE_TOKEN"];
+            var issuerToken = ConfigurationManager.AppSettings["JWT_ISSUER_TOKEN"];
+            var expireTime = ConfigurationManager.AppSettings["JWT_EXPIRE_MINUTES"];
+
+            var securityKey = new SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(secretKey));
+            var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
+
+            // create a claimsIdentity
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, username) });
+
+            // create token to the user
+            var tokenHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
+            var jwtSecurityToken = tokenHandler.CreateJwtSecurityToken(
+                audience: audienceToken,
+                issuer: issuerToken,
+                subject: claimsIdentity,
+                notBefore: DateTime.UtcNow,
+                expires: DateTime.UtcNow.AddMinutes(Convert.ToInt32(expireTime)),
+                signingCredentials: signingCredentials);
+
+            var jwtTokenString = tokenHandler.WriteToken(jwtSecurityToken);
+            return jwtTokenString;
+        }
+    }
+}

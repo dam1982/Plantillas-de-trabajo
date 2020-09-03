@@ -1,0 +1,72 @@
+
+version
+git --version
+
+configurar nombre
+git config --global user.name "diego"
+configurar email
+git config --global user.email "toxidomass@hotmail.com"
+ver configuracion
+git config -l
+
+
+siguiente paso buscar la carpeta que cree de para los repositorios y entrar desde el cmd
+
+
+crear repositorio
+git init
+
+
+ver status y ver que archivos etoy adicionando o no
+git status
+
+
+agregar los archivos y darle git a control de eyo
+git add .
+
+
+primer comitt anexa a la rama master y tiene control sobre mis archivo
+y guarda el archivo
+git commit -m "comit Inicial"
+
+
+buscar la diferencia cuando alguien le iso un cambio al archivo
+
+git diff
+
+revertir los cambios al ultimo comit
+git checkout .
+
+ver historicos y cuantos commit
+git log
+
+
+modificar o hacer commit solo un archivo dentro de varios
+git add nombre archivo   tambien se puede un archivo   ejemplo    js/
+
+
+
+sacar un archivo del control de git
+git reset
+
+documentacion
+git help
+
+crear variaciones o alias para trabajar mas rapido
+ejemplo
+git config --global alias.l  log
+
+cuando se hace un un comit mal y quiero retificarlo
+git commit --amend -m "nueva modificacion"
+
+cambiar nombre a archivo
+git mv principal.html princ.
+
+borrar archivo
+git rm nombre del archivo
+
+
+
+cuando hay error de time
+
+git config --global http.proxy http://tusuario:tuclave@192.1.3.3:8080
