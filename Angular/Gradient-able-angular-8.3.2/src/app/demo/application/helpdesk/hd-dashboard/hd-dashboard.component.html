@@ -1,0 +1,270 @@
+<div class="container">
+  <div class="row">
+    <!-- support-section start -->
+    <div class="col-xl-4 col-md-6">
+      <div class="card support-bar">
+        <div class="card-body pb-0">
+          <h2 class="m-0">350</h2>
+          <span class="text-c-purple">Support Requests</span>
+          <p class="mb-3 mt-3">Total number of support requests that come in.</p>
+        </div>
+        <app-apex-chart chartID="helpdesk-support-1-chart" [chartConfig]="this.chartDB.support1HACC"></app-apex-chart>
+        <div class="card-footer bg-purple text-white">
+          <div class="row text-center">
+            <div class="col border-right">
+              <h4 class="m-0 text-white">10</h4>
+              <span>Open</span>
+            </div>
+            <div class="col border-right">
+              <h4 class="m-0 text-white">5</h4>
+              <span>Running</span>
+            </div>
+            <div class="col">
+              <h4 class="m-0 text-white">3</h4>
+              <span>Solved</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- support-section end -->
+    <!-- support1-section start -->
+    <div class="col-xl-4 col-md-6">
+      <div class="card support-bar">
+        <div class="card-body pb-0">
+          <h2 class="m-0">30<small>min</small></h2>
+          <span class="text-c-blue">Agent Response</span>
+          <p class="mb-3 mt-3">Total number ticket solve by the agent.</p>
+        </div>
+        <app-apex-chart chartID="helpdesk-support-2-chart" [chartConfig]="this.chartDB.support2HACC"></app-apex-chart>
+        <div class="card-footer bg-primary text-white">
+          <div class="row text-center">
+            <div class="col border-right">
+              <h4 class="m-0 text-white">5</h4>
+              <span>pending</span>
+            </div>
+            <div class="col">
+              <h4 class="m-0 text-white">75+</h4>
+              <span>Satisfied clients</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- support-section1 end -->
+    <!-- support2-section start -->
+    <div class="col-xl-4 col-md-12">
+      <div class="card support-bar">
+        <div class="card-body pb-0">
+          <h2 class="m-0">800</h2>
+          <span class="text-c-green">Support Resolved</span>
+          <p class="mb-3 mt-3">Total number of support requests that come in.</p>
+        </div>
+        <app-apex-chart chartID="helpdesk-support-3-chart" [chartConfig]="this.chartDB.support3HACC"></app-apex-chart>
+        <div class="card-footer bg-success text-white">
+          <div class="row text-center">
+            <div class="col border-right">
+              <h4 class="m-0 text-white">80</h4>
+              <span>Starred</span>
+            </div>
+            <div class="col border-right">
+              <h4 class="m-0 text-white">3</h4>
+              <span>Reopen</span>
+            </div>
+            <div class="col">
+              <h4 class="m-0 text-white">14+</h4>
+              <span>Reassigned</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- support-section2 end -->
+    <!-- customer-section start -->
+    <div class="col-xl-8 col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h6>Customer Satisfaction</h6>
+          <span>It takes continuous effort to maintain high customer satisfaction levels.Internal and external quality measures are often tied together.,as the opinion...</span>
+          <span class="text-c-blue d-block">Learn more..</span>
+          <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-sm-6">
+              <app-apex-chart chartID="helpdesk-satisfaction-chart" [chartConfig]="this.chartDB.satisfactionHACC"></app-apex-chart>
+            </div>
+            <div class="col-sm-6">
+              <span class="d-block mb-1"><i class="fas fa-circle f-10 m-r-5" style="color:#67b7dc;"></i>Very Poor [66%]</span>
+              <span class="d-block mb-1"><i class="fas fa-circle f-10 m-r-5" style="color:#6794dc;"></i>Satisfied [50%]</span>
+              <span class="d-block mb-1"><i class="fas fa-circle f-10 m-r-5" style="color:#6771dc;"></i>Very Satisfied [40%]</span>
+              <span class="d-block mb-1"><i class="fas fa-circle f-10 m-r-5" style="color:#8067dc;"></i>Poor [30%]</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- rating-section start -->
+      <div class="row">
+        <div class="col-xl-6 col-md-12">
+          <div class="card social-res-card">
+            <div class="card-header">
+              <h5>Facebook Source</h5>
+            </div>
+            <div class="card-body">
+              <p class="m-b-10">Page Profile</p>
+              <div class="progress m-b-25">
+                <div class="progress-bar progress-c-blue" style="width:25%"></div>
+              </div>
+              <p class="m-b-10">Favorite</p>
+              <div class="progress m-b-25">
+                <div class="progress-bar progress-c-blue" style="width:85%"></div>
+              </div>
+              <p class="m-b-10">Like Story</p>
+              <div class="progress">
+                <div class="progress-bar progress-c-blue" style="width:65%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-md-12">
+          <div class="card social-res-card">
+            <div class="card-header">
+              <h5>Twitter Source</h5>
+            </div>
+            <div class="card-body">
+              <p class="m-b-10">Wall Profile</p>
+              <div class="progress m-b-25">
+                <div class="progress-bar progress-c-red" style="width:85%"></div>
+              </div>
+              <p class="m-b-10">Favorite</p>
+              <div class="progress m-b-25">
+                <div class="progress-bar progress-c-red" style="width:25%"></div>
+              </div>
+              <p class="m-b-10">Like Tweets</p>
+              <div class="progress">
+                <div class="progress-bar progress-c-red" style="width:65%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- rating-section end -->
+    </div>
+    <!-- customer-section end -->
+    <!-- latest-section start -->
+    <div class="col-xl-4 col-md-6">
+      <div class="card latest-update-card">
+        <div class="card-header">
+          <h5>Latest Activity</h5>
+        </div>
+        <perfect-scrollbar [style.max-height]="'360px'">
+          <div class="card-body">
+            <div class="latest-update-box">
+              <div class="row p-t-20 p-b-20">
+                <div class="col-auto text-right update-meta">
+                  <i class="b-primary update-icon ring"></i>
+                </div>
+                <div class="col p-l-5">
+                  <a href="javascript:;">
+                    <h6 class="m-0">Devlopment & Update</h6>
+                  </a>
+                  <p class="m-b-0">Lorem ipsum dolor sit amet, <a href="javascript:;" class="text-c-blue"> More</a></p>
+                </div>
+              </div>
+              <div class="row p-b-20">
+                <div class="col-auto text-right update-meta">
+                  <i class="b-primary update-icon ring"></i>
+                </div>
+                <div class="col p-l-5">
+                  <a href="javascript:;">
+                    <h6 class="m-0">Showcases</h6>
+                  </a>
+                  <p class="m-b-0">Lorem dolor sit amet, <a href="javascript:;" class="text-c-blue"> More</a></p>
+                </div>
+              </div>
+              <div class="row p-b-20">
+                <div class="col-auto text-right update-meta">
+                  <i class="b-success update-icon ring"></i>
+                </div>
+                <div class="col p-l-5">
+                  <a href="javascript:;">
+                    <h6 class="m-0">Miscellaneous</h6>
+                  </a>
+                  <p class="m-b-0">Lorem ipsum dolor sit ipsum amet, <a href="javascript:;" class="text-c-green"> More</a></p>
+                </div>
+              </div>
+              <div class="row p-b-20">
+                <div class="col-auto text-right update-meta">
+                  <i class="b-primary update-icon ring"></i>
+                </div>
+                <div class="col p-l-5">
+                  <a href="javascript:;">
+                    <h6 class="m-0">Showcases</h6>
+                  </a>
+                  <p class="m-b-0">Lorem dolor sit amet, <a href="javascript:;" class="text-c-blue"> More</a></p>
+                </div>
+              </div>
+              <div class="row p-b-20">
+                <div class="col-auto text-right update-meta">
+                  <i class="b-success update-icon ring"></i>
+                </div>
+                <div class="col p-l-5">
+                  <a href="javascript:;">
+                    <h6 class="m-0">Miscellaneous</h6>
+                  </a>
+                  <p class="m-b-0">Lorem ipsum dolor sit ipsum amet, <a href="javascript:;" class="text-c-green"> More</a></p>
+                </div>
+              </div>
+              <div class="row p-b-20">
+                <div class="col-auto text-right update-meta">
+                  <i class="b-primary update-icon ring"></i>
+                </div>
+                <div class="col p-l-5">
+                  <a href="javascript:;">
+                    <h6 class="m-0">Devlopment</h6>
+                  </a>
+                  <p class="m-b-0">Lorem ipsum dolor sit amet, <a href="javascript:;" class="text-c-green"> More</a></p>
+                </div>
+              </div>
+              <div class="row p-b-0">
+                <div class="col-auto text-right update-meta">
+                  <i class="b-primary update-icon ring"></i>
+                </div>
+                <div class="col p-l-5">
+                  <a href="javascript:;">
+                    <h6 class="m-0">Showcases</h6>
+                  </a>
+                  <p class="m-b-0">Lorem dolor sit amet, <a href="javascript:;" class="text-c-blue"> More</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card flat-card widget-primary-card">
+            <div class="row-table">
+              <div class="col-sm-3 card-body">
+                <i class="feather icon-star-on"></i>
+              </div>
+              <div class="col-sm-9">
+                <h4>4000 +</h4>
+                <h6>Ratings Received</h6>
+              </div>
+            </div>
+          </div>
+          <div class="card flat-card widget-purple-card">
+            <div class="row-table">
+              <div class="col-sm-3 card-body">
+                <i class="fas fa-trophy"></i>
+              </div>
+              <div class="col-sm-9">
+                <h4>17</h4>
+                <h6>Achievements</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- latest-section end -->
+  </div>
+</div>

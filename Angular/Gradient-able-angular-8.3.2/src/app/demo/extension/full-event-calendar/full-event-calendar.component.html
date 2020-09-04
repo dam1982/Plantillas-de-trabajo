@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="Full Calendar" cardClass="elite-calendar" [options]="false">
+      <div class='app' *ngIf="!notSupported">
+        <div class='app-calendar' *ngIf="calendarVisible">
+          <full-calendar
+            #calendar
+            defaultView="dayGridMonth"
+            [header]="{
+              left: 'prev,next today',
+              center: 'title',
+              right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+            }"
+            [plugins]="calendarPlugins"
+            [weekends]="calendarWeekends"
+            [events]="calendarEvents"
+            (dateClick)="handleDateClick($event)"
+          ></full-calendar>
+        </div>
+      </div>
+      <div class="col-sm-12 text-center" *ngIf="notSupported">
+        <div class="alert alert-danger"><code>css-animator</code> does not support in IE.</div>
+      </div>
+    </app-card>
+  </div>
+</div>

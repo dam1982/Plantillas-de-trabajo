@@ -1,0 +1,21 @@
+<div class="page-body">
+  <div class="row">
+    <div class="col-sm-12">
+      <app-card cardTitle="Single Images">
+        <div class="row single-image-gallery">
+          <div class="col-auto">
+            <app-gallery [albums]="singleGallery1"></app-gallery>
+          </div>
+          <div class="col-auto">
+            <app-gallery [albums]="singleGallery2"></app-gallery>
+          </div>
+        </div>
+      </app-card>
+    </div>
+    <div class="col-sm-12">
+      <app-card cardTitle="Image Gallery">
+          <app-gallery [albums]="albums"></app-gallery>
+      </app-card>
+    </div>
+  </div>
+</div>

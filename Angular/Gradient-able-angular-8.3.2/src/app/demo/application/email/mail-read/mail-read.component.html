@@ -1,0 +1,181 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card email-card">
+      <div class="card-header">
+        <div class="mail-header">
+          <div class="row align-items-center">
+            <!-- [ email-left section ] start -->
+            <div class="col-xl-2 col-md-3">
+              <a href="index.html" class="b-brand">
+                <div class="b-bg">
+                  N
+                </div>
+                <span class="b-title text-muted">Gradient Able</span>
+              </a>
+            </div>
+            <!-- [ email-left section ] end -->
+            <!-- [ email-right section ] start -->
+            <div class="col-xl-10 col-md-9">
+              <div class="input-group mb-0">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01"><i class="feather icon-search"></i></label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01">
+                  <option selected>Search ...</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </div>
+            </div>
+            <!-- [ email-right section ] end -->
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="mail-body">
+          <div class="row">
+            <!-- [ email-left section ] start -->
+            <div class="col-xl-2 col-md-3">
+              <div class="mb-3">
+                <a [routerLink]="['/email/mail-compose']" class="btn waves-effect waves-light btn-rounded btn-outline-primary">+ Compose</a>
+              </div>
+              <ul class="mb-2 nav nav-tab flex-column nav-pills">
+                <li class="nav-item mail-section">
+                  <a class="nav-link text-left active" [routerLink]="['/email/mail-inbox']">
+                    <span><i class="feather icon-inbox"></i>Index</span>
+                    <span class="float-right">6</span>
+                  </a>
+                </li>
+                <li class="nav-item mail-section">
+                  <a class="nav-link text-left" [routerLink]="['/email/mail-inbox']">
+                    <span><i class="feather icon-star-on"></i>Starred</span>
+                  </a>
+                </li>
+                <li class="nav-item mail-section">
+                  <a class="nav-link text-left" [routerLink]="['/email/mail-inbox']">
+                    <span><i class="feather icon-file-text"></i>Drafts</span>
+                  </a>
+                </li>
+                <li class="nav-item mail-section">
+                  <a class="nav-link text-left" [routerLink]="['/email/mail-inbox']">
+                    <span><i class="feather icon-navigation"></i>Sent Mail</span>
+                  </a>
+                </li>
+                <li class="nav-item mail-section">
+                  <a class="nav-link text-left" [routerLink]="['/email/mail-inbox']">
+                    <span><i class="feather icon-trash-2"></i>Trash</span>
+                  </a>
+                </li>
+              </ul>
+              <a class="email-more-link" data-toggle="collapse" (click)="isCollapsed = !isCollapsed" href="javascript:" role="button" aria-expanded="false" aria-controls="email-more-cont">
+                <span *ngIf="!isCollapsed"><i class="feather icon-chevron-down mr-2"></i>More</span>
+                <span *ngIf="isCollapsed"><i class="feather icon-chevron-up mr-2"></i>Less</span>
+              </a>
+              <div class="collapse" id="email-more-cont" [ngbCollapse]="!isCollapsed">
+                <ul class="nav nav-tab flex-column nav-pills">
+                  <li class="nav-item mail-section">
+                    <a class="nav-link text-left" href="javascript:">
+                      <span><i class="feather icon-zap"></i> Important</span>
+                      <span class="float-right">6</span>
+                    </a>
+                  </li>
+                  <li class="nav-item mail-section">
+                    <a class="nav-link text-left" href="javascript:">
+                      <span><i class="feather icon-message-circle"></i> Chats</span>
+                    </a>
+                  </li>
+                  <li class="nav-item mail-section">
+                    <a class="nav-link text-left" href="javascript:">
+                      <span><i class="feather icon-alert-triangle"></i> Spam</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- [ email-left section ] end -->
+            <!-- [ email-right section ] start -->
+            <div class="col-xl-10 col-md-9">
+              <div class="card">
+                <div class="card-header">
+                  <h6 class="d-inline-block m-0">Here You Have New Opportunity...</h6>
+                  <p class="float-right m-0"><strong>08:23 AM</strong></p>
+                </div>
+                <div class="card-body">
+                  <div class="email-read">
+                    <div class="photo-table m-r-10">
+                      <a href="javascript:">
+                        <img class="media-object img-radius" src="assets/images/user/avatar-1.jpg" alt="E-mail user" style="width:50px;">
+                      </a>
+                    </div>
+                    <div>
+                      <a href="javascript:">
+                        <p class="user-name text-dark mb-1"><strong>John Doe</strong></p>
+                      </a>
+                      <a class="user-mail txt-muted" href="javascript:">
+                        <p class="user-name text-dark mb-1"><strong>From:johndoe7869@gmail.com</strong></p>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="m-b-20 m-l-50 p-l-10 email-contant">
+                    <div class="photo-contant">
+                      <div>
+                        <p class="user-name text-dark mb-1"><strong>Hello Dear...</strong></p>
+                        <div class="email-content">
+                          <p class="">
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient
+                            montes, nascetur ridiculus mus.Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis.
+                          </p>
+                          <ul>
+                            <li>Lorem ipsum dolor sit amet</li>
+                            <li>Consectetur adipiscing elit</li>
+                            <li>Facilisis in pretium nisl aliquet</li>
+                            <li>Nulla volutpat aliquam velit
+                              <ul>
+                                <li>Phasellus iaculis neque</li>
+                                <li>Purus sodales ultricies</li>
+                              </ul>
+                            </li>
+                            <li>Faucibus porta lacus fringilla vel</li>
+                            <li>Eget porttitor lorem</li>
+                          </ul>
+                          <blockquote class="blockquote">
+                            <p class="mb-2">
+                              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient
+                              montes, nascetur ridiculus mus.
+                            </p>
+                            <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                          </blockquote>
+                        </div>
+                      </div>
+                      <div class="m-t-15">
+                        <i class="feather icon-paperclip f-20 m-r-10"></i>Attachments <b>(3)</b>
+                        <div class="row mail-img m-t-20">
+                          <div class="col-sm-4 col-md-3 col-xl-2 m-b-20">
+                            <a href="javascript:" data-toggle="lightbox" data-title="Gradient Able Image 1" data-footer="Gradient Able Image 1"><img src="assets/images/slider/img-slide-4.jpg" class="img-fluid img-thumbnail" alt=""></a>
+                          </div>
+                          <div class="col-sm-4 col-md-3 col-xl-2 m-b-20">
+                            <a href="javascript:" data-toggle="lightbox" data-title="Gradient Able Image 2" data-footer="Gradient Able Image 2"><img src="assets/images/slider/img-slide-1.jpg" class="img-fluid img-thumbnail" alt=""></a>
+                          </div>
+                          <div class="col-sm-4 col-md-3 col-xl-2 m-b-20">
+                            <a href="javascript:" data-toggle="lightbox" data-title="Gradient Able Image 3" data-footer="Gradient Able Image 3"><img src="assets/images/slider/img-slide-3.jpg" class="img-fluid img-thumbnail" alt=""></a>
+                          </div>
+                        </div>
+                        <form class="form-material">
+                          <div class="form-group">
+                            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Reply Your Thoughts" required="">
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- [ email-right section ] start -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,1146 @@
+<div class="row">
+  <!-- student start -->
+  <div class="col-lg-8 col-md-12">
+    <app-card cardTitle="Students by Courses">
+      <app-apex-chart chartID="chart-apex-student" [chartConfig]="this.chartDB.chartStudent"></app-apex-chart>
+    </app-card>
+  </div>
+  <div class="col-lg-4 col-md-12">
+    <app-card cardTitle="Email Campaign">
+      <app-apex-chart chartID="chart-apex-email" [chartConfig]="this.chartDB.chartEmail"></app-apex-chart>
+    </app-card>
+  </div>
+  <!-- student start -->
+  <!-- users visite and profile start -->
+  <div class="col-md-12 col-xl-4">
+    <app-card [hidHeader]="true" cardClass="seo-card" blockClass="seo-statustic" footerClass="seo-chart border border-top-0 p-0 overflow-hidden" [isCardFooter]="true">
+      <i class="feather icon-save f-20 text-c-green"></i>
+      <h5 class="mb-1">64%</h5>
+      <p>Memory</p>
+      <div class="app-card-footer">
+        <app-apex-chart chartID="analytics-seo-card-chart" [chartConfig]="this.chartDB.analyticsSeoCard"></app-apex-chart>
+      </div>
+    </app-card>
+    <app-card [hidHeader]="true" cardClass="seo-card" blockClass="seo-statustic" footerClass="seo-chart border border-top-0 p-0 overflow-hidden" [isCardFooter]="true">
+      <i class="feather icon-refresh-cw f-20 text-c-blue"></i>
+      <h5 class="mb-1">$46,845</h5>
+      <p>Revenue</p>
+      <div class="app-card-footer">
+        <app-apex-chart chartID="analytics-seo-card-chart-1" [chartConfig]="this.chartDB.chartSeoCard"></app-apex-chart>
+      </div>
+    </app-card>
+  </div>
+  <div class="col-md-12 col-xl-8">
+    <app-card cardTitle="Unique Visitor" [options]="false" cardClass="bg-c-blue map-visitor-card" blockClass="pl-0 pb-0" [isCardFooter]="true">
+      <app-apex-chart chartID="chart-apex-unique-visitor" [chartConfig]="this.chartDB.chartUniqueVisitor"></app-apex-chart>
+      <div class="app-card-footer">
+        <div class="row justify-content-center text-center">
+          <div class="col-auto b-r-default col-6 col-sm-4">
+            <h6>Visits</h6>
+            <p class="text-muted">29.703 Users (40%)</p>
+            <div class="progress">
+              <div class="progress-bar bg-c-blue" style="width:40%"></div>
+            </div>
+          </div>
+          <div class="col-auto col-6 col-sm-4">
+            <h6>Revenue</h6>
+            <p class="text-muted">20703$ (60%)</p>
+            <div class="progress">
+              <div class="progress-bar bg-c-green" style="width:60%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+  <!-- users visite and profile end -->
+
+  <!-- statustic and process start -->
+  <div class="col-lg-8 col-md-12">
+    <app-card cardTitle="Statistics">
+      <app-apex-chart chartID="chart-apex-statistics" [chartConfig]="this.chartDB.chartStatistics"></app-apex-chart>
+    </app-card>
+  </div>
+  <div class="col-lg-4 col-md-12">
+    <app-card cardTitle="Process Compliance" [options]="false">
+      <div class="row">
+        <div class="col-md-6">
+          <p class="f-50 d-inline-block m-t-30 m-b-30">0.4</p>
+          <i class="feather icon-arrow-down text-c-red f-26 m-l-5"></i>
+          <span class="text-muted">2018 (Jan - Jun)</span>
+          <div class="m-t-30">
+            <a href="#!" class="text-underline text-c-blue"><small>Previous Quarters</small></a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <app-apex-chart chartID="chart-apex-proccess-compliance" [chartConfig]="this.chartDB.chartProcessCompliance"></app-apex-chart>
+        </div>
+      </div>
+    </app-card>
+  </div>
+  <!-- statustic and process end -->
+  <!-- users statustic start -->
+  <div class="col-lg-4 col-md-6">
+    <app-card cardTitle="Active user" [options]="false">
+      <app-apex-chart chartID="chart-apex-user-1" [chartConfig]="this.chartDB.chartUser1"></app-apex-chart>
+    </app-card>
+  </div>
+  <div class="col-lg-4 col-md-6">
+    <app-card cardTitle="Page view" [options]="false">
+      <app-apex-chart chartID="chart-apex-user-2" [chartConfig]="this.chartDB.chartUser2"></app-apex-chart>
+    </app-card>
+  </div>
+  <div class="col-lg-4 col-md-12">
+    <app-card cardTitle="New installation" [options]="false">
+      <app-apex-chart chartID="chart-apex-user-3" [chartConfig]="this.chartDB.chartUser3"></app-apex-chart>
+    </app-card>
+  </div>
+  <!-- users statustic end -->
+  <!-- amount-card start -->
+  <div class="col-md-6 col-xl-3">
+    <app-card [hidHeader]="true" [isCardFooter]="true" footerClass="p-0 border border-0" cardClass="bg-c-blue overflow-hidden amount-card" blockClass="pb-1">
+      <i class="feather icon-arrow-up"></i>
+      <h4 class="text-white">$4600,00</h4>
+      <div class="app-card-footer">
+        <app-apex-chart chartID="chart-apex-amount-1" [chartConfig]="this.chartDB.chartAmount1"></app-apex-chart>
+        <p class="text-dark pb-1">Amount Founded</p>
+      </div>
+    </app-card>
+  </div>
+  <div class="col-md-6 col-xl-3">
+    <app-card [hidHeader]="true" [isCardFooter]="true" footerClass="p-0 border border-0" cardClass="bg-c-green overflow-hidden amount-card" blockClass="pb-1">
+      <i class="feather icon-arrow-down"></i>
+      <h4 class="text-white">$387.00</h4>
+      <div class="app-card-footer">
+        <app-apex-chart chartID="chart-apex-amount-2" [chartConfig]="this.chartDB.chartAmount2"></app-apex-chart>
+        <p class="text-dark">Balance</p>
+      </div>
+    </app-card>
+  </div>
+  <div class="col-md-6 col-xl-3">
+    <app-card [hidHeader]="true" [isCardFooter]="true" footerClass="p-0 border border-0" cardClass="bg-c-yellow overflow-hidden amount-card" blockClass="pb-1">
+      <i class="feather icon-arrow-up"></i>
+      <h4 class="text-white">$8350.00</h4>
+      <div class="app-card-footer">
+        <app-apex-chart chartID="chart-apex-amount-3" [chartConfig]="this.chartDB.chartAmount3"></app-apex-chart>
+        <p class="text-dark">Payback Amount</p>
+      </div>
+    </app-card>
+  </div>
+  <div class="col-md-6 col-xl-3">
+    <app-card [hidHeader]="true" [isCardFooter]="true" footerClass="p-0 border border-0" cardClass="bg-c-red overflow-hidden amount-card" blockClass="pb-1">
+      <i class="feather icon-arrow-down"></i>
+      <h4 class="text-white">$123.00</h4>
+      <div class="app-card-footer">
+        <app-apex-chart chartID="chart-apex-amount-4" [chartConfig]="this.chartDB.chartAmount4"></app-apex-chart>
+        <p class="text-dark">Planned Collection Income</p>
+      </div>
+    </app-card>
+  </div>
+  <!-- amount-card end -->
+
+  <!-- support-tracker start -->
+  <div class="col-xl-4 col-md-6">
+    <app-card [hidHeader]="true">
+      <div class="row">
+        <div class="col-6">
+          <h6>Support Analytics</h6>
+        </div>
+        <div class="col">
+          <div class="dropdown float-right" ngbDropdown>
+            <a class="dropdown-toggle text-c-blue" ngbDropdownToggle href="javascript:" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Last Week
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
+              <a class="dropdown-item" href="javascript:">1 week</a>
+              <a class="dropdown-item" href="javascript:">2 year</a>
+              <a class="dropdown-item" href="javascript:">3 month</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row align-items-center">
+        <div class="col-6">
+          <h2 class="mt-2 mb-0">280</h2>
+          <span class="">Tickets</span>
+          <h6 class="mb-0 mt-3">Close: <span class="text-success">120</span></h6>
+          <h6>Response <span class="text-danger">2d</span></h6>
+        </div>
+        <div class="col-6">
+          <div id="hd-complited-ticket"></div>
+          <app-apex-chart chartID="chart-apex-completed-ticket" [chartConfig]="this.chartDB.completedTicketCAC"></app-apex-chart>
+        </div>
+      </div>
+    </app-card>
+  </div>
+  <!-- support-tracker end -->
+  <!-- session-device start -->
+  <div class="col-xl-4 col-md-6">
+    <app-card [hidHeader]="true">
+      <h6>Traffic tracker</h6>
+      <div class="row mt-2">
+        <div class="col-6">
+          <span class="d-block text-uppercase">Inbound</span>
+          <h3 class="mt-1">180 GB</h3>
+          <div class="mt-3">
+            <app-apex-chart chartID="chart-apex-transactions1" [chartConfig]="this.chartDB.transactions1CAC"></app-apex-chart>
+          </div>
+        </div>
+        <div class="col-6">
+          <span class="d-block text-uppercase">Outbound</span>
+          <h3 class="mt-1">597.1 GB</h3>
+          <div class="mt-3">
+            <app-apex-chart chartID="chart-apex-transactions2" [chartConfig]="this.chartDB.transactions2CAC"></app-apex-chart>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+  <!-- session-device end -->
+  <!-- storage-activity start -->
+  <div class="col-xl-4 col-md-12">
+    <div class="marge-card">
+      <app-card [hidHeader]="true" cardClass="mb-0" blockClass="pb-0">
+        <div class="row">
+          <div class="col-auto">
+            <h6>Cloud Computing</h6>
+          </div>
+          <div class="col">
+            <div class="dropdown float-right" ngbDropdown>
+              <a class="dropdown-toggle text-c-blue" ngbDropdownToggle href="javascript:" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">weekly</a>
+              <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
+                <a class="dropdown-item" href="javascript:">1 week</a>
+                <a class="dropdown-item" href="javascript:">2 year</a>
+                <a class="dropdown-item" href="javascript:">3 month</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-auto">
+            <span class="d-block"><i class="fas fa-circle text-c-green f-10 m-r-10"></i>Storage</span>
+            <h6 class="ml-3 mt-1">10.5 GB</h6>
+          </div>
+          <div class="col">
+            <span class="d-block"><i class="fas fa-circle text-c-purple f-10 m-r-10"></i>Bandwidth</span>
+            <h6 class="ml-3 mt-1">50 GB</h6>
+          </div>
+        </div>
+      </app-card>
+      <app-card [hidHeader]="true" blockClass="p-0">
+        <app-apex-chart chartID="chart-apex-storage" [chartConfig]="this.chartDB.storageCAC"></app-apex-chart>
+      </app-card>
+    </div>
+  </div>
+  <!-- storage-activity end -->
+
+  <!-- account-section start -->
+  <div class="col-xl-8">
+    <div class="marge-card">
+      <app-card [hidHeader]="true" cardClass="mb-0" blockClass="pb-0">
+        <h6 class="text-c-blue mb-3">Department wise annual recurring and profit</h6>
+        <div class="row">
+          <div class="col-auto">
+            <h3>$687,578</h3>
+            <h6><i class="feather icon-trending-down text-c-red mr-2"></i>Marketing Growth</h6>
+            <span>Measure How Fast You're Growing in<br>current Market.<span class="text-c-blue">Learn More</span></span>
+          </div>
+          <div class="col">
+            <h3>30%</h3>
+            <h6><i class="feather icon-trending-up text-c-blue mr-2"></i>Annual profit/stakeholders</h6>
+            <span>Ave 30% or more profite provide to investor as<br>Anual return.<span class="text-c-blue">Learn More</span></span>
+          </div>
+        </div>
+      </app-card>
+      <app-card [hidHeader]="true" blockClass="p-0 m-t-15">
+        <app-apex-chart chartID="chart-apex-account" [chartConfig]="this.chartDB.accountCAC"></app-apex-chart>
+      </app-card>
+    </div>
+  </div>
+  <!-- account-section end -->
+
+  <!-- traffic-monitor start -->
+  <div class="col-xl-4">
+    <div class="row">
+      <div class="col-xl-12 col-md-6">
+        <app-card [hidHeader]="true">
+          <div class="row">
+            <div class="col-auto">
+              <h6>Page view by device</h6>
+            </div>
+            <div class="col">
+              <div class="dropdown float-right" ngbDropdown>
+                <a class="dropdown-toggle text-c-blue" ngbDropdownToggle href="javascript:" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">weekly</a>
+                <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
+                  <a class="dropdown-item" href="javascript:">1 week</a>
+                  <a class="dropdown-item" href="javascript:">2 year</a>
+                  <a class="dropdown-item" href="javascript:">3 month</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 pr-0">
+              <h6 class="my-3"><i class="feather icon-monitor f-20 mr-2 text-primary"></i>66.6%<span class="text-c-green ml-2 f-14"><i class="feather icon-arrow-up"></i>2%</span></h6>
+              <h6 class="my-3"><i class="feather icon-tablet f-20 mr-2 text-success"></i>29.7%<span class="text-c-red ml-2 f-14"><i class="feather icon-arrow-down"></i>3%</span></h6>
+              <h6 class="my-3"><i class="feather icon-smartphone f-20 mr-2 text-danger"></i>32.8%<span class="text-c-green ml-2 f-14"><i class="feather icon-arrow-up"></i>8%</span></h6>
+            </div>
+            <div class="col-6">
+              <div class="chart-percent text-center">
+                <app-apex-chart chartID="chart-apex-percentage" [chartConfig]="this.chartDB.percentageCAC"></app-apex-chart>
+              </div>
+            </div>
+          </div>
+        </app-card>
+      </div>
+      <div class="col-xl-12 col-md-6">
+        <app-card [hidHeader]="true">
+          <div class="row d-flex align-items-center">
+            <div class="col-6 pr-0">
+              <span class="d-block mb-1"><i class="fas fa-circle f-10 m-r-5 text-primary"></i>Desktop [66.6%]</span>
+              <span class="d-block mb-1"><i class="fas fa-circle f-10 m-r-5 text-success"></i>Mobile [29.7%]</span>
+              <span class="d-block"><i class="fas fa-circle f-10 m-r-5 text-warning"></i>Tablet [38.6%]</span>
+            </div>
+            <div class="col-6">
+              <div id="device-chart"></div>
+              <app-apex-chart chartID="chart-apex-device" [chartConfig]="this.chartDB.deviceCAC"></app-apex-chart>
+            </div>
+          </div>
+        </app-card>
+      </div>
+    </div>
+  </div>
+  <!-- traffic-monitor end -->
+
+  <!-- conversion-section start -->
+  <div class="col-sm-12">
+    <div class="row no-gutters">
+      <div class="col-md-4 col-xl-2 col-sm-6">
+        <app-card [hidHeader]="true">
+          <span>Transactions</span>
+          <h3>61</h3>
+          <app-apex-chart chartID="analytics-apex-user-chart" [chartConfig]="this.chartDB.analyticsUser"></app-apex-chart>
+        </app-card>
+      </div>
+      <div class="col-md-4 col-xl-2 col-sm-6">
+        <app-card [hidHeader]="true">
+          <span>Current stock</span>
+          <h3>50</h3>
+          <app-apex-chart chartID="analytics-apex-session-chart" [chartConfig]="this.chartDB.analyticsSession"></app-apex-chart>
+        </app-card>
+      </div>
+      <div class="col-md-4 col-xl-2 col-sm-6">
+        <app-card [hidHeader]="true">
+          <span>Page bounce rate</span>
+          <h3>0.50%</h3>
+          <app-apex-chart chartID="analytics-apex-page-view-chart" [chartConfig]="this.chartDB.analyticsPageView"></app-apex-chart>
+        </app-card>
+      </div>
+      <div class="col-md-4 col-xl-2 col-sm-6">
+        <app-card [hidHeader]="true">
+          <span>Total order value</span>
+          <h3>$203.20</h3>
+          <app-apex-chart chartID="analytics-apex-page-session-chart" [chartConfig]="this.chartDB.analyticsPageSession"></app-apex-chart>
+        </app-card>
+      </div>
+      <div class="col-md-4 col-xl-2 col-sm-6">
+        <app-card [hidHeader]="true">
+          <span>Revenue</span>
+          <h3>$2,45,789</h3>
+          <app-apex-chart chartID="analytics-apex-avg-session-chart" [chartConfig]="this.chartDB.analyticsAvgSession"></app-apex-chart>
+        </app-card>
+      </div>
+      <div class="col-md-4 col-xl-2 col-sm-6">
+        <app-card [hidHeader]="true">
+          <span>New Purchases</span>
+          <h3>45</h3>
+          <app-apex-chart chartID="analytics-apex-bounce-rate-chart" [chartConfig]="this.chartDB.analyticsBounceRate"></app-apex-chart>
+        </app-card>
+      </div>
+    </div>
+  </div>
+  <!-- conversion-section end -->
+
+  <!-- moderate start -->
+  <div class="col-xl-4 col-md-5">
+    <app-card [hidHeader]="true" cardClass="rating-bar">
+      <div class="row mb-3">
+        <div class="col-6">
+          <h6 class="m-0">Task Completed</h6>
+          <span>Successful tested</span>
+        </div>
+        <div class="col-6">
+          <h2 class="text-right">60%</h2>
+        </div>
+      </div>
+      <bar-rating [(rate)]="taskRate" [max]="18" [theme]="'horizontal'"></bar-rating>
+    </app-card>
+    <app-card cardTitle="Session by time of day">
+      <app-apex-chart chartID="chart-apex-time-user" [chartConfig]="this.chartDB.timeUserCAC"></app-apex-chart>
+    </app-card>
+  </div>
+  <!-- moderate end -->
+
+  <!-- population-section start -->
+  <div class="col-xl-8 col-md-7">
+    <app-card cardTitle="Product manufacturing completion by Region">
+      <app-apex-chart chartID="chart-apex-horizontal-bar" [chartConfig]="this.chartDB.horizontalBarCAC"></app-apex-chart>
+    </app-card>
+    <div class="row">
+      <div class="col-xl-6 col-md-12">
+        <div class="marge-card">
+          <app-card [hidHeader]="true" cardClass="mb-0" blockClass="pb-0">
+            <h6>Conversions</h6>
+            <h4 class="m-0">0.85%<span class="text-c-blue ml-2"><i class="feather icon-arrow-up"></i>0.50%</span></h4>
+            <span>Purchased</span>
+          </app-card>
+          <app-card [hidHeader]="true" blockClass="p-0 m-t-15">
+            <app-apex-chart chartID="chart-apex-conversions" [chartConfig]="this.chartDB.conversionsBarCAC"></app-apex-chart>
+          </app-card>
+        </div>
+      </div>
+      <div class="col-xl-6 col-md-12">
+        <app-card [hidHeader]="true">
+          <div class="row d-flex align-items-center">
+            <div class="col-6">
+              <h6>Active customer <span class="d-block">on site</span></h6>
+              <h2 class="m-0">2.86</h2>
+              <span class="text-c-green">+85.9%</span>
+            </div>
+            <div class="col-6">
+              <app-apex-chart chartID="chart-apex-site" [chartConfig]="this.chartDB.siteCAC"></app-apex-chart>
+            </div>
+          </div>
+        </app-card>
+      </div>
+    </div>
+  </div>
+  <!-- population-section start -->
+
+  <!-- customer-section start -->
+  <div class="col-lg-6">
+    <app-card [hidHeader]="true">
+      <h6>Customer Satisfaction</h6>
+      <span>It takes continuous effort to maintain high customer satisfaction levels.Internal and external quality measures are often tied together.,as the opinion...</span>
+      <span class="text-c-blue d-block">Learn more..</span>
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col">
+          <app-apex-chart chartID="chart-apex-satisfaction" [chartConfig]="this.chartDB.saleSatisfaction"></app-apex-chart>
+        </div>
+      </div>
+    </app-card>
+  </div>
+  <!-- customer-section end -->
+
+  <!-- traffic-section start -->
+  <div class="col-lg-6">
+    <app-card cardTitle="Marketing campaign" [options]="false">
+      <app-apex-chart chartID="chart-apex-traffic" [chartConfig]="this.chartDB.trafficCAC"></app-apex-chart>
+    </app-card>
+  </div>
+  <!-- traffic-section end -->
+
+  <!-- view-section start -->
+  <div class="col-md-4">
+    <div class="marge-card">
+      <app-card [hidHeader]="true" cardClass="mb-0" blockClass="pb-0">
+        <div class="row">
+          <div class="col-6">
+            <h3>4856</h3>
+          </div>
+          <div class="col-6 text-right">
+            <span>Views</span>
+          </div>
+        </div>
+      </app-card>
+      <app-card [hidHeader]="true" blockClass="p-0 m-t-15">
+        <app-apex-chart chartID="chart-apex-view1" [chartConfig]="this.chartDB.view1CAC"></app-apex-chart>
+      </app-card>
+    </div>
+    <div class="marge-card">
+      <app-card [hidHeader]="true" cardClass="mb-0" blockClass="pb-0">
+        <div class="row">
+          <div class="col-6">
+            <h3>678</h3>
+          </div>
+          <div class="col-6 text-right">
+            <span>Active Users</span>
+          </div>
+        </div>
+      </app-card>
+      <app-card [hidHeader]="true" blockClass="p-0 m-t-15">
+        <app-apex-chart chartID="chart-apex-view2" [chartConfig]="this.chartDB.view2CAC"></app-apex-chart>
+      </app-card>
+    </div>
+  </div>
+  <!-- view-section end -->
+
+  <!-- time-section start -->
+  <div class="col-md-4">
+    <app-card cardTitle="Time on Site" [options]="false">
+      <app-apex-chart chartID="chart-apex-time" [chartConfig]="this.chartDB.timeCAC"></app-apex-chart>
+      <div class="row mt-2">
+        <div class="col-6">
+          <span class="text-muted"><i class="fas fa-circle text-c-green f-10 m-r-10"></i>Time on site</span>
+        </div>
+        <div class="col-6 text-right">
+          <span class="text-muted">1:31</span>
+        </div>
+      </div>
+    </app-card>
+  </div>
+  <!-- time-section end -->
+
+  <!-- browser-section start -->
+  <div class="col-md-4">
+    <app-card cardTitle="Browser States" cardClass="table-card" headerClass="borderless" blockClass="px-0 py-0" [options]="false">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <tbody>
+          <tr>
+            <td>Google Chrome</td>
+            <td><span class="text-right d-block m-0"><span class="m-r-15">21%</span><span class="data-attributes" data-peity='{ "fill": ["#4680ff", "#eeeeee"],"innerRadius": 8, "radius": 13 }'>5/7</span></span></td>
+          </tr>
+          <tr>
+            <td>Mozila Firefox</td>
+            <td><span class="text-right d-block m-0"><span class="m-r-15">76%</span><span class="data-attributes" data-peity='{ "fill": ["#ff5252", "#eeeeee"],"innerRadius": 8, "radius": 13 }'>3/8</span></span></td>
+          </tr>
+          <tr>
+            <td>Apple Safari</td>
+            <td><span class="text-right d-block m-0"><span class="m-r-15">20%</span><span class="data-attributes" data-peity='{ "fill": ["#11c15b", "#eeeeee"],"innerRadius": 8, "radius": 13 }'>5/6</span></span></td>
+          </tr>
+          <tr>
+            <td>Internet Explorer</td>
+            <td><span class="text-right d-block m-0"><span class="m-r-15">26%</span><span class="data-attributes" data-peity='{ "fill": ["#7759de", "#eeeeee"],"innerRadius": 8, "radius": 13 }'>2/6</span></span></td>
+          </tr>
+          <tr>
+            <td>Opera mini</td>
+            <td><span class="text-right d-block m-0"><span class="m-r-15">27%</span><span class="data-attributes" data-peity='{ "fill": ["#FF9800", "#eeeeee"],"innerRadius": 8, "radius": 13 }'>5/7</span></span></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+  <!-- browser-section end -->
+
+  <!-- visit-section start -->
+  <div class="col-xl-5 col-md-12">
+    <app-card [hidHeader]="true">
+      <div class="row">
+        <div class="col-auto">
+          <span>Customers</span>
+        </div>
+        <div class="col text-right">
+          <h2 class="mb-0">826</h2>
+          <span class="text-c-green">8.2%<i class="feather icon-trending-up ml-1"></i></span>
+        </div>
+      </div>
+      <app-apex-chart chartID="chart-apex-customer" [chartConfig]="this.chartDB.customerCAC"></app-apex-chart>
+      <div class="row mt-4">
+        <div class="col">
+          <h3 class="m-0"><i class="fas fa-circle f-10 m-r-5 text-primary"></i>674</h3>
+          <span class="ml-3">New</span>
+        </div>
+        <div class="col">
+          <h3 class="m-0"><i class="fas fa-circle text-c-blue f-10 m-r-5 text-success"></i>182</h3>
+          <span class="ml-3">Return</span>
+        </div>
+        <div class="col">
+          <h3 class="m-0"><i class="fas fa-circle text-c-purple f-10 m-r-5 text-danger"></i>768</h3>
+          <span class="ml-3">Custom</span>
+        </div>
+      </div>
+    </app-card>
+  </div>
+  <!-- visit-section end -->
+
+  <!-- population-section start -->
+  <div class="col-xl-7 col-md-12">
+    <div class="row">
+      <div class="col-md-6">
+        <app-card cardTitle="Current project progress">
+          <h6 class="mb-3"><span class="pie_1" data-peity='{"radius": 12 }'>226,134</span><span class="m-l-10">AFSL web app</span></h6>
+          <h6 class="mb-3"><span class="pie_2" data-peity='{"radius": 12 }'>1,4</span><span class="m-l-10">Norttech website</span></h6>
+          <h6 class="mb-0"><span class="pie_3" data-peity='{"radius": 12 }'>1/3</span><span class="m-l-10">Maestro iris attendance</span></h6>
+        </app-card>
+        <div class="marge-card">
+          <app-card [hidHeader]="true" cardClass="mb-0" blockClass="pb-0">
+            <h6>New stock <span class="text-muted">( purchased )</span></h6>
+            <h4 class="m-0">0.85%<span class="text-info ml-2"><i class="feather icon-arrow-up"></i>0.50%</span></h4>
+          </app-card>
+          <app-card [hidHeader]="true" blockClass="p-0 m-t-15">
+            <app-apex-chart chartID="chart-apex-conversions-cac" [chartConfig]="this.chartDB.conversionsCAC"></app-apex-chart>
+          </app-card>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <app-card cardTitle="Sales Report" [options]="false">
+          <app-apex-chart chartID="chart-apex-sale" [chartConfig]="this.chartDB.saleCAC"></app-apex-chart>
+          <div class="row mt-3 d-flex align-items-center text-center">
+            <div class="col-6">
+              <h6>$1000</h6>
+              <span>Target</span>
+            </div>
+            <div class="col-6">
+              <h6>$985</h6>
+              <span>Last week</span>
+            </div>
+          </div>
+        </app-card>
+      </div>
+    </div>
+  </div>
+  <!-- population-section end -->
+
+  <!-- total-revenue start -->
+  <div class="col-xl-4 col-md-12">
+    <app-card cardTitle="Total Revenue" [options]="false" cardClass="mb-0" blockClass="">
+      <div id="revenue-chart"></div>
+      <app-apex-chart chartID="chart-apex-revenue" [chartConfig]="this.chartDB.revenueCAC"></app-apex-chart>
+      <span class="text-center text-muted d-block">Total sales made today</span>
+    </app-card>
+    <app-card [hidHeader]="true" blockClass="p-10">
+      <div class="row d-flex align-items-center text-center">
+        <div class="col">
+          <h6>$1258</h6>
+          <span>Target</span>
+        </div>
+        <div class="col">
+          <h6>$975</h6>
+          <span>Last week</span>
+        </div>
+        <div class="col">
+          <h6>$500</h6>
+          <span>Last Day</span>
+        </div>
+      </div>
+    </app-card>
+  </div>
+  <!-- total-revenue end -->
+
+  <!-- market-dow start -->
+  <div class="col-xl-4 col-md-6">
+    <app-card cardTitle="Market Sales" [options]="false">
+      <h3><i class="feather icon-trending-down text-c-red mr-3"></i>27,695.65</h3>
+      <div class="row d-flex align-items-center text-center mt-4">
+        <div class="col">
+          <h6>Youtube</h6>
+          <span class="text-c-red">- 16.85%</span>
+        </div>
+        <div class="col">
+          <h6>Facebook</h6>
+          <span class="text-c-purple">+ 45.36%</span>
+        </div>
+        <div class="col">
+          <h6>Twitter</h6>
+          <span class="text-c-blue">+ 50.69%</span>
+        </div>
+      </div>
+      <app-apex-chart chartID="chart-apex-market" [chartConfig]="this.chartDB.marketCAC"></app-apex-chart>
+    </app-card>
+  </div>
+  <!-- market-dow end -->
+
+  <!-- sales-section start -->
+  <div class="col-xl-4 col-md-6">
+    <app-card cardTitle="Sale report of year" [options]="false">
+      <app-apex-chart chartID="chart-apex-type" [chartConfig]="this.chartDB.typeCAC"></app-apex-chart>
+      <div class="mt-3">
+        <span class="d-block mb-2"><i class="fas fa-circle f-10 m-r-15 text-danger"></i>Desktop Computers<span class="float-right f-w-400">76.7%</span></span>
+        <span class="d-block mb-2"><i class="fas fa-circle f-10 m-r-15 text-warning"></i>Smartphones<span class="float-right f-w-400">15%</span></span>
+        <span class="d-block"><i class="fas fa-circle f-10 m-r-15 text-info"></i>Tablets<span class="float-right f-w-400">30%</span></span>
+      </div>
+    </app-card>
+  </div>
+  <!-- sales-section end -->
+
+  <!-- store-section start -->
+  <div class="col-sm-12">
+    <app-card [hidHeader]="true">
+      <div class="row">
+        <div class="col">
+          <h5>Store Visitors</h5>
+        </div>
+        <div class="col-auto text-right">
+          <span>This Month</span>
+        </div>
+      </div>
+      <app-apex-chart chartID="chart-apex-site-visitor" [chartConfig]="this.siteVisitorCAC" [newData]="this.data"></app-apex-chart>
+    </app-card>
+  </div>
+  <!-- store-section end -->
+
+  <!-- sessions-section start -->
+  <div class="col-xl-12">
+    <app-card cardTitle="Advertising campaign monitor" cardClass="table-card" blockClass="px-0 py-0" [options]="false">
+      <app-apex-chart chartID="chart-apex-traffic-monitor" [chartConfig]="this.chartDB.trafficMonitorCAC"></app-apex-chart>
+      <div class="table-responsive">
+        <perfect-scrollbar [style.max-height]="'380px'">
+          <table class="table table-hover m-b-0">
+            <thead>
+            <tr>
+              <th><span>Campaign date</span></th>
+              <th>
+                <span>Click
+                  <a class="help"><i class="feather icon-help-circle f-16"></i></a>
+                </span>
+              </th>
+              <th>
+                <span>Cost
+                  <a class="help"><i class="feather icon-help-circle f-16"></i></a>
+                </span>
+              </th>
+              <th>
+                <span>CTR
+                  <a class="help"><i class="feather icon-help-circle f-16"></i></a>
+                </span>
+              </th>
+              <th>
+                <span>ARPU
+                  <a class="help"><i class="feather icon-help-circle f-16"></i></a>
+                </span>
+              </th>
+              <th>
+                <span>ECPI
+                  <a class="help"><i class="feather icon-help-circle f-16"></i></a>
+                </span>
+              </th>
+              <th>
+                <span>ROI
+                  <a class="help"><i class="feather icon-help-circle f-16"></i></a>
+                </span>
+              </th>
+              <th>
+                <span>Revenue
+                <a class="help"><i class="feather icon-help-circle f-16"></i></a>
+                </span>
+              </th>
+              <th>
+                <span>Conversions
+                  <a class="help"><i class="feather icon-help-circle f-16"></i></a>
+                </span>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>08-11-2016</td>
+              <td>786
+                <div class="mt-1">
+                  <ngb-progressbar type="danger" height="4px" [value]="60"></ngb-progressbar>
+                </div>
+              </td>
+              <td>485
+                <div class="mt-1">
+                  <ngb-progressbar type="primary" height="4px" [value]="50"></ngb-progressbar>
+                </div>
+              </td>
+              <td>769
+                <div class="mt-1">
+                  <ngb-progressbar type="warning" height="4px" [value]="70"></ngb-progressbar>
+                </div>
+              </td>
+              <td>45,3%
+                <div class="mt-1">
+                  <ngb-progressbar type="success" height="4px" [value]="60"></ngb-progressbar>
+                </div>
+              </td>
+              <td>6,7%
+                <div class="mt-1">
+                  <ngb-progressbar type="info" height="4px" [value]="30"></ngb-progressbar>
+                </div>
+              </td>
+              <td>8,56
+                <div class="mt-1">
+                  <ngb-progressbar type="danger" height="4px" [value]="40"></ngb-progressbar>
+                </div>
+              </td>
+              <td>10:55
+                <div class="mt-1">
+                  <ngb-progressbar type="warning" height="4px" [value]="70"></ngb-progressbar>
+                </div>
+              </td>
+              <td>33.8%
+                <div class="mt-1">
+                  <ngb-progressbar type="success" height="4px" [value]="40"></ngb-progressbar>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>15-10-2016</td>
+              <td>786
+                <div class="mt-1">
+                  <ngb-progressbar type="danger" height="4px" [value]="65"></ngb-progressbar>
+                </div>
+              </td>
+              <td>523
+                <div class="mt-1">
+                  <ngb-progressbar type="primary" height="4px" [value]="80"></ngb-progressbar>
+                </div>
+              </td>
+              <td>736
+                <div class="mt-1">
+                  <ngb-progressbar type="warning" height="4px" [value]="80"></ngb-progressbar>
+                </div>
+              </td>
+              <td>78,3%
+                <div class="mt-1">
+                  <ngb-progressbar type="success" height="4px" [value]="70"></ngb-progressbar>
+                </div>
+              </td>
+              <td>6,6%
+                <div class="mt-1">
+                  <ngb-progressbar type="info" height="4px" [value]="70"></ngb-progressbar>
+                </div>
+              </td>
+              <td>7,56
+                <div class="mt-1">
+                  <ngb-progressbar type="danger" height="4px" [value]="44"></ngb-progressbar>
+                </div>
+              </td>
+              <td>4:30
+                <div class="mt-1">
+                  <ngb-progressbar type="warning" height="4px" [value]="68"></ngb-progressbar>
+                </div>
+              </td>
+              <td>76.8%
+                <div class="mt-1">
+                  <ngb-progressbar type="success" height="4px" [value]="90"></ngb-progressbar>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>08-08-2017</td>
+              <td>624
+                <div class="mt-1">
+                  <ngb-progressbar type="danger" height="4px" [value]="45"></ngb-progressbar>
+                </div>
+              </td>
+              <td>436
+                <div class="mt-1">
+                  <ngb-progressbar type="primary" height="4px" [value]="55"></ngb-progressbar>
+                </div>
+              </td>
+              <td>756
+                <div class="mt-1">
+                  <ngb-progressbar type="warning" height="4px" [value]="95"></ngb-progressbar>
+                </div>
+              </td>
+              <td>78,3%
+                <div class="mt-1">
+                  <ngb-progressbar type="success" height="4px" [value]="38"></ngb-progressbar>
+                </div>
+              </td>
+              <td>6,4%
+                <div class="mt-1">
+                  <ngb-progressbar type="info" height="4px" [value]="30"></ngb-progressbar>
+                </div>
+              </td>
+              <td>9,45
+                <div class="mt-1">
+                  <ngb-progressbar type="danger" height="4px" [value]="41"></ngb-progressbar>
+                </div>
+              </td>
+              <td>9:05
+                <div class="mt-1">
+                  <ngb-progressbar type="warning" height="4px" [value]="67"></ngb-progressbar>
+                </div>
+              </td>
+              <td>8.63%
+                <div class="mt-1">
+                  <ngb-progressbar type="success" height="4px" [value]="41"></ngb-progressbar>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>11-12-2017</td>
+              <td>423
+                <div class="mt-1">
+                  <ngb-progressbar type="danger" height="4px" [value]="54"></ngb-progressbar>
+                </div>
+              </td>
+              <td>123
+                <div class="mt-1">
+                  <ngb-progressbar type="primary" height="4px" [value]="70"></ngb-progressbar>
+                </div>
+              </td>
+              <td>756
+                <div class="mt-1">
+                  <ngb-progressbar type="warning" height="4px" [value]="75"></ngb-progressbar>
+                </div>
+              </td>
+              <td>78,6%
+                <div class="mt-1">
+                  <ngb-progressbar type="success" height="4px" [value]="60"></ngb-progressbar>
+                </div>
+              </td>
+              <td>45,6%
+                <div class="mt-1">
+                  <ngb-progressbar type="info" height="4px" [value]="90"></ngb-progressbar>
+                </div>
+              </td>
+              <td>6,85
+                <div class="mt-1">
+                  <ngb-progressbar type="danger" height="4px" [value]="30"></ngb-progressbar>
+                </div>
+              </td>
+              <td>7:45
+                <div class="mt-1">
+                  <ngb-progressbar type="warning" height="4px" [value]="40"></ngb-progressbar>
+                </div>
+              </td>
+              <td>33.8%
+                <div class="mt-1">
+                  <ngb-progressbar type="success" height="4px" [value]="80"></ngb-progressbar>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>05-06-2015</td>
+              <td>465
+                <div class="mt-1">
+                  <ngb-progressbar type="danger" height="4px" [value]="66"></ngb-progressbar>
+                </div>
+              </td>
+              <td>463
+                <div class="mt-1">
+                  <ngb-progressbar type="primary" height="4px" [value]="50"></ngb-progressbar>
+                </div>
+              </td>
+              <td>456
+                <div class="mt-1">
+                  <ngb-progressbar type="warning" height="4px" [value]="30"></ngb-progressbar>
+                </div>
+              </td>
+              <td>68,6%
+                <div class="mt-1">
+                  <ngb-progressbar type="success" height="4px" [value]="30"></ngb-progressbar>
+                </div>
+              </td>
+              <td>76,6%
+                <div class="mt-1">
+                  <ngb-progressbar type="info" height="4px" [value]="32"></ngb-progressbar>
+                </div>
+              </td>
+              <td>7,56
+                <div class="mt-1">
+                  <ngb-progressbar type="danger" height="4px" [value]="70"></ngb-progressbar>
+                </div>
+              </td>
+              <td>8:45
+                <div class="mt-1">
+                  <ngb-progressbar type="warning" height="4px" [value]="71"></ngb-progressbar>
+                </div>
+              </td>
+              <td>39.8%
+                <div class="mt-1">
+                  <ngb-progressbar type="success" height="4px" [value]="38"></ngb-progressbar>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>08-11-2016</td>
+              <td>786
+                <div class="mt-1">
+                  <ngb-progressbar type="danger" height="4px" [value]="43"></ngb-progressbar>
+                </div>
+              </td>
+              <td>485
+                <div class="mt-1">
+                  <ngb-progressbar type="primary" height="4px" [value]="70"></ngb-progressbar>
+                </div>
+              </td>
+              <td>769
+                <div class="mt-1">
+                  <ngb-progressbar type="warning" height="4px" [value]="69"></ngb-progressbar>
+                </div>
+              </td>
+              <td>45,3%
+                <div class="mt-1">
+                  <ngb-progressbar type="success" height="4px" [value]="90"></ngb-progressbar>
+                </div>
+              </td>
+              <td>6,7%
+                <div class="mt-1">
+                  <ngb-progressbar type="info" height="4px" [value]="80"></ngb-progressbar>
+                </div>
+              </td>
+              <td>8,56
+                <div class="mt-1">
+                  <ngb-progressbar type="danger" height="4px" [value]="41"></ngb-progressbar>
+                </div>
+              </td>
+              <td>10:55
+                <div class="mt-1">
+                  <ngb-progressbar type="warning" height="4px" [value]="55"></ngb-progressbar>
+                </div>
+              </td>
+              <td>33.8%
+                <div class="mt-1">
+                  <ngb-progressbar type="success" height="4px" [value]="70"></ngb-progressbar>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>15-10-2016</td>
+              <td>786
+                <div class="mt-1">
+                  <ngb-progressbar type="danger" height="4px" [value]="61"></ngb-progressbar>
+                </div>
+              </td>
+              <td>523
+                <div class="mt-1">
+                  <ngb-progressbar type="primary" height="4px" [value]="45"></ngb-progressbar>
+                </div>
+              </td>
+              <td>736
+                <div class="mt-1">
+                  <ngb-progressbar type="warning" height="4px" [value]="70"></ngb-progressbar>
+                </div>
+              </td>
+              <td>78,3%
+                <div class="mt-1">
+                  <ngb-progressbar type="success" height="4px" [value]="60"></ngb-progressbar>
+                </div>
+              </td>
+              <td>6,6%
+                <div class="mt-1">
+                  <ngb-progressbar type="info" height="4px" [value]="30"></ngb-progressbar>
+                </div>
+              </td>
+              <td>7,56
+                <div class="mt-1">
+                  <ngb-progressbar type="danger" height="4px" [value]="40"></ngb-progressbar>
+                </div>
+              </td>
+              <td>4:30
+                <div class="mt-1">
+                  <ngb-progressbar type="warning" height="4px" [value]="70"></ngb-progressbar>
+                </div>
+              </td>
+              <td>76.8%
+                <div class="mt-1">
+                  <ngb-progressbar type="success" height="4px" [value]="40"></ngb-progressbar>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </perfect-scrollbar>
+      </div>
+    </app-card>
+  </div>
+  <!-- sessions-section end -->
+
+  <!-- support-section start -->
+  <div class="col-xl-4 col-md-12">
+    <div class="marge-card support-bar">
+      <app-card [hidHeader]="true" cardClass="mb-0" blockClass="pb-0">
+        <h2 class="m-0">350</h2>
+        <span class="text-c-blue">Support Requests</span>
+        <p class="mb-3 mt-3">Total number of support requests that come in.</p>
+      </app-card>
+      <app-card [hidHeader]="true" cardClass="mb-0" blockClass="p-0">
+        <app-apex-chart chartID="chart-apex-support" [chartConfig]="this.chartDB.supportCAC"></app-apex-chart>
+      </app-card>
+      <app-card [hidHeader]="true" cardClass="bg-primary text-white" blockClass="p-10">
+        <div class="row text-center">
+          <div class="col">
+            <h4 class="m-0 text-white">10</h4>
+            <span>Open</span>
+          </div>
+          <div class="col">
+            <h4 class="m-0 text-white">5</h4>
+            <span>Running</span>
+          </div>
+          <div class="col">
+            <h4 class="m-0 text-white">3</h4>
+            <span>Solved</span>
+          </div>
+        </div>
+      </app-card>
+    </div>
+  </div>
+  <!-- support-section end -->
+
+  <!-- average-section start -->
+  <div class="col-xl-8 col-md-12">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card mrr-card">
+          <div class="card-body mb-3">
+            <span class="d-flex align-items-center"><i class="fab fa-bitcoin text-c-blue f-22 m-r-5"></i>Bitcoin</span>
+          </div>
+          <div class="position-absolute bottom-chart w-100">
+            <app-apex-chart chartID="chart-apex-average1" [chartConfig]="this.chartDB.average1CAC"></app-apex-chart>
+          </div>
+          <div class="card-body">
+            <span class="float-right">Goal: $75</span>
+            <h3 class="m-0">$80</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card mrr-card">
+          <div class="card-body mb-3">
+            <span class="d-flex align-items-center"><i class="fab fa-ethereum text-c-green f-22 m-r-5"></i>Ethereum</span>
+          </div>
+          <div class="position-absolute bottom-chart w-100">
+            <app-apex-chart chartID="chart-apex-average2" [chartConfig]="this.chartDB.average2CAC"></app-apex-chart>
+          </div>
+          <div class="card-body">
+            <span class="float-right">Goal: $75</span>
+            <h3 class="m-0">$80</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card bg-danger text-white mrr-card">
+          <div class="card-body mb-3">
+            <span>Total ticket Resolved</span>
+          </div>
+          <div class="position-absolute bottom-chart" [style.width]="'100%'">
+            <app-apex-chart chartID="chart-apex-average3" [chartConfig]="this.chartDB.average3CAC"></app-apex-chart>
+          </div>
+          <div class="card-body">
+            <span class="float-right">pending: 75</span>
+            <h3 class="m-0 text-white">400</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card bg-warning text-white mrr-card">
+          <div class="card-body mb-3">
+            <span>Avg. Customer Satisfaction</span>
+          </div>
+          <div class="position-absolute bottom-chart" [style.width]="'100%'">
+            <app-apex-chart chartID="chart-apex-average4" [chartConfig]="this.chartDB.average4CAC"></app-apex-chart>
+          </div>
+          <div class="card-body">
+            <span class="float-right">Reopen: 20%</span>
+            <h3 class="m-0 text-white">75%</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- average-section end -->
+
+  <!-- account-section start -->
+  <div class="col-sm-12">
+    <app-card cardTitle="Daily Visitor" [options]="false">
+      <div class="toolbar btn-group">
+        <button id="one_month" (click)="this.dailyVisitorEvent('1m')" class="btn btn-sm btn-outline-primary" [ngClass]="{'active': this.dailyVisitorStatus === '1m'}">1M</button>
+        <button id="six_months" (click)="this.dailyVisitorEvent('6m')" class="btn btn-sm btn-outline-primary" [ngClass]="{'active': this.dailyVisitorStatus === '6m'}">6M</button>
+        <button id="one_year" (click)="this.dailyVisitorEvent('1y')" class="btn btn-sm btn-outline-primary" [ngClass]="{'active': this.dailyVisitorStatus === '1y'}">1Y</button>
+        <button id="ytd" (click)="this.dailyVisitorEvent('ytd')" class="btn btn-sm btn-outline-primary" [ngClass]="{'active': this.dailyVisitorStatus === 'ytd'}">YTD</button>
+        <button id="all" (click)="this.dailyVisitorEvent('all')" class="btn btn-sm btn-outline-primary" [ngClass]="{'active': this.dailyVisitorStatus === 'all'}">ALL</button>
+      </div>
+      <app-apex-chart chartID="daily-visitor-aa-cc" [chartConfig]="this.chartDB.dailyVisitorAACC" [xAxis]="dailyVisitorAxis"></app-apex-chart>
+    </app-card>
+  </div>
+  <!-- account-section end -->
+</div>

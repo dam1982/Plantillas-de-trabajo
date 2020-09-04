@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-12">
+        <h5>Ciudades</h5>
+        <hr>       
+     </div>  
+     <div class="col-12">
+         <div class="row">
+            <div class="col-md-4 col-xl-4" *ngFor="let city of cities">
+                <app-card [hidHeader]="true">
+                    <h5 class="card-title">{{city.Name}}</h5>
+                    <p class="card-text">{{city.Department}}</p>
+                   
+                  </app-card>
+            </div>
+        </div>
+        
+    </div>       
+       
+
+</div>
+
