@@ -1,0 +1,32 @@
+
+
+
+<div class="container main-container">
+  <h1>Firechat</h1>
+  <hr>
+
+  <div class="row animated fadeIn fast" *ngIf="_cs.usuario">
+    <div class="col-md-12 text-right">
+      <button (click)="_cs.logout()" type="button" class="btn btn-outline-danger">Salir</button>
+    </div>
+  </div>
+
+  <div *ngIf="!_cs.usuario" class="animated fadeIn fast">
+    <app-login></app-login>
+  </div>
+
+  <div *ngIf="_cs.usuario" class="chat-window animated fadeIn fast">
+    <app-chat></app-chat>
+  </div>
+
+
+</div>
+
+
+
+
+<!-- <ul>
+  <li class="text" *ngFor="let chat of chats | async">
+    {{ chat | json }}
+  </li>
+</ul> -->

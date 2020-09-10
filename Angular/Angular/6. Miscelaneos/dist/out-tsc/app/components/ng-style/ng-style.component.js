@@ -1,0 +1,28 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+import { Component } from '@angular/core';
+var NgStyleComponent = (function () {
+    function NgStyleComponent() {
+        this.tamano = 10;
+    }
+    NgStyleComponent.prototype.ngOnInit = function () {
+    };
+    return NgStyleComponent;
+}());
+NgStyleComponent = __decorate([
+    Component({
+        selector: 'app-ng-style',
+        template: "\n\n    <p [style.fontSize.px]=\"tamano\">\n      Hola mundo... esta es una etiqueta\n    </p>\n\n    <button class=\"btn btn-primary\" (click)=\"tamano = tamano + 5\">\n      <i class=\"fa fa-plus\"></i>\n    </button>\n\n    <button class=\"btn btn-primary\" (click)=\"tamano = tamano - 5\">\n      <i class=\"fa fa-minus\"></i>\n    </button>\n\n  ",
+        styles: []
+    }),
+    __metadata("design:paramtypes", [])
+], NgStyleComponent);
+export { NgStyleComponent };
+//# sourceMappingURL=../../../../../src/app/components/ng-style/ng-style.component.js.map

@@ -1,0 +1,44 @@
+
+<!-- <ul>
+  <li *ngFor="let peli of peliculas">
+    {{ peli.poster_path }}
+  </li>
+</ul> -->
+
+<div class="row" *ngIf="peliculas">
+
+  <div class="col-sm-6">
+
+    <div class="row">
+      <div class="col-md-12 div-pic-1"
+          [ngStyle]="{'background-image': 'url(http://image.tmdb.org/t/p/w300' + peliculas[0].poster_path + ')'}"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 div-pic-2"
+          [ngStyle]="{'background-image': 'url(http://image.tmdb.org/t/p/w300' + peliculas[1].poster_path + ')'}"></div>
+
+      <div class="col-md-6 div-pic-2"
+            [ngStyle]="{'background-image': 'url(http://image.tmdb.org/t/p/w300' + peliculas[3].poster_path + ')'}"></div>
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="row">
+      <div class="col-md-6 div-pic-2"
+            [ngStyle]="{'background-image': 'url(http://image.tmdb.org/t/p/w300' + peliculas[4].poster_path + ')'}"></div>
+
+      <div class="col-md-6 div-pic-2"
+            [ngStyle]="{'background-image': 'url(http://image.tmdb.org/t/p/w300' + peliculas[5].poster_path + ')'}"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 div-pic-1"
+            [ngStyle]="{'background-image': 'url(http://image.tmdb.org/t/p/w300' + peliculas[6].poster_path + ')'}"></div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- http://image.tmdb.org/t/p/w300/iX3RJLK9Ywi9OXYZrCigNbNPSZY.jpg -->
