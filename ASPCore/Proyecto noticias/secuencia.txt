@@ -1,0 +1,12 @@
+
+
+1   crear Modelos
+2  mapeos
+3 crear DbContext
+4 agregar el DbContext al startup como servicio y llamar la conexion json
+5 crear el json la conexion para que no quede quemado
+6 crear servicios 
+7 poner cada servicio que creo en el startup  services.AddTransient<NoticiasService>();
+8 crear controlador
+
+
