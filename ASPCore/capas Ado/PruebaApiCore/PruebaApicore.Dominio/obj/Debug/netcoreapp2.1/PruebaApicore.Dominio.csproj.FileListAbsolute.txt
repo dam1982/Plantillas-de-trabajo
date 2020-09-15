@@ -1,0 +1,9 @@
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApicore.Dominio\bin\Debug\netcoreapp2.1\PruebaApicore.Dominio.deps.json
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApicore.Dominio\bin\Debug\netcoreapp2.1\PruebaApicore.Dominio.dll
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApicore.Dominio\bin\Debug\netcoreapp2.1\PruebaApicore.Dominio.pdb
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApicore.Dominio\obj\Debug\netcoreapp2.1\PruebaApicore.Dominio.csproj.CoreCompileInputs.cache
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApicore.Dominio\obj\Debug\netcoreapp2.1\PruebaApicore.Dominio.AssemblyInfoInputs.cache
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApicore.Dominio\obj\Debug\netcoreapp2.1\PruebaApicore.Dominio.AssemblyInfo.cs
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApicore.Dominio\obj\Debug\netcoreapp2.1\PruebaApicore.Dominio.dll
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApicore.Dominio\obj\Debug\netcoreapp2.1\PruebaApicore.Dominio.pdb
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApicore.Dominio\obj\Debug\netcoreapp2.1\PruebaApicore.Dominio.csprojAssemblyReference.cache

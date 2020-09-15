@@ -1,0 +1,14 @@
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApiCore.Infraestructura\obj\Debug\netcoreapp2.1\PruebaApiCore.Infraestructura.csprojAssemblyReference.cache
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApiCore.Infraestructura\obj\Debug\netcoreapp2.1\PruebaApiCore.Infraestructura.csproj.CoreCompileInputs.cache
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApiCore.Infraestructura\obj\Debug\netcoreapp2.1\PruebaApiCore.Infraestructura.AssemblyInfoInputs.cache
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApiCore.Infraestructura\obj\Debug\netcoreapp2.1\PruebaApiCore.Infraestructura.AssemblyInfo.cs
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApiCore.Infraestructura\bin\Debug\netcoreapp2.1\PruebaApiCore.Infraestructura.deps.json
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApiCore.Infraestructura\bin\Debug\netcoreapp2.1\PruebaApiCore.Infraestructura.dll
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApiCore.Infraestructura\bin\Debug\netcoreapp2.1\PruebaApicore.Dominio.dll
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApiCore.Infraestructura\bin\Debug\netcoreapp2.1\PruebaApicore.Dominio.pdb
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApiCore.Infraestructura\obj\Debug\netcoreapp2.1\PruebaApiCore.Infraestructura.csproj.CopyComplete
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApiCore.Infraestructura\bin\Debug\netcoreapp2.1\PruebaApiCore.Infraestructura.pdb
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApiCore.Infraestructura\bin\Debug\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApiCore.Infraestructura\bin\Debug\netcoreapp2.1\System.Data.SqlClient.xml
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApiCore.Infraestructura\obj\Debug\netcoreapp2.1\PruebaApiCore.Infraestructura.dll
+C:\Users\ADMIN\source\repos\PruebaApiCore\PruebaApiCore.Infraestructura\obj\Debug\netcoreapp2.1\PruebaApiCore.Infraestructura.pdb
