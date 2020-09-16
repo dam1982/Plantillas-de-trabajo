@@ -1,0 +1,50 @@
+<div class="auth-wrapper align-items-stretch aut-bg-img">
+  <div class="flex-grow-1">
+    <div class="h-100 d-md-flex align-items-center auth-side-img">
+      <div class="col-sm-10 auth-content w-auto">
+        <img src="assets/images/auth/auth-logo.png" alt="" class="img-fluid">
+        <h1 class="text-white my-4">Bienvenido!</h1>
+        <h4 class="text-white font-weight-normal">Ingresa tus credenciales para iniciar. <br />Si olvidaste tus
+          credenciales utiliza la opción de recordar contraseña.</h4>
+      </div>
+    </div>
+
+    <div class="auth-side-form">
+      <form #validationForm="ngForm" class="editForm" novalidate>
+        <div class=" auth-content">
+          <img src="assets/images/auth/auth-logo-dark.png" alt="" class="img-fluid mb-4 d-block d-xl-none d-lg-none">
+          <h3 class="mb-4 f-w-400">Autenticación</h3>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="feather icon-user"></i></span>
+            </div>
+            <input type="text" class="form-control" name="userLogin" placeholder="Usuario" [ngClass]="{'is-invalid': !userLogin.valid && (userLogin.dirty || userLogin.touched || isSubmit)}" #userLogin="ngModel" required [(ngModel)]="formInput.userLogin">
+            <label *ngIf="!userLogin.valid && (userLogin.dirty || userLogin.touched || isSubmit)" id="validation-required-error" class="error jquery-validation-error small form-text invalid-feedback">Requerido</label>
+          </div>
+          <div class="input-group mb-4">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="feather icon-lock"></i></span>
+            </div>
+
+            <input type="password" class="form-control" name="password" placeholder="Contraseña" [ngClass]="{'is-invalid': !password.valid && (password.dirty || password.touched || isSubmit)}" #password="ngModel" minlength="6" required [(ngModel)]="formInput.password" (keyup.enter)="Authenticate(validationForm)">
+            <label *ngIf="!password.valid && (password.dirty || password.touched || isSubmit)" id="validation-password-error" class="error jquery-validation-error small form-text invalid-feedback">Ingresa una contraseña válida.</label>
+          </div>
+          
+          <button class="btn btn-block btn-primary event-btn m-2" type="button" (click)="Authenticate(validationForm)" [disabled] = "this.onAction">
+            <span *ngIf="this.onAction" class="spinner-grow spinner-grow-sm" role="status"></span>
+            <span *ngIf="this.onAction" class="load-text"> Ingresando...</span>
+            <span *ngIf="!this.onAction" class="btn-text">Ingresar</span>
+          </button>
+          
+          
+          <div class="text-center">
+            <div class="saprator my-4"><span>ó</span></div>
+            <p class="mb-2 text-muted">Olvidaste tu contraseña? <a [routerLink]="['/auth/reset-password-v2']"
+                class="f-w-400">Recordar</a></p>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<app-ui-modal ([ngModel])="ModalWindow" #ModalWindow class="ModalSchema" [hideFooter]="true" [containerClick]="false"
+    [dialogClass]="'modal-xl'">
+    <div class="app-modal-header">
+        <h5 class="modal-title">{{ModalWindow.title}}</h5>
+        <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="Finish()"><span
+                aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body">
+        <app-card [hidHeader]="true">
+            <div class="row">
+                <div class="col-12">
+                    Numero de Alistamiento: {{this.businessOrder.CurrentEnlistment.EnlistmentNumber}}
+                </div>
+            </div>
+            <hr>
+            <form #EnlismentForm="ngForm">
+                <div class="row">
+
+
+                    <div class=" col-md-3 col-sm-3 col-xs-12">
+                        <label for="">Nro Orden *</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="OrderNumber"  id="OrderNumber"
+                                (keyup.enter)="GetProducts(OrderNumber.value)" #OrderNumber
+                                [(ngModel)]="this.businessOrder.CurrentEnlistment.OrderNumber" required>
+                            <div class="input-group-append">
+                                <button class="btn btn-info btn-outline" (click)="GetProducts(OrderNumber.value)"
+                                    type="button" [disabled]="this.onActionProducts">
+                                    <span *ngIf="this.onActionProducts" class="spinner-grow spinner-grow-sm"
+                                        role="status"></span>
+                                    <span *ngIf="!this.onActionProducts" class="btn-text"><i
+                                            class="fas fa-search"></i></span>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" col-md-6 col-sm-5 col-xs-12">
+                        <label for="">Producto*</label>
+                        <ng-select [items]="products" bindLabel="Name" bindValue="Code" name="Product"
+                            #Product="ngModel" [(ngModel)]="this.businessOrder.CurrentEnlistment.ProductCode"
+                            notFoundText="No se encontraron productos." appendTo="body" required></ng-select>
+                    </div>
+                    <div class=" col-md-3 col-sm-4 col-xs-12">
+                        <label for="">Cajas*</label>
+                        <input type="text" class="form-control" name="boxes" #boxes="ngModel"
+                            [(ngModel)]="this.businessOrder.CurrentEnlistment.BoxesNumber" required>
+                    </div>
+
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-12" style="margin-top: 1em; margin-bottom: 1em;">
+
+                    <button class="btn btn-info  float-right" (click)="ValidationBoxes( boxes.value )" type="button"
+                        [disabled]="this.onActionBoxes">
+                        <span *ngIf="this.onActionBoxes" class="spinner-grow spinner-grow-sm" role="status"></span>
+                        <span *ngIf="this.onActionBoxes" class="load-text">Consultando...</span>
+                        <span *ngIf="!this.onActionBoxes" class="btn-text">Consultar</span>
+                    </button>
+                </div>
+            </div>
+        </app-card>
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-md-12 col-sm-12 col-xs-12">
+                <ngx-datatable #dataTable class="material" [rows]="gridMapper.DisplayRows" [scrollbarH]="true"
+                    [columnMode]="gridMapper.ColumnMode.force" [columns]="gridMapper.Columns" [headerHeight]="50"
+                    [footerHeight]="50" rowHeight="auto" [limit]="15" [messages]="gridMapper.Messages"></ngx-datatable>
+
+
+            </div>
+        </div>
+
+        <hr>
+        <div class="row">
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)="Finish()">Cancelar</button>
+                <button class="btn btn-primary event-btn" type="button" (click)="SaveEnlisment()"
+                    [disabled]="this.onActionSave">
+                    <span *ngIf="this.onActionSave" class="spinner-grow spinner-grow-sm" role="status"></span>
+                    <span *ngIf="this.onActionSave" class="load-text">Guardando...</span>
+                    <span *ngIf="!this.onActionSave" class="btn-text">Guardar</span>
+                </button>
+            </div>
+        </div>
+
+
+    </div>
+</app-ui-modal>

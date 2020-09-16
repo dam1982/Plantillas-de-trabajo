@@ -1,0 +1,85 @@
+<div class="row" *ngIf="!business.ExternalTagCode">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <app-card cardTitle="Etiqueta Externa" [options]="false">
+            <form #applicationForm="ngForm">
+                <div class="form-row">
+                    <div class="form-group col-7 col-md-8">
+                        <label for="internalTag">Etiqueta Interna *</label>
+                        <div class="input-group">
+                            <input class="form-control" name="internalTag" [(ngModel)]="internalTagText" autocomplete="off"
+                            maxlength="64" #internalTag="ngModel" (keyup.enter)="AddInternalTag()" appAutofocus >
+                            <div class="input-group-append">
+                                <button class="btn btn-primary d-sm-block" [hidden]="" type="button" (click)="AddInternalTag()" title="Confirmar">
+                                    <i class="fas fa-check-circle" *ngIf="!onAction"></i>
+                                    <span *ngIf="onAction" class="spinner-border spinner-border-sm"
+                                        role="status"></span>
+                                </button>
+                            </div>                            
+                        </div>                      
+                    </div>
+                    <div class="form-group col-5 col-md-4" *ngIf="rePrint">
+                        <label for="rePrint" style="width: 100%;">Reimpresión?</label>
+                        <div class="switch switch-primary d-inline m-r-10">
+                            <input type="checkbox" id="rePrint" name="rePrint" [(ngModel)]="rePrintCheck"
+                                #rePrint="ngModel">
+                            <label for="rePrint" class="cr" style="margin-top: -0.5em;margin-left: 1.5em;"></label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <hr>
+            <app-card cardTitle="Etiquetas Leídas: {{internalTags.length}}" [options]="false">
+                <div *ngFor="let item of internalTags">
+                    {{item}} ! {{orderId}}
+                </div>
+            </app-card>
+        </app-card>
+    </div>
+
+    <div class="col-sm-12" style="text-align: center;">
+        <button type=" button" class="btn btn-secondary" data-dismiss="modal" (click)="Cancel()">Cancelar</button>
+        &nbsp;&nbsp;
+       <button class="btn btn-primary event-btn" type="button" (click)="ValidateTags()" [disabled]="this.onAction">
+            <span *ngIf="this.onAction" class="spinner-grow spinner-grow-sm" role="status"></span>
+            <span *ngIf="this.onAction" class="load-text">Generando...</span>
+            <span *ngIf="!this.onAction" class="btn-text">Generar Etiqueta</span>
+        </button>
+    </div>
+</div>
+
+<div class="row" *ngIf="business.ExternalTagCode" >
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <app-card cardTitle="Confirmación Etiqueta Externa" [options]="false">
+            <form #confirmForm="ngForm">
+                <div class="form-row">
+                    <div class="form-group col-7 col-md-8">
+                        <label for="internalTag">Etiqueta Externa *</label>
+                        <input class="form-control" name="externalTag" [(ngModel)]="externalTagText" autocomplete="off"
+                            maxlength="64" #externalTag="ngModel" (keyup)="AddExternalTag($event)" appAutofocus >
+                    </div>                   
+                </div>
+            </form>                  
+        </app-card>
+    </div>
+    <div class="col-sm-12" style="text-align: center;">
+         <button type=" button" class="btn btn-secondary" data-dismiss="modal" (click)="Reprint()" *ngIf="this.operation == 'SaveTags'">Cancelar</button>
+        &nbsp;&nbsp;
+        <button class="btn btn-primary event-btn" type="button" (click)="ConfirmExternalTag()" [disabled]="this.onAction">
+            <span *ngIf="this.onAction" class="spinner-grow spinner-grow-sm" role="status"></span>
+            <span *ngIf="this.onAction" class="load-text">Confirmando...</span>
+            <span *ngIf="!this.onAction" class="btn-text">Confirmar</span>
+        </button>
+    </div>
+</div>
+
+<app-ui-modal ([ngModel])="ModalWindow" #ModalWindow class="ModalSchema" [hideFooter]="true"
+        [containerClick]="false" [dialogClass]="'modal-l'">
+        <div class="app-modal-header">
+            <h5 class="modal-title">Autorización de Calidad</h5>            
+        </div>
+        <div class="app-modal-body">            
+            <app-quality-authorization #qualityAuth (authorizedEvent)="CloseModal($event)"></app-quality-authorization>
+        </div>
+
+    </app-ui-modal>
+<ng2-toasty [position]="'bottom-right'"></ng2-toasty>

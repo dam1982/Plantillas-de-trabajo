@@ -1,0 +1,101 @@
+<div class="row btn-page">
+    <div class="col-12">
+        <h5>Administración Impresoras</h5>
+        <hr>
+    </div>
+    <hr>
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-md-3 col-sm-4 col-xs-12">
+                <button class="btn btn-success btn-block" (click)="NewPrinter(false)" [disabled]="activeEdit">
+                    Crear
+                </button>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+                <button class="btn btn-info btn-block" (click)="NewPrinter(true)" [disabled]="activeEdit">
+                    Duplicar
+                </button>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" #searchControl
+                        (keyup)="gridMapper.FilterRows(searchControl.value)" placeholder="Buscar">
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-xl-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 1em;">
+                <ngx-datatable #dataTable class="material" [rows]="gridMapper.DisplayRows" 
+                    [columnMode]="gridMapper.ColumnMode.force" [columns]="gridMapper.Columns" [headerHeight]="50"
+                    [footerHeight]="50" rowHeight="auto" [scrollbarH]="true" [limit]="15"
+                    [messages]="gridMapper.Messages" [selected]="gridMapper.SelectedRows"
+                    [selectionType]="gridMapper.SelectionType.single" [selectAllRowsOnPage]="false">
+                </ngx-datatable>
+                <ng-template #SwitchTemplate let-row="row" let-value="value" let-rowIndex="rowIndex">
+                    <div class="switch switch-primary">
+                        <input type="checkbox" [id]="'switch'+rowIndex" class="align-middle"
+                            [disabled]="!editing[rowIndex]" [checked]="value"
+                            (change)="updateValue($event, 'Fixed', rowIndex)">
+                        <label [for]="'switch'+rowIndex" class="cr" style="margin-top: -10%;"></label>
+                    </div>
+                </ng-template>
+                <ng-template #NameTemplate ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                    let-row="row">
+                    <span *ngIf="!editing[rowIndex]">
+                        {{ value }}
+                    </span>
+                    <input autofocus class="form-control" placeholder="Nombre Impresora" style="width: 100%;"
+                        (blur)="updateValue($event, 'Name', rowIndex)" *ngIf="editing[rowIndex]" type="text"
+                        [value]="value" />
+                </ng-template>
+
+                <ng-template #AddressTemplate ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                    let-row="row">
+                    <span *ngIf="!editing[rowIndex]">
+                        {{ value }}
+                    </span>
+                    <input class="form-control" placeholder="0.0.0.0"
+                        (keyup)="updateValue($event, 'IpAddress', rowIndex)" *ngIf="editing[rowIndex]" type="text"
+                        [value]="value" />
+                </ng-template>
+
+                <ng-template #PortTemplate ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                    let-row="row">
+                    <span *ngIf="!editing[rowIndex]">
+                        {{ value }}
+                    </span>
+                    <input class="form-control" (keyup)="updateValue($event, 'Port', rowIndex)"
+                        *ngIf="editing[rowIndex]" type="number" min="1" [value]="value" />
+                </ng-template>
+
+                <ng-template #ActionsTemplate ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value">
+                    <div class="row">
+                        <div class="col-12">
+                            <button class="btn btn-info" *ngIf="!editing[rowIndex]" [disabled]="activeEdit"
+                                (click)="editing[rowIndex] = true; activeEdit=true; ">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-success" *ngIf="editing[rowIndex]" (click)="SaveChanges(rowIndex)">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="btn btn-danger" [disabled]="activeEdit && !editing[rowIndex]"
+                                (click)="DeletePrint(rowIndex)">
+                                <i class="fas fa-window-close" title="Eliminar impresora"
+                                    *ngIf="!editing[rowIndex]"></i>
+                                <i class="fas fa-undo-alt" title="Deshacer cambios" *ngIf="editing[rowIndex]"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </ng-template>
+
+            </div>
+        </div>
+    </div>
+</div>
+<ng2-toasty [position]="'bottom-right'"></ng2-toasty>

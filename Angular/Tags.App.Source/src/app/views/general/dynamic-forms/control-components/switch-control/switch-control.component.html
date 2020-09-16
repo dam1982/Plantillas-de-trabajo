@@ -1,0 +1,7 @@
+<div class="form-group col-md-{{definition.Width}}" [formGroup]="form">
+    <label style="width: 100%;">{{ definition.Title }}</label>
+    <div class="switch switch-primary d-inline m-r-10">
+        <input type="checkbox" [id]="definition.FieldName"  [formControlName]="definition.FieldName" >
+        <label [for]="definition.FieldName" class="cr" style="margin-top: -0.5em;margin-left: 1.5em;"></label>
+    </div>
+</div>

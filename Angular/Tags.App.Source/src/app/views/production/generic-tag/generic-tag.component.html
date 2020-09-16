@@ -1,0 +1,98 @@
+<div class="row btn-page">
+  <div class="col-12">
+      <h5>Generar Etiquetas Genéricas</h5>
+      <hr>
+  </div>
+  <div class="col-12">
+      <app-card [hidHeader]="true">
+          <form #Form="ngForm">
+              <div class="form-row">
+                  <div class="form-group col-12">
+                      <label for="Title">Titulo*</label>
+                      <input type="text" class="form-control" required name="Title" #Title="ngModel"
+                              autocomplete="off" [(ngModel)]="this.CurrentTitle">
+                  </div>
+              </div>
+              <div class="form-row">
+                  <div class="form-group col-12">
+                      <label for="BarCode">Código barras etiqueta*</label>
+                      <input type="text" class="form-control" required name="BarCode" #BarCode="ngModel"
+                              autocomplete="off" [(ngModel)]="this.CurrentBarCode">
+                  </div>
+              </div>
+          </form>
+      </app-card>
+
+      <div class="row" style="justify-content: center;">
+
+          <div class="col-12 col-md-4 col-xl-2"> <a routerLink="/dashboard/analytics" routerLinkActive="active"
+                  class="btn btn-block btn-dark">Cancelar</a>
+          </div>
+          <div class="col-12 col-md-4 col-xl-2"> <button type="button" class="btn btn-block btn-info"
+                  (click)="OpenModalPrint()">Previsualizar</button>
+          </div>
+
+      </div>
+  </div>
+
+
+  <app-ui-modal ([ngModel])="ModalWindow" #ModalWindow [containerClick]="false" [dialogClass]="'modal-lg'">
+
+    <div class="app-modal-header">
+        <h5 class="modal-title">Previsualizar Etiqueta</h5>
+        <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+            (click)="ModalWindow.hide()"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body " class="estilo">
+
+  <app-card [hidHeader]="true">
+
+    <div class="row" >
+        <div class="col-12 text-center">
+          <strong>{{CurrentTitle}}</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12"><strong>Fecha y hora:</strong> {{this.today}}
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-12"><strong>Responsable:</strong> {{user.Names}}
+        </div>
+    </div>
+
+
+
+
+    <div class="row">
+        <div class="col-12 text-center">
+            <h4>IIIII IIII III IIIIIIIII II IIIIIIIIII III</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center">
+            <strong>{{this.CurrentBarCode}}</strong>
+        </div>
+    </div>
+</app-card>
+<hr>
+<div class="row">
+    <div class="col-12 text-center">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+            (click)="this.modalWindow.hide()">Cancelar</button>
+        <button class="btn btn-primary event-btn" type="button" (click)="onPrint()"
+            [disabled]="this.onActionPrint">
+            <span *ngIf="this.onActionPrint" class="spinner-grow spinner-grow-sm" role="status"></span>
+            <span *ngIf="this.onActionPrint" class="load-text">Imprimiendo...</span>
+            <span *ngIf="!this.onActionPrint" class="btn-text">Imprimir</span>
+        </button>
+    </div>
+</div>
+
+</div>
+
+
+</app-ui-modal>
+<ng2-toasty [position]="'bottom-right'"></ng2-toasty>
+</div>

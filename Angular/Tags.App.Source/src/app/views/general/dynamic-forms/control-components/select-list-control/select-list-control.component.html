@@ -1,0 +1,6 @@
+<div class="form-group col-md-{{definition.Width}}" [formGroup]="form">
+    <label>{{ definition.Title }}</label>
+    <ng-select [items]="dataList" [id]="definition.FieldName" #select [bindLabel]="definition.DisplayField"
+        [bindValue]="definition.IdField" [required]="definition.Required" [formControlName]="definition.FieldName"
+        style="width: 100%;" (keyup)="AutoCompleteField()" appendTo="body"></ng-select>
+</div>

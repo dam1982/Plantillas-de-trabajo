@@ -1,0 +1,139 @@
+<app-ui-modal ([ngModel])="ModalWindow" #ModalWindow [containerClick]="false" [dialogClass]="'modal-xl'">
+
+    <div class="app-modal-header">
+        <h5 class="modal-title">Confirmar Traslado Producto Terminado</h5>
+        <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+            (click)="ModalWindow.hide()"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body">
+        <!-- Formulario -->
+        <form>
+            <div class="form-row">
+                <div class="col-6 col-md-2">
+                    <h6>Bodega Origen</h6>
+                    <div>
+                        {{CurrentTransfer.SourceWarehouseName}}
+                    </div>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h6>Bodega Destino</h6>
+                    <div>
+                        {{CurrentTransfer.DestinationWarehouseName}}
+                    </div>
+                </div>
+                <div class="col-12 col-md-8">
+                    <h6>Observaciones de Entrega</h6>
+                    <div>
+                        {{CurrentTransfer.DeliveryObservations}}
+                    </div>
+                </div>
+            </div> 
+            <div class="form-row" style="margin-top: 15px;">
+                <div class="col-6 col-md-2">
+                    <label style="font-weight: bold;">Etiqueta interna</label>
+                    <input type="text" class="form-control" #InternalTagInput name="InternalTagInput" autocomplete="off"
+                    (keyup.enter)="ConfirmInternalTag()">
+                </div>
+                <div class="col-6 col-md-2">
+                    <label>&nbsp;</label>
+                    <button class="btn btn-success  btn-block" #buttonAddTag
+                        (click)="ConfirmInternalTag()">Confirmar</button>
+                </div>
+                <div class="col-4 col-md-8">
+                    <label style="width: 100%;">&nbsp;</label>
+                    <button class="btn btn-danger" (click)="RejectInternaltag()" style="float: right;">Devolver </button>
+                </div>
+            </div>
+
+            <br>
+            
+
+            <div class="form-row">
+
+                <div class="table-responsive">
+
+                    <ngx-datatable #dataTableDetail class="material" [rows]="gridMapperDetail.DisplayRows"
+                        [columnMode]="gridMapperDetail.ColumnMode.force" [columns]="gridMapperDetail.Columns"
+                        [rowClass]="GetRowClass" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="15"
+                        [selected]="gridMapperDetail.SelectedRows" [scrollbarH]="true"
+                        [selectionType]="gridMapperDetail.SelectionType.single" [messages]="gridMapperDetail.Messages">
+                    </ngx-datatable>
+                </div>
+            </div>
+            <br>
+
+            <div class="form-row">
+                <div class="col-6 col-md-3">
+                    Cant. Items: {{ItemsDetails}}
+                </div>
+                <div class="col-6 col-md-3 bg-success" style="text-align: center;">
+                    Cant. Items Confirmados: {{ConfirmItems}}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-6 col-md-3">
+                    Cant. Unds: {{UndsDetails}}
+                </div>
+                <div class="col-6 col-md-3 bg-danger" style="text-align: center;">
+                    Cant. Items Devueltos: {{RejectItems}}
+                </div>
+            </div>
+            <br>
+            <!-- Observaciones -->
+            <div class="form-row">
+                <label for="observaciones">Observaciones Recibo: </label>
+                <textarea class="form-control col-md-12" type="text" id="ReceiptObservations"
+                    name="ReceiptObservations" #ReceiptObservations rows="4"
+                    [(ngModel)]="CurrentTransfer.ReceiptObservations"></textarea>
+            </div>
+        </form>
+        <hr>
+        <div class="row">
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="ModalWindow.hide()">Cerrar</button>
+                &nbsp;&nbsp;
+                <button class="btn btn-primary" (click)="ConfirmTransfer()" [disabled]="this.onAction"
+                    type="button">
+                    <span *ngIf="this.onAction" class="spinner-border spinner-border-sm" role="status"></span>
+                    <span *ngIf="this.onAction" class="load-text">Guardando...</span> 
+                    <span *ngIf="!this.onAction" class="btn-text">Guardar</span>
+                </button>
+            </div>
+            
+        </div>
+    </div>
+</app-ui-modal>
+<app-ui-modal ([ngModel])="RejectWindow" #RejectWindow [containerClick]="false" [dialogClass]="'modal-l'" [style]="'inline-table'">
+    <div class="app-modal-header">
+        <h5 class="modal-title">Devolver Producto Terminado</h5>
+    </div>
+    <div class="app-modal-body">
+        <form #rejectForm="ngForm" *ngIf="CurrentDetail">
+            <div class="form-row">
+                <div class="col-12">
+                    <label for="etiqueta">Motivo *</label>
+                    <ng-select [items]="optionReasons" appendTo="body" name="ReasonId" #ReasonId="ngModel"
+                        [(ngModel)]="CurrentDetail.ReasonId" bindLabel="Value" bindValue="Key" required
+                        notFoundText="Digita texto a buscar...">
+                    </ng-select>
+                </div>
+                <div class="col-12">
+                    <label for="observaciones">Observaciones Devolución: </label>
+                    <textarea class="form-control col-md-12" type="text" id="DetailObservations"
+                        name="DetailObservations" #DetailObservations rows="4" required
+                        [(ngModel)]="CurrentDetail.Observations"></textarea>
+                </div>
+
+            </div>
+        </form>
+        <hr>
+        <div class="row">
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                    (click)="RejectWindow.hide()">Cancelar</button>
+                    &nbsp;&nbsp;
+                <button type="button" class="btn btn-primary" (click)="SaveReject()">Devolver</button>
+            </div>
+        </div>
+    </div>
+</app-ui-modal>

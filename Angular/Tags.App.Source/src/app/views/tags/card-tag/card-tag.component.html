@@ -1,0 +1,37 @@
+<h4>Cantidad a imprimir:<strong> {{this.dataTag.QuantityToPrint}}</strong></h4>
+<app-card [hidHeader]="true" class="mobile">
+    <div class="row">
+        <div class="col-12 ">
+            <strong>{{this.dataTag.ProductName}}</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-5"><strong>RS Invima:</strong> {{this.dataTag.RsInvima}}</div>
+        <div class="col-7">
+            <h4>IIIIII IIIIII III II I</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-5"><strong>Quantity/Cantidad:</strong> {{this.dataTag.Quantity}} {{this.dataTag.UnitMeasure}}</div>
+        <div class="col-4 col-md-5">{{this.dataTag.OneTag}}!{{this.dataTag.OrderLineId}}</div>
+        <div class="col-3 col-md-2">VB.:</div>
+
+    </div>
+    <div class="row">
+        <div class="col-5"><strong>Batch/Lote:</strong> {{this.dataTag.Batch}}</div>
+        <div class="col-7">
+            <h4>IIIII IIII III </h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-5"><strong>Line Prod/Línea Prod:</strong> {{this.dataTag.ProductionLineId}}</div>
+        <div class="col-4 col-md-5">{{this.dataTag.BatchBarCode}}</div>
+        <div class="col-3 col-md-2"><strong>Paq:</strong> {{this.dataTag.OneTag}}</div>
+    </div>
+    <div class="row">
+        <div class="col-5"><strong>Date/Fecha:</strong> {{this.dataTag.DateNow}}</div>
+        <div class="col-3 col-md-2">Plastitec S.A</div>
+        <div class="col-4 col-md-2"><strong>CE:</strong> {{this.dataTag.PackerCode}}</div>
+        <div class="col-3 col-md-2"><strong>Op:</strong> {{this.dataTag.OrderNumber}}</div>
+    </div>
+</app-card>

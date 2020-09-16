@@ -1,0 +1,174 @@
+<app-ui-modal ([ngModel])="ModalWindow" #ModalWindow class="ModalSchema" [containerClick]="false"
+    [dialogClass]="'modal-xl'">
+    <div class="app-modal-header">
+        <h5 class="modal-title">{{ModalWindow.title}}</h5>
+        <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="Finish()"><span
+                aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body">
+        <app-card [hidHeader]="true">
+            <form #TransferRawMaterialForm="ngForm">
+                <div class="form-row">
+
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="rad0" value="0" name="customRadioInline" class="custom-control-input"
+                            (change)="ChangeTransferType(0)"
+                            [checked]="this.business.CurrentTransfer.TransferTypeId===0"
+                            [disabled]="this.business.CurrentTransfer.TransferNumber!==0">
+                        <label class="custom-control-label" for="rad0">Traslado</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="rad1" value="1" name="customRadioInline" class="custom-control-input"
+                            (change)="ChangeTransferType(1)"
+                            [checked]="this.business.CurrentTransfer.TransferTypeId===1"
+                            [disabled]="this.business.CurrentTransfer.TransferNumber!==0">
+                        <label class="custom-control-label" for="rad1">Requisición</label>
+                    </div>
+
+                </div>
+                <hr>
+                <div class="row" *ngIf="this.business.CurrentTransfer.TransferTypeId===1">
+                    <div class=" col-md-4 col-sm-5 col-xs-12">
+                        <label for="">Nro Requisición*</label>
+                        <ng-select [items]="RequestNumbers" name="ReqNumbers" #ReqNumbers="ngModel"
+                            [disabled]="this.business.CurrentTransfer.TransferNumber!==0"
+                            [(ngModel)]="this.business.CurrentTransfer.RequestNumber" (change)="GetMaterialRequest()"
+                            notFoundText="No se encontraron números de requisición." appendTo="body" required
+                            [searchable]="false">
+                        </ng-select>
+                    </div>
+                    <div class=" col-md-8 col-sm-5 col-xs-12">
+                        <label for="">Observaciones Requisición</label>
+                        <input type="text" class="form-control" name="ObsReq" #ObsReq="ngModel"
+                            [(ngModel)]="this.business.CurrentTransfer.RequestObservations" disabled>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 1em;">
+                    <div class=" col-md-4 col-sm-5 col-xs-12">
+                        <label for="">Bodega Origen*</label>
+                        <ng-select [items]="SourceWarehouses" [disabled]="this.business.CurrentTransfer.TransferNumber!==0 || 
+                            this.business.CurrentTransfer.TransferTypeId === 1" bindLabel="Name" bindValue="Code"
+                            name="SourceWarehouse" #SourceWarehouse="ngModel"
+                            [(ngModel)]="this.business.CurrentTransfer.SourceWarehouseCode"
+                            (change)="this.business.CurrentTransfer.SourceWarehouseName = $event.Name"
+                            notFoundText="No se encontraron Bodegas." appendTo="body" required [searchable]="false">
+                        </ng-select>
+                    </div>
+                    <div class=" col-md-4 col-sm-5 col-xs-12">
+                        <label for="">Bodega Destino*</label>
+                        <ng-select [items]="DestinationWarehouses" [disabled]="this.business.CurrentTransfer.TransferNumber!==0 || 
+                        this.business.CurrentTransfer.TransferTypeId === 1" bindLabel="Name" bindValue="Code"
+                            name="DestinationWarehouse" #DestinationWarehouse="ngModel"
+                            [(ngModel)]="this.business.CurrentTransfer.DestinationWarehouseCode"
+                            (change)="this.business.CurrentTransfer.DestinationWarehouseName = $event.Name"
+                            notFoundText="No se encontraron Bodegas." appendTo="body" required [searchable]="false">
+                        </ng-select>
+                    </div>
+
+
+                </div>
+                <div class="row " style="margin-top: 1em;">
+                    <div class=" col-md-4 col-sm-4 col-xs-12">
+                        <label for="">Producto (Etiqueta Universal)*</label>
+                        <input type="text" class="form-control" name="PackagesNumber" #PackagesNumber="ngModel"
+                            [(ngModel)]="this.CurrentProduct" required autocomplete="off">
+                    </div>
+                    <div class="col-md-3 col-sm-4 col-xs-12">
+                        <label for="">&nbsp;</label>
+                        <button class="btn btn-success btn-block" type="button" (click)="SaveTransfer()"
+                            [disabled]="this.onActionAdd">
+                            <span *ngIf="this.onActionAdd" class="spinner-grow spinner-grow-sm" role="status"></span>
+                            <span *ngIf="this.onActionAdd" class="load-text">Agregando...</span>
+                            <span *ngIf="!this.onActionAdd" class="btn-text">Agregar</span>
+                        </button>
+
+                    </div>
+                    <div class="col-md-3 col-sm-4 col-xs-12" *ngIf="this.business.CurrentTransfer.TransferTypeId===0">
+                        <label for="">&nbsp;</label>
+                        <button class="btn btn-danger btn-block" (click)="RemoveTransferDetail()">
+                            Eliminar
+                        </button>
+                    </div>
+                    <div class="col-md-3 col-sm-4 col-xs-12" *ngIf="this.business.CurrentTransfer.TransferTypeId===1">
+                        <label for="">&nbsp;</label>
+                        <button class="btn btn-info btn-block" (click)="GetProductByBatch()">
+                            Ver Lote
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 1em;">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <ngx-datatable #dataTable class="material" [rows]="gridMapper.DisplayRows"
+                            [columnMode]="gridMapper.ColumnMode.force" [columns]="gridMapper.Columns"
+                            [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [scrollbarH]="true" [limit]="15"
+                            [selected]="gridMapper.SelectedRows" [selectionType]="gridMapper.SelectionType.single"
+                            [messages]="gridMapper.Messages">
+                        </ngx-datatable>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 1em;">
+                    <div class="col-12">Cant. Items: {{itemsQuantity}}
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 1em;">
+                    <div class="col-12">
+                        <label for="">Observaciones:</label>
+                        <textarea class="form-control" rows="3" name="Observations" [(ngModel)]="this.Obs"
+                            #Observations="ngModel"></textarea>
+                    </div>
+                </div>
+
+            </form>
+
+        </app-card>
+
+
+        <hr>
+        <div class="row">
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)="Finish()">Cancelar</button>
+                <button class="btn btn-primary event-btn" type="button" (click)="FinishTransfer()"
+                    [disabled]="this.onActionSave">
+                    <span *ngIf="this.onActionSave" class="spinner-grow spinner-grow-sm" role="status"></span>
+                    <span *ngIf="this.onActionSave" class="load-text">Terminando...</span>
+                    <span *ngIf="!this.onActionSave" class="btn-text">Terminar</span>
+                </button>
+            </div>
+        </div>
+
+
+    </div>
+</app-ui-modal>
+<app-ui-modal ([ngModel])="ModalWindowProdByBatch" [style]="'inline-table'" #ModalWindowProdByBatch class="ModalSchema"
+    [containerClick]="false" [dialogClass]="'modal-xl'">
+    <div class="app-modal-header">
+        <h5 class="modal-title">Lotes Producto: {{CurrentProduct}}</h5>
+        <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+            (click)="ModalWindowProdByBatch.hide()"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body">
+        <div class="row" style="margin-top: 1em;">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <ngx-datatable #dataTable class="material" [rows]="gridMapperProdByBatch.DisplayRows"
+                    [columnMode]="gridMapperProdByBatch.ColumnMode.force" [columns]="gridMapperProdByBatch.Columns"
+                    [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [scrollbarH]="true" [limit]="15"
+                    [selected]="gridMapperProdByBatch.SelectedRows"
+                    [selectionType]="gridMapperProdByBatch.SelectionType.single"
+                    [messages]="gridMapperProdByBatch.Messages">
+                </ngx-datatable>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)="ModalWindowProdByBatch.hide()">Cerrar</button>
+
+            </div>
+        </div>
+    </div>
+</app-ui-modal>
+<ng2-toasty [position]="'bottom-right'"></ng2-toasty>

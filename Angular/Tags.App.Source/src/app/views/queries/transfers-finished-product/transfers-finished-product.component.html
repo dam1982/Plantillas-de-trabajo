@@ -1,0 +1,395 @@
+<div class="row btn-page">
+  <div class="col-12">
+    <h5>Consulta Traslados Producto Terminado</h5>
+    <hr>
+  </div>
+  <div class="col-sm-12">
+    <ngb-accordion [closeOthers]="false" activeIds="static-1" class="gradientaccordion">
+      <ngb-panel id="static-1">
+        <ng-template ngbPanelTitle>
+          <h4><a href="javascript:"><i class="feather icon-search float-left"></i><span>Búsqueda</span> </a></h4>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <form [formGroup]="formBuscarTraslado">
+            <div class="form-row">
+
+              <div class="form-group col-md-2">
+                <label for="numTraslado">Nro Traslado</label>
+                <input type="number" class="form-control" formControlName="Id">
+
+
+              </div>
+              <div class="form-group col-md-5">
+                <label for="cliente">Cliente</label>
+                <ng-select [items]="optionsCustomers" #customerSelect bindLabel="Name" (keyup)="searchCustomers()"
+                  appendTo="body" bindValue="Code" labelForId="CustomerCode" formControlName="CustomerCode"
+                  notFoundText="Digita texto a buscar...">
+                </ng-select>
+
+              </div>
+
+
+              <div class="form-group col-md-5">
+                <label for="producto">Producto</label>
+                <ng-select [items]="optionsProducts" #productSelect bindLabel="Name" (keyup)="searchProducts()"
+                  appendTo="body" bindValue="Code" labelForId="ProductCode" formControlName="ProductCode"
+                  notFoundText="Digita texto a buscar...">
+                </ng-select>
+
+              </div>
+
+            </div>
+            <div class="form-row">
+
+              <div class="form-group col-md-2">
+                <label for="lote">Lote</label>
+                <input type="text" class="form-control" formControlName="Batch">
+              </div>
+              <div class="form-group col-md-3">
+                <label for="fechaInicio">Fecha inicio</label>
+                <input type="date" class="form-control" formControlName="TransactionDateMin" #DeliveryDateInput>
+
+
+              </div>
+              <div class="form-group col-md-3">
+                <label for="fechaFin">Fecha fin</label>
+                <input type="date" class="form-control" formControlName="TransactionDateMax">
+
+
+              </div>
+              <div class="form-group col-md-4">
+                <label for="usuarioEntrega">Usuario Entrega</label>
+                <ng-select [items]="optionsUsers" bindLabel="Names" bindValue="Document"
+                  formControlName="DeliveryUserDocument" appendTo="body" notFoundText="Digita texto a buscar...">
+                </ng-select>
+              </div>
+
+            </div>
+            <div class="form-row">
+
+              <div class="form-group col-md-4">
+                <label for="usuarioRecibe">Usuario Recibe</label>
+                <ng-select [items]="optionsUsers" bindLabel="Names" bindValue="Document"
+                  formControlName="ReceiptUserDocument" appendTo="body" notFoundText="Digita texto a buscar...">
+                </ng-select>
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="estado">Estado</label>
+                <ng-select [items]="optionsStates" bindLabel="Value" bindValue="Key" formControlName="StateId"
+                  appendTo="body" notFoundText="Selecciona una opción...">
+                </ng-select>
+
+              </div>
+              <div class="form-group col-md-5">
+                <label for="SourceWarehouse">Bodega Origen</label>
+                <ng-select [items]="optionsSourceWareHouses" #SourceWareHouseSelect bindLabel="Name"
+                 bindValue="Code" labelForId="SourceWarehouseCode"
+                  formControlName="SourceWarehouseCode" notFoundText="Digita texto a buscar..." appendTo="body">
+                </ng-select>
+
+              </div>
+            </div>
+            <div class="form-row">
+
+              <div class="form-group col-md-4">
+                <label for="DestinationWarehouse">Bodega Destino</label>
+                <ng-select [items]="optionsDestinationWareHouses" #DestinationWareHouseSelect bindLabel="Name"
+                  appendTo="body"  bindValue="Code"
+                  labelForId="DestinationWarehouseCode" formControlName="DestinationWarehouseCode"
+                  notFoundText="Digita texto a buscar...">
+                </ng-select>
+
+              </div>
+
+              <div class="form-group col-md-4">
+                <label for="orders">Nro Orden</label>
+                <input type="number" class="form-control" formControlName="OrderNumber">
+
+              </div>
+
+              <div class="form-group col-md-2">
+                <label for="">&nbsp;</label>
+                <button class="btn btn-secondary btn-block" type="button"
+                  (click)="resetFormTraslados()">Limpiar</button>
+              </div>
+              <div class="form-group col-md-2">
+                <label for="">&nbsp;</label>
+                <button class="btn btn-primary event-btn btn-block" (click)="GetTransfers()"
+                  [disabled]="this.onActiveSearch" type="button">
+                  <span *ngIf="this.onActiveSearch" class="spinner-border spinner-border-sm" role="status"></span>
+                  <span *ngIf="this.onActiveSearch" class="load-text">Buscando...</span>
+                  <span *ngIf="!this.onActiveSearch" class="btn-text">Buscar</span>
+                </button>
+              </div>
+
+            </div>
+          </form>
+        </ng-template>
+      </ngb-panel>
+
+    </ngb-accordion>
+
+    <div class="row">
+      <div class="col-md-2">
+        <button class="btn btn-info btn-block" (click)="exportExcel()">Exportar a Excel </button>
+      </div>
+    </div>
+
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+
+
+        <ngx-datatable #tableTransfers class="material expandable" [rows]="rows" [columnMode]="ColumnMode.standard"
+          [scrollbarH]="true" [columns]="columns" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="15"
+          [selected]="selected" [selectionType]="SelectionType.single" [sorts]="[{ prop: 'DeliveryDate', dir: 'asc' }]"
+          [messages]="messegesTable">
+
+          <!-- Row Detail Template -->
+          <ngx-datatable-row-detail rowHeight="80 *  row.Details.length" #myDetailRow>
+            <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+              <div style="padding-left:35px; width: 50%;">
+
+                <ngx-datatable class="material" [rows]="row.Details" [columnMode]="ColumnMode.standard"
+                  [columns]="columnsDetails" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="5"
+                  [selected]="selected" [selectionType]="SelectionType.single">
+
+                  <ngx-datatable-column prop="PackageNumber" [maxWidth]="100">
+                    <ng-template let-column="column" ngx-datatable-header-template>
+                      <span class="mobile-hidden">Paquete</span>
+                    </ng-template>
+                    <ng-template let-row="row.Details" let-value="value" ngx-datatable-cell-template>
+                      {{ value }}
+                    </ng-template>
+                  </ngx-datatable-column>
+
+                  <ngx-datatable-column prop="Quantity" [maxWidth]="100">
+                    <ng-template let-column="column" ngx-datatable-header-template>
+                      <span class="mobile-hidden">Cantidad</span>
+                    </ng-template>
+                    <ng-template let-row="row.Details" let-value="value" ngx-datatable-cell-template>
+                      {{ value }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column prop="Confirmed" [maxWidth]="250">
+                    <ng-template let-column="column" ngx-datatable-header-template>
+                      <span class="mobile-hidden">Confirmado</span>
+                    </ng-template>
+                    <ng-template let-row="row.Details" let-value="value" ngx-datatable-cell-template>
+                      {{ value ? 'Si':'No' }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column prop="ReasonName" [width]="500">
+                    <ng-template let-column="column" ngx-datatable-header-template>
+                      <span class="mobile-hidden">Razón No Confirmación</span>
+                    </ng-template>
+                    <ng-template let-row="row.Details" let-value="value" ngx-datatable-cell-template>
+                      {{ value }}
+                    </ng-template>
+                  </ngx-datatable-column>
+
+                </ngx-datatable>
+
+              </div>
+            </ng-template>
+          </ngx-datatable-row-detail>
+
+          <!-- Column Templates -->
+          <!-- <ngx-datatable-column [width]="50" [resizeable]="false" [sortable]="false" [draggable]="false"
+            [canAutoResize]="false">
+            <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+              <a href="javascript:void(0)" [class.datatable-icon-right]="!row.$$expanded"
+                [class.datatable-icon-down]="row.$$expanded" (click)="toggleExpandRow(row)">
+              </a>
+            </ng-template>
+          </ngx-datatable-column> -->
+          <ngx-datatable-column [width]="70" [resizeable]="false" [sortable]="false" [draggable]="false"
+            [canAutoResize]="false">
+            <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+              <button class="btn btn-info" #ButtonDetail (click)="toggleExpandRow(row,ButtonDetail)"><i
+                  class="fas fa-plus"></i></button>
+            </ng-template>
+          </ngx-datatable-column>
+
+
+          <ngx-datatable-column prop="Id" [maxWidth]="100">
+            <ng-template let-column="column" ngx-datatable-header-template>
+              <span class="mobile-hidden">Nro Traslado</span>
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{ value }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column prop="CustomerName" [maxWidth]="150">
+            <ng-template let-column="column" ngx-datatable-header-template>
+              <span class="mobile-hidden">Cliente</span>
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{ value }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column prop="OrderNumber" [maxWidth]="100">
+            <ng-template let-column="column" ngx-datatable-header-template>
+              <span class="mobile-hidden">Nro Orden</span>
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{ value }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column prop="ProductName" [maxWidth]="400">
+            <ng-template let-column="column" ngx-datatable-header-template>
+              <span class="mobile-hidden">Producto</span>
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{ value }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column prop="TotalItems" [maxWidth]="70">
+            <ng-template let-column="column" ngx-datatable-header-template>
+              <span class="mobile-hidden">Items</span>
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{ value }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column prop="TotalQuantity" [maxWidth]="80">
+            <ng-template let-column="column" ngx-datatable-header-template>
+              <span class="mobile-hidden">Unidades</span>
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{ value }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column prop="Batch" [maxWidth]="130">
+            <ng-template let-column="column" ngx-datatable-header-template>
+              <span class="mobile-hidden">Lote</span>
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{ value }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column prop="DeliveryDate" [maxWidth]="140">
+            <ng-template let-column="column" ngx-datatable-header-template>
+              <span class="mobile-hidden">Fecha Entrega</span>
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{ value | date:'d/MM/y' }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column prop="ReceiptDate" [maxWidth]="140">
+            <ng-template let-column="column" ngx-datatable-header-template>
+              <span class="mobile-hidden">Fecha Recibo</span>
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{ value | date:'d/MM/y' }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column prop="StateName" [maxWidth]="130">
+            <ng-template let-column="column" ngx-datatable-header-template>
+              <span class="mobile-hidden">Estado</span>
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{ value }}
+            </ng-template>
+          </ngx-datatable-column>
+
+
+          <ngx-datatable-column prop="DeliveryUserName" [maxWidth]="150">
+            <ng-template let-column="column" ngx-datatable-header-template>
+              <span class="mobile-hidden">Usuario Entrega</span>
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{ value }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column prop="ReceiptUserName" [maxWidth]="150">
+            <ng-template let-column="column" ngx-datatable-header-template>
+              <span class="mobile-hidden">Usuario Recibe</span>
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{ value }}
+            </ng-template>
+          </ngx-datatable-column>
+
+
+          <ngx-datatable-column prop="SourceWarehouseName" [maxWidth]="150">
+            <ng-template let-column="column" ngx-datatable-header-template>
+              <span class="mobile-hidden">Bodega Origen</span>
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{ value }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column prop="DestinationWarehouseName" [maxWidth]="150">
+            <ng-template let-column="column" ngx-datatable-header-template>
+              <span class="mobile-hidden">Bodega destino</span>
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              {{ value }}
+            </ng-template>
+          </ngx-datatable-column>
+
+
+
+
+        </ngx-datatable>
+
+
+      </div>
+
+    </div>
+    <div class="row" style="margin-top: 10px;">
+      <div class="col-12 " style="margin:auto;">
+
+        <app-card cardTitle="Totales" [options]="false">
+
+          <ngx-datatable class="material" [rows]="rowsTotals" [columnMode]="ColumnMode.standard"
+            [columns]="columnsDetails" [headerHeight]="50" [footerHeight]="50" rowHeight="auto"
+            [selectionType]="SelectionType.single" [messages]="messegesTable">
+
+
+            <ngx-datatable-column prop="Batch" [width]="300">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span class="mobile-hidden">Lote</span>
+              </ng-template>
+              <ng-template let-row="row.Details" let-value="value" ngx-datatable-cell-template>
+                {{ value }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column prop="TagsQuantity" [width]="150">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                  <span class="mobile-hidden">Cantidad Etiquetas</span>
+              </ng-template>
+              <ng-template let-row="row.Details" let-value="value" ngx-datatable-cell-template>
+                  {{ value }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="ProductQuantity" [width]="150">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span class="mobile-hidden">Cantidad Producto</span>
+              </ng-template>
+              <ng-template let-row="row.Details" let-value="value" ngx-datatable-cell-template>
+                {{ value | number}}
+              </ng-template>
+            </ngx-datatable-column>
+
+
+          </ngx-datatable>
+        </app-card>
+      </div>
+    </div>
+  </div>
+  <ng2-toasty></ng2-toasty>

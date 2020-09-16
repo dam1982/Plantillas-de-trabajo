@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <app-card cardTitle="Autorización Impresión Etiqueta" [options]="false">
+            <form #loginForm="ngForm">
+                <div class="form-row">
+                    <div class="form-group col-12">
+                        <label for="login">Usuario *</label>
+                        <input class="form-control" name="login" [(ngModel)]="loginText" autocomplete="off"
+                            maxlength="64" #login="ngModel" appAutofocus required>
+                    </div>
+                    <div class="form-group col-12">
+                        <label for="pwd">Contraseña *</label>
+                        <input type="password" class="form-control" name="pwd" [(ngModel)]="pwdText"
+                            maxlength="64" #pwd="ngModel" required >
+                    </div>
+                </div>
+            </form>            
+        </app-card>
+    </div>
+
+    <div class="col-sm-12" style="text-align: center;">
+        <button type=" button" class="btn btn-secondary" data-dismiss="modal" (click)="Cancel()">Cancelar</button>   
+        &nbsp;&nbsp;
+        <button class="btn btn-primary event-btn" type="button" (click)="ValidateAuthorization()" [disabled]="this.onAction">
+            <span *ngIf="this.onAction" class="spinner-grow spinner-grow-sm" role="status"></span>
+            <span *ngIf="this.onAction" class="load-text">Autorizando...</span>
+            <span *ngIf="!this.onAction" class="btn-text">Autorizar</span>
+        </button>    
+    </div>
+</div>

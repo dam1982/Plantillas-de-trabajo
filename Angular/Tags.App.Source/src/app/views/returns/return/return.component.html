@@ -1,0 +1,98 @@
+<app-ui-modal ([ngModel])="ModalWindow" #ModalWindow class="ModalSchema" [hideFooter]="true" [containerClick]="false"
+    [dialogClass]="'modal-xl'">
+    <div class="app-modal-header">
+        <h5 class="modal-title">{{ModalWindow.title}}</h5>
+        <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="Finish()"><span
+                aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body">
+        <app-card [hidHeader]="true">
+            <div class="row">
+                <div class=" col-md-3 col-sm-4 col-xs-12">
+                    <strong>Nro. Devolución:</strong> {{this.business.CurrentReturn.ReturnNumber}}
+                </div>
+                <div class=" col-md-3 col-sm-4 col-xs-12">
+                    <strong>Order:</strong> {{this.business.CurrentReturn.OrderNumber}}
+                </div>
+                <div class=" col-md-6 col-sm-4 col-xs-12">
+                    <strong>Producto:</strong> {{this.business.CurrentReturn.ProductName}}
+                </div>
+            </div>
+            <div class="row">
+                <div class=" col-md-3 col-sm-6 col-xs-12">
+                    <strong>Motivo:</strong> {{this.business.CurrentReturn.ReasonName}}
+                </div>
+                <div class=" col-md-9 col-sm-6 col-xs-12">
+                    <strong>Observaciones:</strong> {{this.business.CurrentReturn.ReturnObservations}}
+                </div>
+            </div>
+            <div class="row">
+                <div class=" col-12">
+                    <strong>Bodega Devolución:</strong> {{this.business.CurrentReturn.DestinationWarehouseName}}
+                </div>
+            </div>
+            <hr>
+
+            <div class="row">
+                <div class=" col-md-4 col-sm-6 col-xs-12">
+                    <label for="">Etiqueta*</label>
+                    <input type="text" class="form-control" #Tag [(ngModel)]="FieldTag" name="Tag"
+                        (keyup.enter)="SaveReturn()" required>
+                </div>
+                <div class="col-md-2 col-sm-3 col-xs-12" style="margin-top: 2em;">
+                    <button class="btn btn-info" type="button" (click)="SaveReturn()" [disabled]="this.onActionConfirm">
+                        <span *ngIf="this.onActionConfirm" class="spinner-grow spinner-grow-sm" role="status"></span>
+                        <span *ngIf="this.onActionConfirm" class="load-text">Devolviendo</span>
+                        <span *ngIf="!this.onActionConfirm" class="btn-text">Devolver</span>
+                    </button>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-xl-8 col-md-12 col-sm-12 col-xs-12" style="margin-top: 1em;">
+                    <ngx-datatable #dataTable class="material" [rows]="gridMapper.DisplayRows" [rowClass]="getRowClass"
+                        [columnMode]="gridMapper.ColumnMode.force" [columns]="gridMapper.Columns" [headerHeight]="50"
+                        [footerHeight]="50" rowHeight="auto" [limit]="15" [messages]="gridMapper.Messages"
+                        [selected]="gridMapper.SelectedRows" [selectionType]="gridMapper.SelectionType.checkbox"
+                        [selectAllRowsOnPage]="false"  [scrollbarH]="true">
+                    </ngx-datatable>
+                    <ng-template #switchTemplate let-row="row" let-value="value">
+                        <div class="switch switch-primary">
+                            <input type="checkbox" id="switchTable" class="align-middle" disabled [checked]="value">
+                            <label for="switchTable" class="cr" style="margin-top: -10%;"></label>
+                        </div>
+                    </ng-template>
+
+                </div>
+            </div>
+            <div class="row" style="margin-top: 1em;">
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <strong>Cant. Item:</strong> {{this.infoQuantity.Items}}
+                </div>
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    <strong>Cant. Items Confirmados:</strong> {{this.infoQuantity.ItemsConfirm}}
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 1em;">
+                <div class="col-12">
+                    <label for="">Observaciones:</label>
+                    <textarea class="form-control" rows="3" name="Observations" [(ngModel)]="this.ObservationsModal"
+                        #Observations="ngModel"></textarea>
+                </div>
+            </div>
+
+        </app-card>
+
+        <div class="row">
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="Finish()">Cerrar</button>
+                <button class="btn btn-primary event-btn" type="button" (click)="FinishReturn()"
+                    [disabled]="this.onActionSave">
+                    <span *ngIf="this.onActionSave" class="spinner-grow spinner-grow-sm" role="status"></span>
+                    <span *ngIf="this.onActionSave" class="load-text">Terminando...</span>
+                    <span *ngIf="!this.onActionSave" class="btn-text">Terminar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</app-ui-modal>

@@ -1,0 +1,102 @@
+<div class="row btn-page">
+    <div class="col-12">
+        <h5>Bandeja Traslados Materia Prima/Producto En Proceso</h5>
+        <hr>
+    </div>
+    <hr>
+    <div class="col-sm-12">
+
+        <ngb-accordion [closeOthers]="true" class="gradientaccordion" [destroyOnHide]="false">
+            <ngb-panel id="static-1">
+                <ng-template ngbPanelTitle>
+                    <h4><a href="javascript:"><i class="feather icon-search float-left"></i><span> Búsqueda</span> </a>
+                    </h4>
+                </ng-template>
+                <ng-template ngbPanelContent>
+
+                    <app-dynamic-form-host #DynamicForm></app-dynamic-form-host>
+
+                    <div class="form-row justify-content-end">
+                        <div class="form-group col-md-2">
+                            <button class="btn btn-secondary btn-block" type="button"
+                                (click)="CleanForm()">Limpiar</button>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <button class="btn btn-primary event-btn btn-block" (click)="SearchFilter()"
+                                [disabled]="this.onActionSearch" type="button">
+                                <span *ngIf="this.onActionSearch" class="spinner-border spinner-border-sm"
+                                    role="status"></span>
+                                <span *ngIf="this.onActionSearch" class="load-text">Buscando...</span>
+                                <span *ngIf="!this.onActionSearch" class="btn-text">Buscar</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+
+
+
+    </div>
+    <div class="col-12">
+        <div class="row">
+
+
+            <div class="col-md-2 col-sm-3 col-xs-12">
+                <button class="btn btn-success btn-block" *ngIf="PermissionAddTransfer" (click)="EditTransfer(true)">
+                    Agregar
+                </button>
+            </div>
+            <div class="col-md-2 col-sm-3 col-xs-12">
+                <button class="btn btn-info btn-block" *ngIf="PermissionEditTransfer" (click)="EditTransfer(false)">
+                    Editar
+                </button>
+            </div>
+            <div class="col-md-2 col-sm-3 col-xs-12">
+                <button class="btn btn-danger btn-block" *ngIf="PermissionCancelTransfer" (click)="CancelTransfer()">
+                    Anular
+                </button>
+            </div>
+            <div class="col-md-2 col-sm-3 col-xs-12">
+                <button class="btn btn-primary btn-block" *ngIf="PermissionReceiveTransfeRM"
+                    (click)="ReceiveTransfeRM()">
+                    Recibir
+                </button>
+            </div>
+            <div class="col-md-2 col-sm-3 col-xs-12">
+                <button class="btn btn-dark btn-block" (click)="ExportExcel()">
+                    Exportar a excel
+                </button>
+            </div>
+            <div class="col-md-2 col-sm-3 col-xs-12">
+                <button class="btn btn-warning btn-block" *ngIf="PermissionFlatFile" (click)="FlatFile()">
+                    Archivo Plano
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="row" style="margin-top: 1em;">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <ngx-datatable #dataTable class="material" [rows]="gridMapper.DisplayRows"
+                    [columnMode]="gridMapper.ColumnMode.force" [columns]="gridMapper.Columns" [headerHeight]="50"
+                    [footerHeight]="50" rowHeight="auto" [scrollbarH]="true" [limit]="15"
+                    [selected]="gridMapper.SelectedRows" [selectionType]="gridMapper.SelectionType.single"
+                    [messages]="gridMapper.Messages" (activate)="OnActivate($event)">
+                </ngx-datatable>
+            </div>
+        </div>
+    </div>
+
+
+    <app-transfer-raw-material #transferRawMaterial (finishEvent)="CloseModal()">
+    </app-transfer-raw-material>
+
+    <app-confirm-raw-material #confirmTransferRawMaterial (finishEvent)="CloseModal()">
+    </app-confirm-raw-material>
+
+</div>
+
+<ng2-toasty [position]="'bottom-right'"></ng2-toasty>

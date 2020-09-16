@@ -1,0 +1,223 @@
+<div class="row btn-page">
+  <div class="col-12">
+      <h5>Entrada de materiales</h5>
+      <hr>
+  </div>
+  <div class="col-12">
+      <app-card [hidHeader]="true">
+          <form #MaterialsInputForm="ngForm">
+              <div class="form-row">
+                  <div class="form-group col-12 col-md-4 col-xl-4">
+                      <label for="BarCodeMaster">Etiqueta Master Producción*</label>
+                      <div class="input-group">
+                          <input type="text" class="form-control" required name="BarCodeMaster" #BarCodeMaster
+                              [(ngModel)]="this.CurrentMaterialsInput.BarCodeMaster" autocomplete="off"
+                              (keyup.enter)="IsArtRequired(BarCodeMaster.value)" [disabled]="this.isArtRequired!==null">
+                          <div class="input-group-append">
+                              <button class="btn" type="button" [ngClass]="this.isArtRequired===null?'btn-primary':'btn-success'"
+                                  (click)="IsArtRequired(BarCodeMaster.value)">
+                                  <i class="fas fa-search" *ngIf="!onActionBarCode"></i>
+                                  <span *ngIf="onActionBarCode" class="spinner-border spinner-border-sm"
+                                      role="status"></span>
+                              </button>
+                          </div>
+                       </div>
+                  </div>
+                  <div class="form-group col-12 col-md-4 col-xl-4">
+                    <label for="Workshift">Turno *</label>
+                    <ng-select [items]="optionsWorkshifts" required appendTo="body" name="Workshift" #Workshift="ngModel"
+                        bindLabel="Value" bindValue="Key" [(ngModel)]="this.CurrentMaterialsInput.WorkshiftId" notFoundText="No se encontraron turnos">
+                    </ng-select>
+                  </div>
+                  <div class="form-group col-12 col-md-4 col-xl-4">
+                      <label for="TechnicalSheet">Ficha Técnica*</label>
+                      <input type="text" class="form-control" required  name="TechnicalSheet"
+                          #TechnicalSheet="ngModel" [(ngModel)]="this.CurrentMaterialsInput.TechnicalSheet">
+                  </div>
+
+
+              </div>
+              <div class="form-row" *ngIf="isArtRequired">
+                <div class="form-group col-12 col-md-6 col-xl-6">
+                  <label for="ArtCodeVerification">Código Arte Ficha Técnica*</label>
+                  <input type="text" class="form-control" required name="ArtCodeVerification"
+                      #ArtCodeVerification="ngModel" [(ngModel)]="this.artCodeVerification">
+                </div>
+                <div class="form-group col-12 col-md-6 col-xl-6">
+                  <label for="ArtCode">Código Arte Malla*</label>
+                  <input type="text" class="form-control" required  name="ArtCode"
+                      #ArtCode="ngModel" [(ngModel)]="this.CurrentMaterialsInput.ArtCode">
+                </div>
+
+              </div>
+
+          </form>
+      </app-card>
+      <div class="row"  style="margin-top: 1em;">
+
+        <div class="col-12 col-md-4 col-xl-2"> <button type="button" class="btn btn-block btn-primary"
+          (click)="GetMaterials()">Cargar Materiales</button>
+        </div>
+          <div class="col-12 col-md-4 col-xl-2"> <button type="button" class="btn btn-block btn-info"
+                (click)="OpenModalChangeArt()">Cambiar Arte</button>
+          </div>
+
+      </div>
+      <br>
+      <app-card [hidHeader]="true" *ngIf="this.isChargedMaterials">
+        <form #MaterialsInputDetailForm="ngForm">
+
+            <div class="form-row">
+              <div class="form-group col-12 col-md-4 col-xl-3">
+                <label for="BarCodeTag">Código Material*</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" required name="BarCodeTag" #BarCodeTag
+                        [(ngModel)]="this.CurrentBarCodeTag" autocomplete="off" (change)="this.CurrentQuantityMax=0"
+                        (keyup.enter)="ValidateMaterial(BarCodeTag.value)">
+                    <div class="input-group-append">
+                        <button class="btn" type="button" [ngClass]="this.CurrentQuantityMax===0?'btn-primary':'btn-success'"
+                            (click)="ValidateMaterial(BarCodeTag.value)" title="Validar">
+                            <i class="fas fa-search" *ngIf="!onActionBarTag"></i>
+                            <span *ngIf="onActionBarTag" class="spinner-border spinner-border-sm"
+                                role="status"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+              <div class="form-group col-12 col-md-3 col-xl-2">
+                <label for="Quantity">Cantidad *</label>
+                <input type="number" min="1" [max]="this.CurrentQuantityMax" [disabled]="this.CurrentQuantityMax===0" [placeholder]="this.CurrentQuantityMax" class="form-control"  name="Quantity"
+                    #Quantity="ngModel" [(ngModel)]="this.CurrentQuantity" title="Por favor valide el código material para ingresar la cantidad.">
+              </div>
+
+            </div>
+            <div class="row">
+
+              <div class="col-12 col-md-4 col-xl-2"> <button type="button" class="btn btn-block btn-primary"
+                (click)="LoadMaterial()" [disabled]="this.CurrentQuantityMax===0">Ingresar</button>
+              </div>
+                <div class="col-12 col-md-4 col-xl-2"> <button type="button" class="btn btn-block btn-info"
+                        (click)="GetDetail()">Ver Detalle</button>
+                </div>
+
+            </div>
+
+            <div class="row justify-content-center">
+              <div class="col-xl-8 col-md-12 col-sm-12 col-xs-12" style="margin-top: 1em;">
+                  <ngx-datatable #dataTable class="material" [rows]="gridMapper.DisplayRows"
+                      [columnMode]="gridMapper.ColumnMode.force" [columns]="gridMapper.Columns" [headerHeight]="50"
+                      [footerHeight]="50" rowHeight="auto" [limit]="15" [messages]="gridMapper.Messages"
+                      [selectAllRowsOnPage]="false"  [scrollbarH]="true">
+                  </ngx-datatable>
+              </div>
+          </div>
+          <div class="row" style="margin-top: 1em;margin-bottom: 1em;">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <strong>Cant. Items:</strong> {{itemsQuantity}}
+            </div>
+
+        </div>
+
+        </form>
+    </app-card>
+    <div class="row" style="margin-top: 1em;">
+      <div class="col-12">
+          <label for="">Observaciones:</label>
+          <textarea class="form-control" rows="3" name="Observations"
+              [(ngModel)]="this.CurrentMaterialsInput.Observartions"
+              #Observations="ngModel"></textarea>
+      </div>
+    </div>
+      <div class="row" style="margin-top: 1em;justify-content: center;">
+
+        <div class="col-12 col-md-4 col-xl-2"> <button type="button" class="btn btn-block btn-dark"
+          (click)="CleanForms()" >Cancelar</button>
+   </div>
+        <div class="col-12 col-md-4 col-xl-2"> <button type="button" class="btn btn-block btn-info"
+               (click)="SaveProductionMaster()" >Grabar</button>
+        </div>
+
+    </div>
+  </div>
+
+  <app-ui-modal ([ngModel])="ModalWindowDetail" #ModalWindowDetail [containerClick]="false" [dialogClass]="'modal-xl'">
+
+    <div class="app-modal-header">
+        <h5 class="modal-title">Detalle Ingreso</h5>
+        <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+            (click)="ModalWindowDetail.hide()"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body " class="estilo">
+
+          <div class="row justify-content-center">
+            <div class="col-xl-11 col-md-12 col-sm-12 col-xs-12" style="margin-top: 1em;">
+                <ngx-datatable #dataTable class="material" [rows]="gridMapperMaterialDetail.DisplayRows"
+                    [columnMode]="gridMapperMaterialDetail.ColumnMode.force" [columns]="gridMapperMaterialDetail.Columns" [headerHeight]="50"
+                    [footerHeight]="50" rowHeight="auto" [limit]="15" [messages]="gridMapperMaterialDetail.Messages"
+                    [selectAllRowsOnPage]="false"  [scrollbarH]="true">
+                </ngx-datatable>
+            </div>
+        </div>
+
+        <hr>
+        <div class="row">
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)="this.modalWindowDetail.hide();">Cerrar</button>
+            </div>
+        </div>
+
+    </div>
+
+
+</app-ui-modal>
+<app-ui-modal ([ngModel])="ModalWindowArt" #ModalWindowArt [containerClick]="false" [dialogClass]="'modal-lg'">
+
+  <div class="app-modal-header">
+      <h5 class="modal-title">Cambiar Arte</h5>
+      <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+          (click)="ModalWindowArt.hide()"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="app-modal-body " class="estilo">
+
+      <app-card [hidHeader]="true" class="mobile">
+        <form #ChangeArtForm="ngForm">
+        <div class="col-12">
+          <strong>Etiqueta master Producción</strong>: {{this.CurrentMaterialsInput.BarCodeMaster}}
+        </div>
+        <div class="row" style="margin-top: 1em;" >
+          <div class="col-12 col-md-6 col-xl-6">
+            <label for="ArtCodeTech">Código Arte Ficha Técnica*</label>
+            <input type="text" class="form-control" required name="ArtCodeTech"
+                #ArtCodeTech="ngModel" [(ngModel)]="this.changeArt.Art1">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6 col-xl-6">
+            <label for="ArtCodeM">Código Arte Malla*</label>
+            <input type="text" class="form-control" required  name="ArtCodeM"
+                #ArtCodeM="ngModel" [(ngModel)]="this.changeArt.Art2">
+          </div>
+        </div>
+      </form>
+      </app-card>
+
+      <hr>
+      <div class="row" style="margin-top: 1em;justify-content: center;">
+
+        <div class="col-12 col-md-4 col-xl-2"> <button type="button" class="btn btn-block btn-dark"
+                (click)="CloseModalArt()">Cerrar</button>
+        </div>
+        <div class="col-12 col-md-4 col-xl-2"> <button type="button" class="btn btn-block btn-info"
+              (click)="ChangeArtCode()">Grabar</button>
+        </div>
+
+    </div>
+
+  </div>
+
+
+</app-ui-modal>
+  <ng2-toasty [position]="'bottom-right'"></ng2-toasty>
+</div>

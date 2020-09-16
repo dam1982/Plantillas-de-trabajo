@@ -1,0 +1,571 @@
+INDICE
+
+
+Paquetes nuevos
+Componentes Nuevos
+Crear componente
+Agregar Navegación
+Ruteo
+Business
+Model Clases objetos
+Formulario Ng-Forms
+Ng-select
+ngx-datatable
+filtro mapa grid maper
+eliminar casillas de la tabla   gridmaper
+Objeto GridMapper
+Material
+datepicker
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				Paquetes nuevos
+	1. Crear Modulo y Router {Dentro de folder views}
+		ng g module administration --routing
+
+      Componentes Nuevos 
+{Dentro de folder de paquete}
+			1. Crear Modulo y Router
+		            ng g module clients --routing
+
+                                                 Crear componente
+	   ng g component clients --module=clients.module.ts --flat
+
+			Agregar Navegación 
+
+                       theme/layout/admin/navigation/navigation.ts
+
+				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ruteo
+	1. Agregar Componente a ruteo modulo {administration-routing.module.ts} 
+			{
+			  path: '',
+			  children: [     
+				{
+				  path: 'clients',
+				  loadChildren: () => import('./clients/clients.module').then(module => module.ClientsModule)
+				},
+					 
+			  ]
+			}
+
+	2. Agregar Componente a Ruteo Página
+			{
+				path: '',
+				component: ClientsComponent
+			}
+
+
+ 		   Tambien hay que mirar  en  la  otra  ruta      
+
+ {
+        path: 'plcholder',
+        loadChildren: () => import('../app/views/plcholder/plcholder.module').then(module => module.PlcholderModule)
+      }
+
+
+
+
+
+
+
+
+Business
+				Modulos
+	1. Agregar Modulo {en Carpeta business}
+		ng g module administration
+	2. Agregar Business
+		ng g service ClientBusiness  --nospec
+
+
+import { Injectable } from '@angular/core';
+import {Request} from '../../model/request'
+import {DocumentStates} from '../../model/document-states'
+import {ServiceObject} from '../../model/service-object'
+import {ApiGatewayService} from '../../business/services/api-gateway.service'
+
+@Injectable({
+  providedIn: 'root'
+})
+export class RequestService {
+
+  constructor(private ApiGatewayService : ApiGatewayService) { }
+
+  GetCollectionRequest(Id: number): Promise<Request> {
+    var servObj = new ServiceObject("BackendService","RequestService","GetRequest");
+      servObj.Data = { Id: Id };
+      return this.ApiGatewayService.PostAction(servObj)
+          .then(x => {
+              servObj = <ServiceObject>x;
+              if (!servObj.Success)
+                  throw new Error(servObj.Message);
+
+                  return Promise.resolve(<Request>servObj.Data);
+          })
+          .catch(x => {
+              throw x.message;
+          });
+}
+
+
+
+
+
+
+
+
+				Model Clases objetos
+			1. Crear Clases del model
+			ng g class City  --nospec
+
+
+
+
+
+
+
+
+				Formulario Ng-Forms
+                                                                      HTML
+Este tipo de formulario muestra datos de un objeto y los envia al mismo tiempo
+ Type: tipo de casilla puede ser letras numéricos fecha check etc
+class="form-control" es la clase que utiliza bootstrrap para el modelo el control
+id="IdRequest" es el id para reconoscimiento ya sea enc ss y javascript
+value="{{item.Id}}" : Valor que va a tener el control en este caso esta llamando un valor de un origen que como vemos en el ngform
+placeholder="{{item.Id}}" : muestra el valor que tiene el control p´redereminado al cargar la pagina
+
+readonly : si queremos que no se pueda utilizar el control solo que muestre
+formControlName="IdRequest"  : el valor que va a mandar al bakend tiene que tener el mismo valor que en el form group que se encuentra en el componente
+[(ngModel)] : maneja un modelo a enviar
+(click)="saveRequest()"> = el metodo que va a utilizar en el backend
+[formGroup]="formRequest"> : aqui tienes que colocar el mismo nombre del for group del component
+
+
+ <form [formGroup]="formRequest">
+ <div class="form-group">
+<label for="IdRequest">Id</label>
+<div *ngFor="let item of RequestQuery">
+<input autocomplete="true" type="text" class="form-control" id="IdRequest" value="{{item.Id}}" placeholder="{{item.Id}}" readonly formControlName="IdRequest" name="IdRequest" [(ngModel)]="item.Id">
+</div>
+</div>
+<button type="button" class="btn btn-primary btn-block" style="margin-left: 120px; width: 210px;" (click)="saveRequest()">Guardar
+</button>
+<form>
+
+
+Componente
+import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
+formRequest: FormGroup;
+
+
+
+ constructor(private fb: FormBuilder){
+this.resetFormTraslados()
+}
+
+ resetFormTraslados() {
+    this.formRequest = this.fb.group({
+      IdRequest: [],
+    });
+
+
+
+
+async saveRequest(){
+  Id :  this.formRequest.value.IdRequest,
+
+Funciones del metodo
+}
+
+ 
+ 
+
+Modulo
+
+import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
+
+
+
+
+
+
+
+
+
+
+
+					
+
+
+NG-SELECT
+
+HTML
+*ngFor = recorreo el objeto del backend para mostrar los datos en el select
+
+[items]="statesQuery" recorreo el objeto del backend para mostrar los datos en el select
+#DocumentState = inicializa el objeto que viene en el backende desde el control
+ bindLabel="Value" = Valor a mostrar en el select
+bindValue="Key" = valor a mandar en el backend
+formControlName="DocumentState" = Valor quer viene dese el form control
+.
+
+ <form [formGroup]="formRequest">
+ <div class="form-group">
+
+ <label for="estado">Estado a Asignar</label>
+ <div *ngFor="let item of RequestQuery">
+<ng-select [items]="statesQuery" #DocumentState 
+bindLabel="Value" bindValue="Key" notFoundText="Digita texto a buscar..." formControlName="DocumentState" name="DocumentState" [(ngModel)]="item.DocumentStateId" placeholder="{{ item.DocumentStateId.value }}">
+</ng-select>
+</div>
+</form>
+
+				Componente
+
+  @ViewChild('DocumentState', { static: false }) DocumentState: any;
+
+
+				Modulo
+
+import { NgSelectModule } from '@ng-select/ng-select';
+
+
+
+
+
+              ngx-datatable	
+	documentacion
+ https://swimlane.gitbook.io/ngx-datatable/    // documentacion oficial
+  https://www.youtube.com/watch?v=NUmLaVcx1HI   // tutorial de you tube
+ 				Instalacion
+npm install @swimlane/ngx-datatable
+                           		Importar al modulo
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+               		Importar al componente			
+import { DatatableComponent, id } from '@swimlane/ngx-datatable';
+			Inicializa la tabla
+@ViewChild("dataTable", { static: false }) dataTable: DatatableComponent;
+   Crear variable tipo grid maper
+gridMapperUsers: GridMapper<Request>;
+
+
+hay dos maneras de utilizar el componente la sensilla y manejando un objeto llamado gridmaper que mapea
+arrray quemado
+componente
+rows = [
+    { name: 'Austin', gender: 'Male', company: 'Swimlane' },
+    { name: 'Dany', gender: 'Male', company: 'KFC' },
+    { name: 'Molly', gender: 'Female', company: 'Burger King' },
+  ];
+  columns = [
+    { prop: 'name' },
+    { name: 'Gender' },
+    { name: 'Company' }
+  ];
+ html
+<div>
+    <ngx-datatable #dataTable [rows]="rows" [columns]="columns">
+    </ngx-datatable>  </div>
+el grid maper mapea el objeto
+
+ 
+ <ngx-datatable #dataTable class="material" [rows]="gridMapperUsers.DisplayRows" [columnMode]="gridMapperUsers.ColumnMode.force" [columns]="gridMapperUsers.Columns" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="15" [selected]="gridMapperUsers.SelectedRows"
+[selectionType]="gridMapperUsers.SelectionType.single" [messages]="gridMapperUsers.Messages">
+</ngx-datatable>
+
+Componente
+Hay que meter el objeto en la variable gridmaper
+ejemplo
+this.gridMapperUsers.DisplayRows = this.RequestQuery[0].Users;
+
+ this.gridMapper = new GridMapper();
+
+ this.gridMapperUsers.Columns = [
+      { prop:"UserName",  name: 'Usuario'},
+      { prop:"UserFullName",  name: 'Nombres'},
+      { prop:"PositionName",  name: 'Cargos'},
+      { prop:"RoleCode",  name: 'Rol'},
+      { prop:"Permissions",  name: 'Funciones'},
+    ];
+
+
+
+
+
+
+
+
+
+
+
+
+crear un filtro a la tabla  con un grid maper
+					componente
+
+FilterTableRows(event) {
+  this.gridMapperUsers.FilterRows(event.target.value.toLowerCase());
+  this.dataTable.offset = 0;
+}
+
+html
+  <div class="col-md-4 col-sm-4 col-xs-12">
+                <input class="form-control" type="text" (keyup)="FilterTableRows($event)" placeholder="Digite texto a buscar..." style="margin-left: 1000px;">
+            </div>
+															eliminar casillas de la tabla   gridmaper
+crear boton con la funcion :   (click)="deleteRow()">Eliminar</button>
+	deleteRow() {
+    var selectGrid = this.gridMapperConditions.SelectedRows[0];
+    Swal.getConfirmButton();
+    this.RequestQuery[0].Conditions = this.RequestQuery[0].Conditions.filter(x => {
+    return x.Id != selectGrid.Id;
+    })
+    this.gridMapperConditions[0] = this.RequestQuery[0].Conditions;
+      this.gridMapperConditions.DisplayRows = this.gridMapperConditions[0]
+    }
+
+
+
+
+			
+	
+	
+	
+
+
+
+
+
+
+Objeto GridMapper :Este objeto se encarga de acomodart los querys de los objetos en la tabla de ngx-datatable
+
+import { ColumnMode, SelectionType } from '@swimlane/ngx-datatable';
+
+export class GridMapper <T> {
+  
+
+   constructor ()
+   {      
+       this.Messages.emptyMessage = "No hay registros a mostrar.";
+       this.Messages.totalMessage = "Total" ;
+       this.Messages.selectedMessage = "Seleccionado" ;
+   }
+  _rows:T[];  
+  _originalRows:T[] = null;
+  get  DisplayRows (): T[] 
+  {
+    return this._rows;
+  }
+  
+  set  DisplayRows (data:T[]) 
+  {
+      this._rows = data; 
+      if(!this._originalRows)   
+        this._originalRows=data;
+  }
+  SelectedRows : T[]=[];
+  Columns: any[];
+  ColumnMode =ColumnMode;
+  SelectionType=SelectionType;
+  Messages : any = {};
+
+  FilterRows(filter:string){
+    var cols = this.Columns;
+    this._rows = this._originalRows.filter(function(d) {
+        var match = false;
+        cols.forEach(item => {
+            if( d[item.prop] && d[item.prop].toString().toLowerCase().indexOf(filter) !== -1 || !filter)
+                match = true;
+
+        });
+        return match;
+    });
+  }
+
+}
+
+
+
+
+					Material
+
+Documnetacion
+https://material.angular.io/
+https://material.angular.io/guide/getting-started
+ng add @angular/material
+
+ 
+															
+
+
+
+
+
+
+
+
+
+
+					Diseños de pagina
+
+ 		
+						HTML
+
+<mat-card>
+
+    <mat-card-title>
+        Aprobación de solicitudes
+    </mat-card-title>
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <h5>Form controls</h5>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <form action="javascript:">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <form action="javascript:">
+                        <div class="form-group">
+                            <label>Text</label>
+                            <input type="text" class="form-control" placeholder="Text">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Example select</label>
+                            <select class="form-control" id="exampleFormControlSelect1">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Example textarea</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</mat-card>
+module
+			import {MatCardModule} from '@angular/material/card';
+
+
+
+
+			                    DATEPICKER
+
+Modulo
+import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
+
+Componente
+
+modelPopup: NgbDateStruct;
+fromDate: any;
+toDate: any;
+
+
+constructor(private busines: ComentsService, public calendar: NgbCalendar, public parserFormatter: NgbDateParserFormatter) { 
+  this.fromDate = calendar.getToday();
+  this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
+   const windowWidth = window.innerWidth;
+  if (windowWidth >= 768 && windowWidth <= 1024) {
+    this.displayMonths = 2;
+    this.navigation = 'select';
+  } else if (windowWidth < 768) {
+    this.displayMonths = 1;
+    this.navigation = 'select';
+  } else {
+    this.displayMonths = 3;
+    this.navigation = 'none';
+  }
+
+  }
+
+selectToday() {
+  this.modelPopup = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()};
+}
+
+
+					HTML
+			<div class="form-group">
+    <div class="input-group">
+    <input  class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp"  ngbDatepicker #d="ngbDatepicker"
+        formControlName="StartDate" name="StartDate" >
+        <div class="input-group-append">
+        <span class="input-group-text" (click)="d.toggle()">
+        <i class="fa fa-calendar"></i>
+        </span>
+    </div>
+</div>
+</div>
+
+

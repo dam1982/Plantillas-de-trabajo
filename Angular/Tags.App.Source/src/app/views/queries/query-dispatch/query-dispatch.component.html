@@ -1,0 +1,56 @@
+<div class="row btn-page">
+    <div class="col-12">
+        <h5>Informe de Despacho</h5>
+        <hr>
+    </div>
+    <hr>
+    <div class="col-sm-12">
+
+        <ngb-accordion [closeOthers]="true" activeIds="static-1" class="gradientaccordion" [destroyOnHide]="false">
+            <ngb-panel id="static-1">
+                <ng-template ngbPanelTitle>
+                    <h4><a href="javascript:"><i class="feather icon-search float-left"></i><span> Búsqueda</span> </a>
+                    </h4>
+                </ng-template>
+                <ng-template ngbPanelContent>
+
+                    <app-dynamic-form-host #DynamicForm></app-dynamic-form-host>
+
+                    <div class="form-row justify-content-end">
+                        <div class="form-group col-md-2">
+                            <button class="btn btn-secondary btn-block" type="button"
+                                (click)="Clear()">Limpiar</button>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <button class="btn btn-primary event-btn btn-block" (click)="GeneratePdf()"
+                                [disabled]="this.onActiveSearch" type="button">
+                                <span *ngIf="this.onActiveSearch" class="spinner-border spinner-border-sm"
+                                    role="status"></span>
+                                <span *ngIf="this.onActiveSearch" class="load-text">Generando...</span>
+                                <span *ngIf="!this.onActiveSearch" class="btn-text">Generar</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+    </div>
+    <div class="col-12">
+        <app-card [hidHeader]="false" [options]="true"  *ngIf="pdfSource">
+            <div #pdfContainer class="row" style="display: block;">
+                <ngx-extended-pdf-viewer [src]="pdfSource" useBrowserLocale="true" height="160vh" [zoom]="'page-width'"
+                [showBookmarkButton] = "false"
+                [showOpenFileButton]= "false"
+                [showRotateButton]= "false"
+                (pdfLoaded) = "OnLoadPdf()"
+                [filenameForDownload] = "'ReporteDespacho.pdf'"
+                ></ngx-extended-pdf-viewer>
+    
+            </div>
+        </app-card>        
+    </div>   
+</div>
+
+<ng2-toasty [position]="'bottom-right'"></ng2-toasty>

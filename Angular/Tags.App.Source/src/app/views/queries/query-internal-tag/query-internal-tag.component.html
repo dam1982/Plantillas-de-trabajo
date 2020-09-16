@@ -1,0 +1,131 @@
+<div class="row btn-page">
+  <div class="col-12">
+    <h5>Consulta Etiquetas Internas</h5>
+    <hr>
+  </div>
+
+  <div class="col-sm-12">
+    <ngb-accordion [closeOthers]="false" activeIds="static-1" class="gradientaccordion">
+      <ngb-panel id="static-1">
+        <ng-template ngbPanelTitle>
+          <h4><a href="javascript:"><i class="feather icon-search float-left"></i><span>Búsqueda</span> </a></h4>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <form [formGroup]="formBuscarTraslado" #forma1="ngForm" (ngSubmit)="GetQueryInternalTag(forma1)">
+            <div class="form-row">
+              <div class="form-group col-md-2">
+                <label for="numTraslado">Nro Orden</label>
+                <input type="number" class="form-control" formControlName="NoOrden" name="NoOrden" class="form-control"
+                  value="">
+              </div>
+              <div class="form-group col-md-5">
+                <label for="cliente">Cliente</label>
+
+                <ng-select [items]="optionsCustomers" #costumerSelect bindLabel="Name" (keyup)="searchCustomers()"
+                  bindValue="Code" labelForId="CostumerCode" formControlName="CostumerCode" name="CostumerCode"
+                  notFoundText="Digita texto a buscar..." appendTo="body">
+                </ng-select>
+
+              </div>
+              <div class="form-group col-md-5">
+                <label>Producto</label>
+                <ng-select [items]="optionsProducts" #productSelect bindLabel="Name" (keyup)="searchProducts()"
+                  bindValue="Code" labelForId="ProductCode" notFoundText="Digita texto a buscar..."
+                  formControlName="ProductCode" name="ProductCode" appendTo="body">
+                </ng-select>
+              </div>
+            </div>
+            <div class="form-row">
+
+              <div class="form-group col-md-2">
+                <label for="lote">Lote</label>
+                <input type="text" class="form-control" name="batch" formControlName="batch">
+              </div>
+
+              <div class="form-group col-md-2">
+                <label for="fechaInicio">Fecha Transacción</label>
+                <input name="fecha1" type="date" class="form-control" #DeliveryDateInput name="fecha1"
+                  formControlName="fecha1">
+              </div>
+
+              <div class="form-group col-md-3" style="padding-top: 8px;">
+                <label for="fechaFin"></label>
+                <input type="date" class="form-control" formControlName="fecha2" >
+              </div>
+
+              <div class="form-group col-md-5">
+                <label for="estado">Linea De Fabricación</label>
+                <ng-select [items]="productLine" #productSelect bindLabel="Value" bindValue="Key" appendTo="body"
+                  notFoundText="Digita texto a buscar..." formControlName="line" name="line">
+                </ng-select>
+              </div>
+
+            </div>
+            <div class="form-row">
+
+              <div class="form-group col-md-4">
+                <label for="estado">Usuario Generación</label>
+                <ng-select [items]="UserQuery" #productSelect bindLabel="Names" bindValue="Personalize1" appendTo="body"
+                  notFoundText="Digita texto a buscar..." formControlName="user" name="user">
+                </ng-select>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="lote">Nro Paquete</label>
+                <input type="text" class="form-control" name="Nopackage" formControlName="Nopackage">
+              </div>
+
+              <div class="form-group col-md-5">
+                <label for="SourceWarehouse">Bodega Ubicación</label>
+                <ng-select name="WarehouseCode" [items]="WarehouseQuery" #WarehouseSelect bindLabel="Name" appendTo="body"
+                  formControlName="WarehouseCode" bindValue="Code"
+                  labelForId="WarehouseCode" notFoundText="Digita texto a buscar...">
+                </ng-select>
+              </div>
+            </div>
+            <div class="form-row" style="text-align: right;">
+              <div class="col-md-8"></div>
+              <div class="form-group col-md-2">
+                <label for="">&nbsp;</label>
+                <button type="button" class="btn btn-secondary btn-block" (click)="resetFormTraslados()">Limpiar</button>
+              </div>
+
+              <div class="form-group col-md-2">
+                <label for="">&nbsp;</label>
+                <button class="btn btn-primary event-btn btn-block" (click)="GetQueryInternalTag(forma1)"
+                  [disabled]="this.onActiveSearch" type="button">
+                  <span *ngIf="this.onActiveSearch" class="spinner-border spinner-border-sm" role="status"></span>
+                  <span *ngIf="this.onActiveSearch" class="load-text">Cargando...</span>
+                  <span *ngIf="!this.onActiveSearch" class="btn-text">Buscar</span>
+                </button>
+              </div>
+
+            </div>
+          </form>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+    <br>
+    <div class="row">
+      <div class="col-md-2">
+        <button class="btn btn-info btn-block" (click)="exportExcel()">Exportar a Excel
+        </button>
+      </div>
+     
+      
+    </div>
+
+    <hr>
+    <ngx-datatable #dataTable class="material" [rows]="gridMapper.DisplayRows"
+      [columnMode]="gridMapper.ColumnMode.standard" [columns]="gridMapper.Columns" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true"
+      rowHeight="auto" [limit]="15" [selected]="gridMapper.SelectedRows"
+      [selectionType]="gridMapper.SelectionType.single" [messages]="gridMapper.Messages"></ngx-datatable>
+
+    <br>
+    <app-card cardTitle="Totales" [options]="false">
+      <ngx-datatable #dtTotals class="material" [rows]="gridTotals.DisplayRows"
+        [columnMode]="gridTotals.ColumnMode.force" [columns]="gridTotals.Columns" [headerHeight]="50"
+        [footerHeight]="50" rowHeight="auto" [limit]="15" [selected]="gridTotals.SelectedRows"
+        [messages]="gridTotals.Messages"></ngx-datatable>
+
+    </app-card>
+    <ng2-toasty></ng2-toasty>

@@ -1,0 +1,5 @@
+<div class="form-row form-group col-md-{{definition.Width}}" [formGroup]="form">
+    <label style="width: 100%;">{{ definition.Title }}</label>
+    <input type="date" class="form-control" [formControlName]="definition.FieldName" [required]="definition.Required"
+        [id]="definition.FieldName" (change)="OnDateChange($event)">
+</div>

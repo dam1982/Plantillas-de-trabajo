@@ -1,0 +1,7 @@
+:host /deep/ .btn-default,
+:host /deep/ .btn-default:hover,
+:host /deep/ .btn-default:active,
+:host /deep/ .btn-default:visited {
+  margin-left: 2em;
+  border: 1px solid #222 !important;
+}

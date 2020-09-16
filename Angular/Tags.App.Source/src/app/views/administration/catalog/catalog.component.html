@@ -1,0 +1,125 @@
+<div class="row btn-page">
+    <div class="col-12">
+        <h5>Administración Catálogos</h5>
+        <hr>
+    </div>
+    <hr>
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-md-3 col-sm-4 col-xs-12">
+                <button class="btn btn-success btn-block" data-tog-gle="modal" (click)="NewLocation(gridSystemModal,true)" >Agregar</button>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+                <button class="btn btn-info btn-block" (click)="NewLocation(gridSystemModal,false)" >Editar</button>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" #searchControl
+                        (keyup)="gridMapper.FilterRows(searchControl.value.toLowerCase())" placeholder="Buscar">
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-xl-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 1em;">
+            <ngx-datatable  class="material" [rows]="gridMapper.DisplayRows" [columnMode]="gridMapper.ColumnMode.force" [columns]="gridMapper.Columns" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="15" [selected]="gridMapper.SelectedRows"
+                [selectionType]="gridMapper.SelectionType.single" [messages]="gridMapper.Messages" >
+            </ngx-datatable>
+    <ng-template #SwitchTemplate let-row="row" let-value="value" let-rowIndex="rowIndex">
+                    <div class="switch switch-primary">
+                        <input type="checkbox" [id]="'switch'+rowIndex" class="align-middle"
+                        [checked]="value" disabled
+                            >
+                        <label [for]="'switch'+rowIndex" class="cr" style="margin-top: -10%;"></label>
+                    </div>
+    </ng-template>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<app-ui-modal  #gridSystemModal [containerClick]="false" [dialogClass]="'modal-xl'">
+<div class="app-modal-header">
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="gridSystemModal.hide()"><span aria-hidden="true">&times;</span></button>
+   
+   <b> <h5 *ngIf="flat ; else update">Crear Catálogo </h5></b>
+        <ng-template #update>
+            <h5>Editar Catálogo</h5>
+        </ng-template>
+<hr>
+</div>
+<div class="app-modal-body">
+<div class="col-12">
+<app-card [hidHeader]="true">
+<form #PrintForm="ngForm">
+        <div class="form-row">
+<div class=" form-group col-md-4 "  > 
+    <b><label for="catalog" >Catálogo</label></b>
+    <ng-select [items]="this.selectTitle" #CatalogId="ngModel"   [class.is-invalid] = "CatalogId.invalid && CatalogId.touched"    required
+                name="CatalogId" [(ngModel)]="catalogValue.CatalogId" value="catalogValue.CatalogId"  appendTo="body"
+                bindLabel="Value" bindValue="Key" notFoundText="{{catalogValue.CatalogId}}"> 
+    </ng-select>
+</div>
+            <div class=" form-group col-md-4"  >
+                <b><label for="title" >Titulo *</label></b>
+                <input type="text" class="form-control"[class.is-invalid] = "title.invalid && title.touched" #title="ngModel" required name="title" [(ngModel)]="catalogValue.Title" maxlength="60" >
+            </div>
+            <div class="form-group col-md-4">
+                <b>  <label for="value">Valor *</label></b>
+                <input type="text" class="form-control" [class.is-invalid] = "value.invalid && value.touched" #value="ngModel"  required  name="value" [(ngModel)]="catalogValue.Value" maxlength="255">
+            </div>
+        </div>
+        <div class="form-row">
+            <b><label for="description">Descripción</label></b>
+            <input type="text" class="form-control" name="description" [(ngModel)]="catalogValue.Description" maxlength="255">
+        </div>
+        <div class="form-row">
+            <div class=" form-group col-md-2">
+                <b>  <label for="code">Code</label></b>
+                <input type="text" class="form-control" name="code" [(ngModel)]="catalogValue.ValueCode" maxlength="10">
+            </div>
+            <div class="form-group col-md-4">
+            <b>  <label for="active"  style="margin-left: 90px;">Activo</label></b>
+                <div class="switch switch-primary" style="margin-left: 90px; margin-top: 10px">
+                        <input type="checkbox" [id]="'switch'" class="align-middle" name="active" [(ngModel)]="catalogValue.Active"
+                        [checked]="value">
+                        <label [for]="'switch'" class="cr" style="margin-top: -10%;"></label>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <b>  <label for="bodegaOrigen">Última Modificación</label></b><br>
+                <p>  <label for="bodegaOrigen" [(ngModel)]="catalogValue.Edition">{{catalogValue.Edition}}</label></p>
+            </div>
+        </div>
+        <div class="form-row">
+        <div class="form-group col-md-12">
+            <b><label for="text" name="text" maxlength="5000">Text</label></b>
+            <br>
+        <textarea rows="8" cols="218" [(ngModel)]="catalogValue.ValueText" class="form-control" name="ValueText">{{catalogValue.ValueText}}</textarea>  
+        </div>
+</div>    
+</form>
+</app-card>
+<div class="col-12">
+<div class="form-row">
+            <div class="col-md-4 col-sm-4 col-xs-12">
+            </div>
+        <div class="col-md-2 col-sm-4 col-xs-12">
+                <button class="btn btn-secondary btn-block" data-tog-gle="modal" (click)="gridSystemModal.hide()" >
+                    Cerrar
+                </button>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-12">
+                <button class="btn btn-info btn-block" (click)="SaveCatalog(gridSystemModal,title)" >
+                    Grabar
+                </button>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-12">
+        </div>        
+            </div>
+</div>
+</div>
+</div>
+</app-ui-modal>
+<ng2-toasty [position]="'bottom-right'"></ng2-toasty>

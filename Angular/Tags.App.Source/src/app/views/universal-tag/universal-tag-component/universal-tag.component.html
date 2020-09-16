@@ -1,0 +1,222 @@
+<div class="row btn-page">
+    <div class="col-12">
+        <h5>Generación etiqueta universal</h5>
+        <hr>
+    </div>
+    <div class="col-12">
+        <app-card [hidHeader]="true">
+            <form #TagForm="ngForm">
+                <div class="form-row">
+
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="rad0" value="0" name="customRadioInline" class="custom-control-input"
+                            (change)="ChangeType(0)" [checked]="CurrentTypeTag==0">
+                        <label class="custom-control-label" for="rad0">Materia Prima</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="rad1" value="1" name="customRadioInline" class="custom-control-input"
+                            (change)="ChangeType(1)" [checked]="CurrentTypeTag==1">
+                        <label class="custom-control-label" for="rad1">Producto En Proceso</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="rad2" value="2" name="customRadioInline" class="custom-control-input"
+                            (change)="ChangeType(2)" [checked]="CurrentTypeTag==2">
+                        <label class="custom-control-label" for="rad2">Muestras</label>
+                    </div>
+
+                </div>
+                <hr>
+                <div class="form-row">
+                    <div class="form-group col-12 col-md-3 col-xl-3" *ngIf="business.CurrentUniversalTag.TagTypeId==0">
+                        <label for="OrderNumber">Nro Orden Compra*</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" required name="OrderNumber" #OrderNumber
+                                [(ngModel)]="business.CurrentUniversalTag.PurchaseOrderNumber" autocomplete="off"
+                                (keyup.enter)="SearchOrderNumber(OrderNumber.value)">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button"
+                                    (click)="SearchOrderNumber(OrderNumber.value)">
+                                    <i class="fas fa-search" *ngIf="onActionOrder"></i>
+                                    <span *ngIf="!onActionOrder" class="spinner-border spinner-border-sm"
+                                        role="status"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-12 col-md-6 col-xl-6" *ngIf="business.CurrentUniversalTag.TagTypeId==1">
+                        <label for="MastarCode">Código Master*</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" required name="MastarCode" #MastarCode
+                                autocomplete="off" (keyup.enter)="SearchMastarCode(MastarCode.value)">
+
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button"
+                                    (click)="SearchMastarCode(MastarCode.value)">
+                                    <i class="fas fa-search" *ngIf="onActionOrder"></i>
+                                    <span *ngIf="!onActionOrder" class="spinner-border spinner-border-sm"
+                                        role="status"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-12 col-md-3 col-xl-3" *ngIf="business.CurrentUniversalTag.TagTypeId==0">
+                        <label for="PurchaseOrderNumber">Proveedor</label>
+                        <input type="text" class="form-control" disabled name="PurchaseOrderNumber"
+                            #PurchaseOrderNumber="ngModel" [(ngModel)]="CurrentPurchaseOrder.SupplierName">
+                    </div>
+                    <div class="form-group col-12 col-md-3 col-xl-3">
+                        <label for="Section">Seccion *</label>
+                        <ng-select [items]="optionsSections" required appendTo="body" name="Section" #Section="ngModel"
+                            bindLabel="Value" bindValue="Key" [(ngModel)]="business.CurrentUniversalTag.SectionId">
+                        </ng-select>
+                    </div>
+                    <div class="form-group col-12 col-md-3 col-xl-3">
+                        <label for="Workshift">Turno </label>
+                        <ng-select [items]="optionsWorkshifts" appendTo="body" name="Workshift" #Workshift="ngModel"
+                            bindLabel="Value" bindValue="Key" [(ngModel)]="business.CurrentUniversalTag.WorkshiftId">
+                        </ng-select>
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-12 col-md-6 col-xl-6"
+                        *ngIf="business.CurrentUniversalTag.TagTypeId==0 || business.CurrentUniversalTag.TagTypeId==1">
+                        <label for="Product" class="custom-control-inline">Productos*</label>
+                        <ng-select [items]="optionsProducts" required
+                            [disabled]="business.CurrentUniversalTag.TagTypeId === 1" appendTo="body" name="Product"
+                            #Product="ngModel" bindLabel="ProductName" [(ngModel)]="this.CurrentProduct"
+                            notFoundText="Busque un número de orden.">
+                        </ng-select>
+                    </div>
+                    <div class="form-group col-12 col-md-6 col-xl-6" *ngIf="business.CurrentUniversalTag.TagTypeId==2">
+                        <label for="ProductAutoComp">Productos *</label>
+                        <ng-select [items]="optionsProducts" required appendTo="body" name="ProductAutoComp"
+                            #ProductAutoComp="ngModel" bindLabel="Name" (keyup)="SearchProducts($event)"
+                            [(ngModel)]="this.CurrentProductFilter" notFoundText="Busque un producto.">
+                        </ng-select>
+                    </div>
+
+                    <div class="form-group col-12 col-md-3 col-xl-3">
+                        <label for="Quantity">Cantidad UE*</label>
+                        <input type="number" class="form-control" required name="Quantity" #Quantity="ngModel"
+                            (change)="business.CurrentUniversalTag.Quantity = business.CurrentUniversalTag.Quantity>0?business.CurrentUniversalTag.Quantity:null"
+                            [(ngModel)]="business.CurrentUniversalTag.Quantity">
+                    </div>
+
+                    <div class="form-group col-12 col-md-3 col-xl-3" *ngIf="business.CurrentUniversalTag.TagTypeId!=1">
+                        <label for="QuantityToPrint">Cant. Imprimir*</label>
+                        <input type="number" class="form-control" required name="QuantityToPrint"
+                            (change)="business.CurrentUniversalTag.QuantityToPrint = business.CurrentUniversalTag.QuantityToPrint>0?business.CurrentUniversalTag.QuantityToPrint:null"
+                            min="1" #QuantityToPrint="ngModel"
+                            [(ngModel)]="business.CurrentUniversalTag.QuantityToPrint">
+                    </div>
+
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-12 col-md-4 col-xl-4">
+                        <label for="Warehouse">Bodega *</label>
+                        <ng-select [items]="optionsWarehouses" required appendTo="body" name="Warehouse"
+                            #Warehouse="ngModel"
+                            bindLabel="Name" bindValue="Code" [(ngModel)]="business.CurrentUniversalTag.WarehouseCode">
+                        </ng-select>
+                    </div>
+                    <div class="form-group col-12 col-md-4 col-xl-4" *ngIf="business.CurrentUniversalTag.TagTypeId!=1">
+                        <label for="Location">Ubicación *</label>
+                        <ng-select [items]="optionsLocations" required appendTo="body" name="Location"
+                            #Location="ngModel" bindLabel="Value" bindValue="Key"
+                            [(ngModel)]="business.CurrentUniversalTag.LocationId">
+                        </ng-select>
+                    </div>
+                    <div class="form-group col-12 col-md-4 col-xl-4" *ngIf="business.CurrentUniversalTag.TagTypeId!=1">
+                        <label for="SupplierBatch">Lote Proveedor *</label>
+                        <input type="text" class="form-control" required name="SupplierBatch" #SupplierBatch="ngModel"
+                            [(ngModel)]="business.CurrentUniversalTag.SupplierBatch" autocomplete="off">
+                    </div>
+
+                    <div class="form-group col-12 col-md-4 col-xl-4" *ngIf="business.CurrentUniversalTag.TagTypeId==1">
+                        <label for="ProductionLineName">Linea Producción*</label>
+                        <input type="text" class="form-control" disabled name="ProductionLineName"
+                            #ProductionLineName="ngModel" [(ngModel)]="business.CurrentUniversalTag.ProductionLineName">
+                    </div>
+                    <div class="form-group col-12 col-md-4 col-xl-4" *ngIf="business.CurrentUniversalTag.TagTypeId==1">
+                        <label for="ProductBatch">Lote Producto *</label>
+                        <input type="text" class="form-control" name="ProductBatch" #ProductBatch="ngModel"
+                            [(ngModel)]="business.CurrentUniversalTag.ProductBatch">
+                    </div>
+                </div>
+                <div class="form-row">
+
+                    <div class="form-group col-12 col-md-4 col-xl-4" *ngIf="business.CurrentUniversalTag.TagTypeId!=1">
+                        <label for="DateUseBefore">Usar antes de: *</label>
+                        <input type="date" class="form-control" required name="DateUseBefore" #DateUseBefore="ngModel"
+                            [(ngModel)]="business.CurrentUniversalTag.UseBefore"
+                            (change)="VerifyDate(DateUseBefore.value)">
+                    </div>
+                    <div class="form-group col-12 col-md-4 col-xl-4" *ngIf="business.CurrentUniversalTag.TagTypeId!=1">
+
+                        <label for="ConsecutiveQuality">Consecutivo calidad*</label>
+                        <input type="text" class="form-control" required name="ConsecutiveQuality" autocomplete="off"
+                            #ConsecutiveQuality="ngModel" [(ngModel)]="business.CurrentUniversalTag.ConsecutiveQuality">
+                    </div>
+
+
+
+                    <div class="form-group col-12 col-md-4 col-xl-4" *ngIf="business.CurrentUniversalTag.TagTypeId==1">
+                        <label for="InternalBatchC">Lote Interno C *</label>
+                        <input type="text" class="form-control" name="InternalBatchC" #InternalBatchC="ngModel"
+                            [(ngModel)]="business.CurrentUniversalTag.InternalBatchC">
+                    </div>
+
+                    <div class="form-group col-12 col-md-4 col-xl-4" *ngIf="business.CurrentUniversalTag.TagTypeId==1">
+                        <label for="InternalBatchP">Lote Interno P *</label>
+                        <input type="text" class="form-control" name="InternalBatchP" #InternalBatchP="ngModel"
+                            [(ngModel)]="business.CurrentUniversalTag.InternalBatchP">
+                    </div>
+                    <div class="form-group col-12 col-md-4 col-xl-4" *ngIf="business.CurrentUniversalTag.TagTypeId==1">
+                        <label for="TotalWeight">Peso Total *</label>
+                        <input type="number" class="form-control" required name="TotalWeight" #TotalWeight="ngModel"
+                            [(ngModel)]="business.CurrentUniversalTag.TotalWeight">
+                    </div>
+
+                    <div class="form-group col-12 col-md-4 col-xl-4">
+                        <label for="TemplateType">Tipo Plantilla*</label>
+                        <ng-select [items]="optionsTemplateType" appendTo="body" required name="TemplateType"
+                            #TemplateType="ngModel"
+                            bindLabel="Value" bindValue="Key" [(ngModel)]="business.CurrentUniversalTag.TemplateTypeId">
+                        </ng-select>
+                    </div>
+
+                    <div class="form-group col-12 col-md-4 col-xl-4" *ngIf="business.CurrentUniversalTag.TagTypeId==1">
+                        <label for="NetWeight">Peso Neto *</label>
+                        <input type="number" class="form-control" required name="NetWeight" #NetWeight="ngModel"
+                            [(ngModel)]="business.CurrentUniversalTag.NetWeight">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-12">
+                        <label for="">Observaciones</label>
+                        <textarea class="form-control" rows="3" name="Observations" #Observations="ngModel"
+                            [(ngModel)]="business.CurrentUniversalTag.Observations"></textarea>
+                    </div>
+
+                </div>
+
+            </form>
+        </app-card>
+
+        <div class="row" style="justify-content: center;">
+
+            <div class="col-12 col-md-4 col-xl-2"> <a routerLink="/dashboard/analytics" routerLinkActive="active"
+                    class="btn btn-block btn-dark">Cancelar</a>
+            </div>
+            <div class="col-12 col-md-4 col-xl-2"> <button type="button" class="btn btn-block btn-info"
+                    (click)="OpenModalPrint()">Previsualizar</button>
+            </div>
+
+        </div>
+    </div>
+
+    <app-universal-tag-preview #PreviewComponent (Print)="onPrint($event)"></app-universal-tag-preview>
+    <ng2-toasty [position]="'bottom-right'"></ng2-toasty>
+</div>

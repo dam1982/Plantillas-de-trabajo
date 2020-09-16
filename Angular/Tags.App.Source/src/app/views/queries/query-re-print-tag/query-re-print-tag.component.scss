@@ -1,0 +1,11 @@
+:host
+  ::ng-deep
+  .ngx-datatable.bootstrap:not(.cell-selection)
+  .datatable-body-row:hover,
+:host
+  ::ng-deep
+  .ngx-datatable.material:not(.cell-selection)
+  .datatable-body-row:hover
+  .datatable-row-group {
+  background: rgb(255, 255, 255);
+}

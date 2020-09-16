@@ -1,0 +1,92 @@
+<h5> Gestión de Perfiles</h5>
+<hr>
+
+<div class="row">
+    <div class="col-sm-12">
+        <form action="javascript:">
+            <div class="row">
+                <div class=" col-md-3">
+                    <button type="button" class="btn btn-success btn-block" datatoggle="modal" (click)="AddProfile()">Agregar</button>
+
+                </div>
+                <div class=" col-md-3">
+                    <button type="button" class="btn btn-primary" datatoggle="modal" (click)="GetProfile()">Editar</button>
+                </div>
+                <div class=" col-md-2">
+                </div>
+                <div class=" col-md-4">
+                    <input class="form-control" type="text" (keyup)="gridMapperProfile.FilterRows(searchControl.value)" #searchControl placeholder="Buscar">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<hr>
+<ngx-datatable #dataTable class="material" [rows]="gridMapperProfile.DisplayRows" [columnMode]="gridMapperProfile.ColumnMode.force" [columns]="gridMapperProfile.Columns" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="15" [selected]="gridMapperProfile.SelectedRows"
+(activate)="OnActivate($event)" [selectionType]="gridMapperProfile.SelectionType.single" [messages]="gridMapperProfile.Messages">
+</ngx-datatable>
+<app-ui-modal ([ngModel])="ModalWindow" #ModalWindow class="ModalSchema" [hideFooter]="true" [containerClick]="false" [dialogClass]="'modal-xl'">
+    <div class="app-modal-header">
+        <h5 class="modal-title">{{titulo}}</h5>
+    </div>
+    <div class="app-modal-body">
+        <app-card [hidHeader]="true">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="">Perfil Id *</label>
+                            <input #ProfileId autocomplete="true" type="text" class="form-control" id="ProfileId" value="" placeholder="" name="IdRequest" [(ngModel)]="profile.ProfileId" [readonly]="!newProfile">
+                        </div>
+                        <div class="col-md-8">
+                            <label for="">Perfil *</label>
+                            <input #ProfileName autocomplete="true" type="text" class="form-control" id="ProfileName" value="" placeholder="" name="ProfileName" [(ngModel)]="profile.ProfileName">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <h3>Permisos</h3>
+            <br>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-md-12" style="display: contents;" *ngFor="let item of this.groupedPermissions | keyvalue">
+                            <div class="col-md-12">
+                                <label for="{{item}}" class="cr"><b>{{item.key}} </b></label>
+                            </div>
+                            <div class="col-md-4" *ngFor="let detail of item.value">
+                                <div class="form-group">
+                                    <div class="checkbox checkbox-fill d-inline">
+                                        <input type="checkbox" name="checkbox-fill-ch{{detail.PermissionId}}" id="checkbox-fill-ch{{detail.PermissionId}}" [(ngModel)]="detail.checked" (ngModelChange)="onCheckPermission($event,detail)">
+                                        <label for="checkbox-fill-ch{{detail.PermissionId}}" id="checkbox-fill-ch{{detail.PermissionId}}" class="cr">{{detail.PermissionName}} </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" (click)="Close()">Cerrar</button>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-primary" (click)="SaveProfile()" [disabled]="this.onAction"
+                    type="button">
+                    <span *ngIf="this.onAction" class="spinner-border spinner-border-sm" role="status"></span>
+                    <span *ngIf="this.onAction" class="load-text">Grabando...</span> 
+                    <span *ngIf="!this.onAction" class="btn-text">Grabar</span>
+                </button>
+                </div>
+                <div class="col-md-3">
+                </div>
+            </div>
+        </app-card>
+    </div>
+</app-ui-modal>
+<ng2-toasty></ng2-toasty>

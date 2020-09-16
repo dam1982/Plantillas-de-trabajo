@@ -1,0 +1,106 @@
+<app-ui-modal ([ngModel])="ModalWindow" #ModalWindow [containerClick]="false" [dialogClass]="'modal-xl'">
+
+    <div class="app-modal-header">
+        <h5 class="modal-title">Editar Traslado Producto Terminado</h5>
+        <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+            (click)="ModalWindow.hide()"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body">
+        <!-- Formulario -->
+        <form>
+            <div class="form-row">
+                <div class="col-md-3">
+                    <label for="bodegaOrigen">Bodega Origen</label>
+                    <ng-select [items]="optionsSourceWarehouse" appendTo="body" name="SourceWarehouseSelect"
+                        #SourceWarehouseSelect [(ngModel)]="CurrentTransfer.SourceWarehouseCode" bindLabel="Name"
+                        bindValue="Code"  [searchable]="false" dropdownPosition="bottom" notFoundText="Digita texto a buscar..." required>
+                    </ng-select>
+
+                </div>
+                <div class="col-md-3">
+                    <label for="bodegaDestino">Bodega Destino</label>
+                    <ng-select [items]="optionsDestinationWarehouse" appendTo="body"
+                        name="DestinationWarehouseSelect" #DestinationWarehouseSelect
+                        [(ngModel)]="CurrentTransfer.DestinationWarehouseCode" bindLabel="Name" bindValue="Code"
+                         notFoundText="Digita texto a buscar..." [searchable]="false"  dropdownPosition="bottom"  required>
+                    </ng-select>
+
+                </div>
+                <div class="col-md-3">
+                    <label for="etiqueta">Etiqueta interna</label>
+                    <input type="text" class="form-control" #InternalTagInput name="InternalTagInput"
+                    (keyup.enter)="AddInternalTag();" autocomplete="off">
+                </div>
+                <div class="col-md-3">
+                    <label for="Agregar">&nbsp;</label>
+                    
+                    <button class="btn btn-success btn-block" type="button" (click)="AddInternalTag()"
+                        [disabled]="this.onAction" #buttonAddTag>
+                        <span *ngIf="this.onAction" class="spinner-grow spinner-grow-sm" role="status"></span>
+                        <span *ngIf="this.onAction" class="load-text">Validando...</span>
+                        <span *ngIf="!this.onAction" class="btn-text">Agregar</span>
+                    </button>
+
+                </div>
+            </div>
+
+            <hr>
+            <div class="row">
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-danger btn-block" (click)="DeleteInternalTag()">Eliminar</button>
+                </div>
+            </div>
+            <!-- Tabla -->
+            
+            <div class="form-row">
+
+                <div class="table-responsive">
+
+                    <ngx-datatable #dataTableDetail class="material" [rows]="gridMapperDetail.DisplayRows"
+                        [columnMode]="gridMapperDetail.ColumnMode.force" [columns]="gridMapperDetail.Columns"
+                        [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="15"
+                        [selected]="gridMapperDetail.SelectedRows"  [scrollbarH]="true"
+                        [selectionType]="gridMapperDetail.SelectionType.single"
+                        [messages]="gridMapperDetail.Messages"></ngx-datatable>
+
+                </div>
+            </div>
+            <br>
+
+            <div class="form-row">
+                <div class="col-12 col-md-3">
+                    Cant. Items: {{ItemsDetails}} 
+                    <br>
+                    Cant. Unds: {{UndsDetails}}
+                </div>
+                <div class="col-12 col-md-9">
+                    <label for="observaciones">Observaciones</label>
+                    <textarea class="form-control col-md-12" type="text" id="DeliveryObservations"
+                        name="DeliveryObservations" #DeliveryObservations
+                        [(ngModel)]="CurrentTransfer.DeliveryObservations"></textarea>
+                </div>
+            </div>
+            
+            
+        </form>
+        <hr>
+        <div class="row">
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)="CloseModal()">Cerrar</button>
+                &nbsp;                
+                <button class="btn btn-primary event-btn" type="button" (click)="SaveTransferPT()"
+                    [disabled]="this.onAction">
+                    <span *ngIf="this.onAction" class="spinner-grow spinner-grow-sm" role="status"></span>
+                    <span *ngIf="this.onAction" class="load-text">Grabando...</span>
+                    <span *ngIf="!this.onAction" class="btn-text">Grabar</span>
+                </button>
+
+
+               
+            </div>
+        </div>
+    </div>
+
+
+</app-ui-modal>

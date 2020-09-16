@@ -1,0 +1,360 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-md-12">
+                <label for=""><b>
+                        <h5>Actualizar Datos Factory</h5>
+                    </b></label>
+            </div>
+            <hr>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label for=""><b>No Orden *</b></label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <input #id [(ngModel)]="orderId" type="text" class="form-control" id="orderId" value="" placeholder="" name="IdRequest"
+                    [readonly]="CancelImput"  (keyup.enter)="Request()">
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary event-btn" type="button" (click)="Request()" [disabled]="this.onSearch">
+                    <span *ngIf="this.onSearch" class="spinner-grow spinner-grow-sm" role="status"></span>
+                    <span *ngIf="this.onSearch" class="load-text">Consultando...</span>
+                    <span *ngIf="!this.onSearch" class="btn-text">Consultar</span>
+                </button>
+
+                
+            </div>
+
+        </div>
+        <div *ngIf="flatWindow" style="margin-left: auto;">
+            <br>
+            <div class="row">
+                <div class="col-md-6" *ngFor="let item of orderArray">
+                    <div class="card" style="margin-left: -13px; padding: 14px;">
+
+                        <h5 *ngIf="item == orderArray[1] ; else otro"> DATOS NUEVOS FACTORY</h5>
+                        <ng-template #otro>
+                            <h5>DATOS ACTUALES </h5>
+                        </ng-template>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-xs-2" style="padding-left: 16px;">
+                                        <b style="    padding-right: 5px">Orden :</b>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <label [ngClass]=" {'classtrue': order2.OrderNumber != item.OrderNumber} ">
+                                            {{item.OrderNumber}} </label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                    </div>
+                                    <div class="col-xs-2" style="padding-left: 16px;">
+                                        <b style="    padding-right: 5px">Orden de Compra :</b>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <label
+                                            [ngClass]=" {'classtrue': order2.PurchaseOrderNumber != item.PurchaseOrderNumber} ">
+                                            {{item.PurchaseOrderNumber}}</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-2 " style="padding-left: 16px;">
+                                        <b style="    padding-right: 5px">Cliente:</b>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <label [ngClass]=" {'classtrue': order2.Customer.Name != item.Customer.Name} ">
+                                            {{item.Customer.Name}} </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-2" style="padding-left: 16px;">
+                                        <b style="    padding-right: 5px">Destinatario:</b>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <label [ngClass]=" {'classtrue': order2.Addressee.Name != item.Addressee.Name} ">
+                                            {{item.Addressee.Name}} </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-2" style="padding-left: 16px;">
+                                        <b style="    padding-right: 5px">Dirección :</b>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <label
+                                            [ngClass]="  {'classtrue': order2.Addressee.Address != item.Addressee.Address} ">
+                                            {{item.Addressee.Address}} </label>
+                                    </div>
+
+                                    <div class="col-xs-1" style="padding-left: 16px;">
+
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <label [ngClass]=" {'classtrue': order2.Addressee.City != item.Addressee.City} ">
+                                            {{item.Addressee.City}} </label>
+                                    </div>
+                                    <div class="col-xs-1" style="padding-left: 16px;">
+
+                                    </div>
+
+                                    <div class="col-xs-2">
+                                        <label
+                                            [ngClass]=" {'classtrue': order2.Addressee.Country != item.Addressee.Country}">
+                                            {{item.Addressee.Country}} </label>
+                                    </div>
+                                </div>
+
+
+                                <div class="row " *ngFor="let res of item.OrderLines; index as i">
+                                    <div class="col-md-12 ">
+                                        <div class="card border-secondary mb-7" style="margin: 18px; padding: 10px;">
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <!-- <p>{{res.OrderLineId}}</p> -->
+                                                            <h4
+                                                                [ngClass]="{'classtrue': res.ProductCode != order2.OrderLines[i].ProductCode     }">
+                                                                {{res.ProductCode}}</h4>
+                                                        </div>
+                                                        <div class="col-sm-7" >
+                                                            <h4
+                                                                [ngClass]="{'classtrue': res.ProductName != order2.OrderLines[i].ProductName  &&   res.ProductCode == order2.OrderLines[i].ProductCode   }">
+                                                                {{res.ProductName}}</h4>
+
+                                                        </div>
+
+                                                        <div class="col-md-2" style="display: flex;">
+                                                            <h4 [ngClass]="{'classtrue': res.Quantity != order2.OrderLines[i].Quantity  &&   res.ProductCode == order2.OrderLines[i].ProductCode}  ">
+                                                                {{res.Quantity | number}} </h4>
+                                                            <h4 [ngClass]="{'classtrue': res.UnitMeasure != order2.OrderLines[i].UnitMeasure  &&   res.ProductCode == order2.OrderLines[i].ProductCode}">
+                                                                {{res.UnitMeasure}}
+                                                                </h4>
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <p><b> Und x Paq </b></p>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <p><b>Und x Caja</b> </p>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <p><b> Paq x Caja </b></p>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <p><b> Paq x Orden </b> </p>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <p><b> Cajas x Orden </b></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <p
+                                                                [ngClass]="{'classtrue': res.QuantityUnitsByPackage != order2.OrderLines[i].QuantityUnitsByPackage  &&   res.ProductCode == order2.OrderLines[i].ProductCode}">
+                                                                {{res.QuantityUnitsByPackage}}</p>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <p
+                                                                [ngClass]="{'classtrue': res.QuantityUnitsByBox != order2.OrderLines[i].QuantityUnitsByBox  &&   res.ProductCode == order2.OrderLines[i].ProductCode}">
+                                                                {{res.QuantityUnitsByBox}}</p>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <p
+                                                                [ngClass]="{'classtrue': res.QuantityPackageByBox != order2.OrderLines[i].QuantityPackageByBox  &&   res.ProductCode == order2.OrderLines[i].ProductCode}">
+                                                                {{res.QuantityPackageByBox}}</p>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <p
+                                                                [ngClass]="{'classtrue': res.QuantityPackageByOrder != order2.OrderLines[i].QuantityPackageByOrder  &&   res.ProductCode == order2.OrderLines[i].ProductCode}">
+                                                                {{res.QuantityPackageByOrder}}</p>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <p
+                                                                [ngClass]="{'classtrue': res.QuantityBoxByOrder != order2.OrderLines[i].QuantityBoxByOrder  &&   res.ProductCode == order2.OrderLines[i].ProductCode}">
+                                                                {{res.QuantityBoxByOrder}}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+
+                                                        <div class="col-md-4">
+                                                            <h6 style="font-size: 20px;"><b> Tolerancias </b></h6>
+                                                        </div>
+                                                        <div class="col-md-8">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="card border-secondary mb-3"
+                                                        style="max-width: 500rem; border: red 1px solid; padding: 3px;">
+                                                        <div class="row">
+                                                            <div class="col-md-2">
+                                                                <p><b> Orden </b></p>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <p><b>Paquete </b></p>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <p><b> Caja x Orden </b></p>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <p><b> Paq x Orden </b></p>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <p><b> X Caja </b></p>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <p><b> X Paq </b></p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-2">
+                                                                <p
+                                                                    [ngClass]="{'classtrue': res.OrderTolerance != order2.OrderLines[i].OrderTolerance &&   res.ProductCode == order2.OrderLines[i].ProductCode}">
+                                                                    {{res.OrderTolerance}}</p>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <p
+                                                                    [ngClass]="{'classtrue': res.PackageTolerance != order2.OrderLines[i].PackageTolerance &&   res.ProductCode == order2.OrderLines[i].ProductCode}">
+                                                                    {{res.PackageTolerance}}</p>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <p
+                                                                    [ngClass]="{'classtrue': res.OrderToleranceByBox != order2.OrderLines[i].OrderToleranceByBox &&   res.ProductCode == order2.OrderLines[i].ProductCode}">
+                                                                    {{res.OrderToleranceByBox}}</p>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <p
+                                                                    [ngClass]="{'classtrue': res.OrderToleranceByPackage != order2.OrderLines[i].OrderToleranceByPackage  &&   res.ProductCode == order2.OrderLines[i].ProductCode}">
+                                                                    {{res.OrderToleranceByPackage}}</p>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <p
+                                                                    [ngClass]="{'classtrue': res.ToleranceByBox != order2.OrderLines[i].ToleranceByBox  &&   res.ProductCode == order2.OrderLines[i].ProductCode}">
+                                                                    {{res.ToleranceByBox}}</p>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <p
+                                                                    [ngClass]="{'classtrue': res.ToleranceByPackage != order2.OrderLines[i].ToleranceByPackage  &&   res.ProductCode == order2.OrderLines[i].ProductCode}">
+                                                                    {{res.ToleranceByPackage}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <p><b>Nro Copias </b></p>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <p><b>Años Exp </b></p>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <p><b> Color Tags </b></p>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <p><b> Cod Interno </b></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <p
+                                                                [ngClass]="{'classtrue': res.NumberCopiesPrint != order2.OrderLines[i].NumberCopiesPrint  &&   res.ProductCode == order2.OrderLines[i].ProductCode}">
+                                                                {{res.NumberCopiesPrint}}</p>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <p
+                                                                [ngClass]="{'classtrue': res.ExpirationYears != order2.OrderLines[i].ExpirationYears  &&   res.ProductCode == order2.OrderLines[i].ProductCode}">
+                                                                {{res.ExpirationYears}}</p>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <p
+                                                                [ngClass]="{'classtrue': res.ColorTags != order2.OrderLines[i].ColorTags  &&   res.ProductCode == order2.OrderLines[i].ProductCode}">
+                                                                {{res.ColorTags}}</p>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <p
+                                                                [ngClass]="{'classtrue': res.CodBarInt != order2.OrderLines[i].CodBarInt  &&   res.ProductCode == order2.OrderLines[i].ProductCode}">
+                                                                {{res.CodBarInt}}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <p><b> Cod Externo </b></p>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <p><b>Titulo Exp NP </b></p>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <p><b>Texto ext esterilización
+                                                                </b></p>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <p
+                                                                [ngClass]="{'classtrue': res.CodBarExt != order2.OrderLines[i].CodBarExt  &&   res.ProductCode == order2.OrderLines[i].ProductCode}">
+                                                                {{res.CodBarExt}}</p>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <p
+                                                                [ngClass]="{'classtrue': res.TitleExternalNP != order2.OrderLines[i].TitleExternalNP  &&   res.ProductCode == order2.OrderLines[i].ProductCode}">
+                                                                {{res.TitleExternalNP}}</p>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <p
+                                                                [ngClass]="{'classtrue': res.TextExternalSterilized != order2.OrderLines[i].TextExternalSterilized  &&   res.ProductCode == order2.OrderLines[i].ProductCode}">
+                                                                {{res.TextExternalSterilized}}</p>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Observaciones *:</label>
+                            <textarea #Observation style="width: 100%;" rows="5"></textarea>
+                        </div>
+
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-secondary btn-block" data-toggle="modal"
+                                (click)="Cancel()">Cancelar</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-primary btn-block" type="button" (click)="SaveRequest(Observation)" [disabled]="this.onAction">
+                                    <span *ngIf="this.onAction" class="spinner-grow spinner-grow-sm" role="status"></span>
+                                    <span *ngIf="this.onAction" class="load-text">Actualizando...</span>
+                                    <span *ngIf="!this.onAction" class="btn-text">Actualizar</span>
+                                </button>
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng2-toasty [position]="'bottom-right'"></ng2-toasty>

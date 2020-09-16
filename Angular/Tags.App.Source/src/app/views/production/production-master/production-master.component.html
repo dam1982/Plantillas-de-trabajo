@@ -1,0 +1,136 @@
+<div class="row btn-page">
+  <div class="col-12">
+      <h5>Generación etiqueta universal</h5>
+      <hr>
+  </div>
+  <div class="col-12">
+      <app-card [hidHeader]="true">
+          <form #ProdMasterForm="ngForm">
+              <div class="form-row">
+
+                  <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" id="rad0" value="0" name="customRadioInline" class="custom-control-input"
+                          (change)="ChangeType(0)" [checked]="CurrentTypeTag==0">
+                      <label class="custom-control-label" for="rad0">Producto Terminado</label>
+                  </div>
+                  <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" id="rad1" value="1" name="customRadioInline" class="custom-control-input"
+                          (change)="ChangeType(1)" [checked]="CurrentTypeTag==1">
+                      <label class="custom-control-label" for="rad1">Producto En Proceso</label>
+                  </div>
+
+              </div>
+              <hr>
+              <div class="form-row">
+                  <div class="form-group col-12 col-md-6 col-xl-6" *ngIf="CurrentTypeTag===0">
+                      <label for="OrderNumber">Orden Producción*</label>
+                      <div class="input-group">
+                          <input type="text" class="form-control" required name="OrderNumber" #OrderNumber
+                              [(ngModel)]="this.business.CurrentProdMaster.OrderNumber" autocomplete="off"
+                              (keyup.enter)="SearchOrderNumber(OrderNumber.value)">
+                          <div class="input-group-append">
+                              <button class="btn btn-primary" type="button"
+                                  (click)="SearchOrderNumber(OrderNumber.value)">
+                                  <i class="fas fa-search" *ngIf="onActionOrder"></i>
+                                  <span *ngIf="!onActionOrder" class="spinner-border spinner-border-sm"
+                                      role="status"></span>
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+
+
+                  <div class="form-group col-12 col-md-6 col-xl-6" *ngIf="CurrentTypeTag===0">
+                      <label for="CustomeName">Cliente</label>
+                      <input type="text" class="form-control" disabled name="CustomeName"
+                          #CustomeName="ngModel" [(ngModel)]="this.business.CurrentProdMaster.CustomerName">
+                  </div>
+
+
+              </div>
+              <div class="form-row">
+                  <div class="form-group col-12 col-md-6 col-xl-6" *ngIf="CurrentTypeTag==0">
+                      <label for="Product" class="custom-control-inline">Producto*</label>
+                      <ng-select [items]="optionsProducts" required appendTo="body" name="Product"
+                          #Product="ngModel" bindLabel="ProductName" bindValue="ProductCode" [(ngModel)]="this.business.CurrentProdMaster.ProductCode"
+                          (change)="this.business.CurrentProdMaster.ProductName = $event['ProductName']"
+                          notFoundText="Busque un numero de orden">
+                      </ng-select>
+                  </div>
+                  <div class="form-group col-12 col-md-6 col-xl-6" *ngIf="CurrentTypeTag===1">
+                    <label for="ProductAutoComp">Producto*</label>
+                    <ng-select [items]="optionsProductsFilter" required appendTo="body" name="ProductAutoComp"
+                        #ProductAutoComp="ngModel" bindLabel="Name" bindValue="Code" (keyup)="SearchProducts($event)"
+                        [(ngModel)]="this.business.CurrentProdMaster.ProductCode"
+                        (change)="this.business.CurrentProdMaster.ProductName = $event['ProductName']" notFoundText="Busque un producto.">
+                    </ng-select>
+                </div>
+                  <div class="form-group col-12 col-md-6 col-xl-6">
+                    <label for="Warehouse">Linea *</label>
+                    <ng-select [items]="optionsProductionLines" required appendTo="body" name="ProductionLine" #ProductionLine="ngModel"
+                        bindLabel="Value" bindValue="Key" [(ngModel)]="this.business.CurrentProdMaster.ProductionLineId">
+                    </ng-select>
+                </div>
+
+              </div>
+
+
+          </form>
+      </app-card>
+
+      <div class="row" style="justify-content: center;">
+
+          <div class="col-12 col-md-4 col-xl-2"> <a routerLink="/dashboard/analytics" routerLinkActive="active"
+                  class="btn btn-block btn-dark">Cancelar</a>
+          </div>
+          <div class="col-12 col-md-4 col-xl-2"> <button type="button" class="btn btn-block btn-info"
+                  (click)="GeneratePdf()">Previsualizar</button>
+          </div>
+
+      </div>
+  </div>
+
+  <app-ui-modal ([ngModel])="ModalWindow" #ModalWindow [containerClick]="false" [dialogClass]="'modal-xl'">
+
+    <div class="app-modal-header">
+        <h5 class="modal-title">Previsualización</h5>
+        <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+            (click)="ModalWindow.hide()"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body " class="estilo">
+
+        <app-card [hidHeader]="true" class="mobile">
+          <div #pdfContainer class="row" style="display: block;">
+            <ngx-extended-pdf-viewer [src]="pdfSource" useBrowserLocale="true" height="160vh" [zoom]="'page-width'"
+            [showBookmarkButton] = "false"
+            [showOpenFileButton]= "false"
+            [showRotateButton]= "false"
+            (pdfLoaded) = "OnLoadPdf()"
+            [filenameForDownload] = "'ReporteDespacho.pdf'"
+            ></ngx-extended-pdf-viewer>
+
+        </div>
+        </app-card>
+
+        <hr>
+        <div class="row">
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)="this.modalWindow.hide();" *ngIf="!isGenerated">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)="CleanForm(CurrentTypeTag); modalWindow.hide();" *ngIf="isGenerated">Cerrar</button>
+                <button class="btn btn-primary event-btn" type="button" (click)="SaveProductionMaster()"
+                    [disabled]="this.onActionPrint" *ngIf="!isGenerated">
+                    <span *ngIf="this.onActionPrint" class="spinner-grow spinner-grow-sm" role="status"></span>
+                    <span *ngIf="this.onActionPrint" class="load-text">Generando...</span>
+                    <span *ngIf="!this.onActionPrint" class="btn-text">Generar</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+
+</app-ui-modal>
+  <ng2-toasty [position]="'bottom-right'"></ng2-toasty>
+</div>

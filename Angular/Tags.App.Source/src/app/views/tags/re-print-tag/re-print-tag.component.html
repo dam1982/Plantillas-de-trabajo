@@ -1,0 +1,135 @@
+<div class="row btn-page">
+    <div class="col-12">
+        <h5>Reimprimir etiquetas</h5>
+        <hr>
+    </div>
+    <div class="col-12">
+        <app-card [hidHeader]="true">
+            <form #PrintForm="ngForm">
+                <div class="form-row">
+                    <div class="form-group col-6 col-md-3 col-xl-3">
+                        <label for="OrderNumber">Nro Orden*</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" required name="OrderNumber" #OrderNumber="ngModel" autocomplete="off"
+                                [(ngModel)]="this.RePrint.OrderNumber" (keyup.enter)="validationOrderNumber()">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" (click)="validationOrderNumber()">
+                                    <i class="fas fa-search" *ngIf="onActionOrder"></i>
+                                    <span *ngIf="!onActionOrder" class="spinner-border spinner-border-sm"
+                                        role="status"></span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group col-6 col-md-9 col-xl-9">
+                        <label for="PurchaseOrderNumber">Orden de compra</label>
+                        <input type="text" class="form-control" disabled name="PurchaseOrderNumber"
+                            #PurchaseOrderNumber="ngModel" [(ngModel)]="CurrentPrint.PurchaseOrderNumber">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-12 col-md-6 col-xl-6">
+                        <label for="">Cliente</label>
+                        <input type="text" class="form-control" disabled name="Customer" #Customer="ngModel"
+                            [(ngModel)]="CurrentPrint.Customer===undefined ? '':CurrentPrint.Customer.Name">
+                    </div>
+                    <div class="form-group col-12 col-md-6 col-xl-6">
+                        <label for="">Destinatario</label>
+                        <input type="text" class="form-control" disabled name="ReceiptUserName"
+                            #ReceiptUserName="ngModel"
+                            [(ngModel)]="CurrentPrint.Addressee===undefined ? '':CurrentPrint.Addressee.Name">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-12 col-md-6 col-xl-6">
+                        <label for="">Productos *</label>
+                        <ng-select [items]="CurrentPrint.OrderLines" required appendTo="body" name="ProductSelect"
+                            #ProductSelect="ngModel" bindLabel="ProductName" bindValue="OrderLineId"
+                            [(ngModel)]="RePrint.OrderLineId" (change)="SelectProduct()"
+                            notFoundText="Busque un número de orden.">
+                        </ng-select>
+                    </div>
+                    <div class="form-group col-12 col-md-6 col-xl-6">
+                        <label for="">Nros. Etiquetas *</label>
+                        <input type="text" class="form-control" required name="Tags" #Tags="ngModel"
+                            [(ngModel)]="CurrentPrint.Tags" (change)="validationTags()">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-12 col-md-4 col-xl-4">
+                        <label for="">Línea de Fabricación*</label>
+                        <ng-select [items]="optionsProductLine" appendTo="body" required name="ProductLine"
+                            #ProductLine="ngModel" bindLabel="Value" bindValue="Key" #ProductionLineId
+                            [(ngModel)]="RePrint.ProductionLineId"
+                            notFoundText="No se encontró la Linea de Fabricación">
+                        </ng-select>
+                    </div>
+                    <div class="form-group col-12 col-md-6 col-xl-4">
+                        <label for="">Fecha de Lote*</label>
+                        <input type="date" class="form-control" required name="DateBatch" #DateBatch="ngModel"
+                            [(ngModel)]="CurrentPrint.DateBatch" (change)="validationBatch()">
+                    </div>
+                    <div class="form-group col-12 col-md-2 col-xl-4">
+                        <label for="">Cant. por paquete*</label>
+                        <input type="number" class="form-control" required name="Quantity" #Quantity="ngModel"
+                            [(ngModel)]="RePrint.Quantity" (keyup)="validationQuantity()">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-6 col-md-6 col-xl-6">
+                        <label for="">Lote</label>
+                        <input type="text" class="form-control" disabled name="Batch" #Batch="ngModel"
+                            [(ngModel)]="RePrint.Batch">
+                    </div>
+                    <div class="form-group col-6 col-md-6 col-xl-6">
+                        <label for="">Cantidad Copias</label>
+                        <input type="text" class="form-control" disabled name="NumberCopiesPrint"
+                            #NumberCopiesPrint="ngModel"
+                            [(ngModel)]="CurrentPrint.selectedOrderLine ===undefined ? '':CurrentPrint.selectedOrderLine.NumberCopiesPrint ">
+                    </div>
+                </div>
+            </form>
+        </app-card>
+
+        <div class="row" style="justify-content: center;">
+
+            <div class="col-12 col-md-4 col-xl-2"> <a routerLink="/dashboard/analytics" routerLinkActive="active"
+                    class="btn btn-block btn-dark">Cancelar</a>
+            </div>
+            <div class="col-12 col-md-4 col-xl-2"> <button type="button" class="btn btn-block btn-info"
+                    (click)="OpenModalPrint()">Previsualizar</button>
+            </div>
+
+        </div>
+    </div>
+    <app-ui-modal ([ngModel])="ModalWindow" #ModalWindow [containerClick]="false" [dialogClass]="'modal-lg'">
+
+        <div class="app-modal-header">
+            <h5 class="modal-title">Previsualizar Etiqueta Interna</h5>
+            <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+                (click)="ModalWindow.hide()"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="app-modal-body ">
+            <app-card-tag [dataTag]="dataTag"></app-card-tag>
+
+            <hr>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        (click)="CancelModal()">Cancelar</button>
+                    <button class="btn btn-primary event-btn" type="button" (click)="Print()"
+                        [disabled]="this.onAction">
+                        <span *ngIf="this.onAction" class="spinner-grow spinner-grow-sm" role="status"></span>
+                        <span *ngIf="this.onAction" class="load-text">Imprimiendo...</span>
+                        <span *ngIf="!this.onAction" class="btn-text">Imprimir</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+
+    </app-ui-modal>
+    <ng2-toasty [position]="'bottom-right'"></ng2-toasty>
+</div>

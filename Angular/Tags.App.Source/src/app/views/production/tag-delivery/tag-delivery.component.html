@@ -1,0 +1,52 @@
+<div class="row btn-page">
+  <div class="col-12">
+      <h5>Validación entrega etiquetas</h5>
+      <hr>
+  </div>
+  <div class="col-12">
+      <app-card [hidHeader]="true">
+          <form #ValidationForm="ngForm">
+              <div class="form-row">
+                  <div class="form-group col-12">
+                      <label for="BarCodeMaster">Etiqueta Master Producción*</label>
+
+                      <input type="text" class="form-control" required name="BarCodeMaster" #BarCodeMaster
+                          [(ngModel)]="this.CurrentBarCodeMaster" autocomplete="off">
+
+                  </div>
+                </div>
+                <div class="form-row">
+                <div class="form-group col-12">
+                  <label for="BarTag">Etiqueta Producto (universal/paquete)*</label>
+                  <input type="text" class="form-control" required  name="BarTag"
+                      #BarTag="ngModel" [(ngModel)]="this.CurrentBarCodeProduct">
+                </div>
+
+              </div>
+
+          </form>
+      </app-card>
+    </div>
+    <div class="col-12">
+      <div class="row" style="margin-top: 1em;justify-content: center;">
+
+        <div class="col-12 col-md-4 col-xl-3"> <button type="button" class="btn btn-block btn-dark"
+          (click)="CleanForm()" >Limpiar</button>
+        </div>
+        <div class="col-12 col-md-4 col-xl-3"> <a routerLink="/dashboard/analytics" routerLinkActive="active"
+          class="btn btn-block btn-dark">Cancelar</a>
+        </div>
+        <div class="col-12 col-md-4 col-xl-3">
+          <button type="button" class="btn btn-block btn-primary" [disabled]="onActionVerification"
+               (click)="ValidateTags()" >
+              <span *ngIf="onActionVerification">Verificando...</span>
+              <span *ngIf="!onActionVerification">Verificar</span>
+              </button>
+        </div>
+
+    </div>
+    </div>
+
+</div>
+<ng2-toasty [position]="'bottom-right'"></ng2-toasty>
+

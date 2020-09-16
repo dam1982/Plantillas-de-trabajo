@@ -1,0 +1,131 @@
+<div class="row btn-page">
+    <div class="col-12">
+        <h5>Administración Puntos de Impresión</h5>
+        <hr>
+    </div>
+    <hr>
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-md-2 col-sm-4 col-xs-12">
+                <button class="btn btn-success btn-block" (click)="EditPrinterPoint(true)">
+                    Agregar
+                </button>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-12">
+                <button class="btn btn-info btn-block" (click)="EditPrinterPoint(false)">
+                    Editar
+                </button>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-12">
+                <button class="btn btn-danger btn-block" (click)="DeletePrinterPoint()">
+                    Eliminar
+                </button>
+            </div>
+
+            <div class="col-md-3 col-xs-12"></div>
+
+            <div class="col-md-3 col-sm-12 col-xs-12 ">
+
+
+                <input type="text" class="form-control float-right" #searchControl
+                    (keyup)="gridMapper.FilterRows(searchControl.value)" placeholder="Buscar">
+
+
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-xl-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 1em;">
+                <ngx-datatable #dataTable class="material" [rows]="gridMapper.DisplayRows" 
+                    [columnMode]="gridMapper.ColumnMode.force" [scrollbarH]="true" [columns]="gridMapper.Columns"
+                    [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="15"
+                    [messages]="gridMapper.Messages" [selected]="gridMapper.SelectedRows"
+                    [selectionType]="gridMapper.SelectionType.single" [selectAllRowsOnPage]="false"
+                    (activate)="OnActivate($event)">
+                </ngx-datatable>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-ui-modal ([ngModel])="ModalWindow" #ModalWindow class="ModalSchema" [hideFooter]="true" [containerClick]="false"
+    [dialogClass]="'modal-xl'">
+    <div class="app-modal-header">
+        <h5 class="modal-title">{{ModalWindow.title}}</h5>
+        <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+            (click)="CloseModal()"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body">
+        <app-card [hidHeader]="true">
+
+            <form #PrinterPointForm="ngForm">
+                <div class="row">
+                    <div class=" col-md-3 col-sm-5 col-xs-12">
+                        <label for="">Código*</label>
+                        <input type="text" class="form-control" name="Code" #Code="ngModel"
+                            [(ngModel)]="this.business.CurrentPrinterPoint.Code" maxlength="6" required>
+                    </div>
+                    <div class=" col-md-4 col-sm-7 col-xs-12">
+                        <label for="">Nombre*</label>
+                        <input type="text" class="form-control" name="Name" #Name="ngModel"
+                            [(ngModel)]="this.business.CurrentPrinterPoint.Name" required>
+                    </div>
+                    <div class=" col-md-5 col-sm-12 col-xs-12">
+                        <label for="">Impresora*</label>
+                        <ng-select [items]="printers" bindLabel="Name" bindValue="Id" name="Printer" #Printer="ngModel"
+                            [(ngModel)]="this.business.CurrentPrinterPoint.Printer.Id"
+                            notFoundText="No se encontraron Impresoras." appendTo="body" required></ng-select>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 1em;">
+                    <div class=" col-md-4 col-sm-6 col-xs-12">
+                        <label for="">Tipo Etiqueta*</label>
+                        <ng-select [items]="tagTypes" bindLabel="Value" bindValue="Key" name="TagType"
+                            #TagType="ngModel" [(ngModel)]="this.business.CurrentPrinterPoint.TagType.Id"
+                            notFoundText="No se encontraron tipos de etiquetas." appendTo="body" required></ng-select>
+                    </div>
+
+                    <div class=" col-md-4 col-sm-6 col-xs-12">
+                        <label for="">Plantilla Impresion*</label>
+                        <ng-select [items]="templates" bindLabel="Value" bindValue="Key" name="Template"
+                            #Template="ngModel" [(ngModel)]="this.business.CurrentPrinterPoint.Template.Id"
+                            notFoundText="No se encontraron plantillas." appendTo="body" required></ng-select>
+                    </div>
+
+                </div>
+                <div class="row" style="margin-top: 1em;">
+                    <div class="col-12">
+                        <label for="">Usuarios*</label>
+                        <dual-list [sort]="true" class="btn-default" [source]="users" key="UserId" display="Names"
+                            [filter]="false" [(destination)]="this.business.CurrentPrinterPoint.Users" height="265px"
+                            [format]="format">
+                        </dual-list>
+                    </div>
+                </div>
+
+            </form>
+
+        </app-card>
+
+
+        <hr>
+        <div class="row">
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)="CloseModal()">Cancelar</button>
+                &nbsp;
+                <button class="btn btn-primary event-btn" type="button" (click)="SavePrinterPoint()"
+                    [disabled]="this.onActionSave">
+                    <span *ngIf="this.onActionSave" class="spinner-grow spinner-grow-sm" role="status"></span>
+                    <span *ngIf="this.onActionSave" class="load-text">Grabando...</span>
+                    <span *ngIf="!this.onActionSave" class="btn-text">Grabar</span>
+                </button>
+            </div>
+        </div>
+
+
+    </div>
+</app-ui-modal>
+
+<ng2-toasty [position]="'bottom-right'"></ng2-toasty>

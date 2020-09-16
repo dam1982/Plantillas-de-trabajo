@@ -1,0 +1,162 @@
+<app-ui-modal ([ngModel])="ModalWindow" #ModalWindow [containerClick]="false" [dialogClass]="'modal-xl'">
+
+    <div class="app-modal-header">
+        <h5 class="modal-title">Previsualizar Etiqueta</h5>
+        <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+            (click)="ModalWindow.hide()"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body " class="estilo">
+
+        <app-card [hidHeader]="true" class="mobile"
+            *ngIf="this.CurrenUniversalTag.TemplateTypeId===enumTemplateType.UniversalMediana || CurrenUniversalTag.TemplateTypeId === enumTemplateType.UniversalGrande">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <strong>ETIQUETA DE IDENTIFICACIÓN Y ESTADO DE CALIDAD</strong>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-9">
+                    <div class="row">
+                        <div class="col-12"><strong>FECHA Y HORA:</strong> {{this.CurrenUniversalTag.CreationDate}}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-6"><strong>SECCIÓN:</strong> {{this.CurrenUniversalTag.SectionName}}</div>
+                        <div class="col-6"><strong>LINEA:</strong> {{this.CurrenUniversalTag.ProductionLineName}}</div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-12"><strong>COD Y PRODUCTO:</strong> {{this.CurrenUniversalTag.ProductCode}}
+                            {{this.CurrenUniversalTag.ProductName}}</div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="circulo" style="
+                        width: 100px;
+                        height: 100px;
+                        -moz-border-radius: 50%;
+                        -webkit-border-radius: 50%;
+                        border-radius: 50%;
+                        border: 3px solid #555;
+                   ">
+
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-4"><strong>LOTE PROVEEDOR:</strong> {{this.CurrenUniversalTag.SupplierBatch}}</div>
+                <div class="col-4"><strong>CONS. C:</strong> {{this.CurrenUniversalTag.ConsecutiveQuality}}</div>
+                <div class="col-4"><strong>USAR ANTES DE:</strong> {{this.CurrenUniversalTag.UseBefore}}</div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-4"><strong>LOTE C:</strong> {{this.CurrenUniversalTag.InternalBatchC}}</div>
+                <div class="col-4"><strong>LOTE P:</strong> {{this.CurrenUniversalTag.InternalBatchP}}</div>
+                <div class="col-4"><strong>LOTE PROD:</strong> {{this.CurrenUniversalTag.ProductBatch}}</div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-4"><strong>CANTIDAD:</strong> {{this.CurrenUniversalTag.Quantity}}</div>
+                <div class="col-4"><strong>PESO TOTAL:</strong> {{this.CurrenUniversalTag.TotalWeight}}</div>
+                <div class="col-4"><strong>PESO NETO:</strong> {{this.CurrenUniversalTag.NetWeight}}</div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-12"><strong>PAQUETE No:</strong> {{this.CurrenUniversalTag.PackageNumber}}</div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-12"><strong>OBSERVACIÓN:</strong> {{this.CurrenUniversalTag.Observations}}</div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-4"><strong>REVISO:</strong> <!-- {{this.CurrenUniversalTag.}} -->
+                </div>
+                <div class="col-4"><strong>RESPONSABLE:</strong> {{user.Names}}
+                </div>
+                <div class="col-4"><strong>TURNO:</strong> {{this.CurrenUniversalTag.WorkshiftName}}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h4>IIIII IIII III IIIIIIIII II IIIIIIIIII III</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h5>{{this.CurrenUniversalTag.UniversalTagId}}-{{this.CurrenUniversalTag.ProductCode}}-0</h5>
+                </div>
+            </div>
+        </app-card>
+        <app-card [hidHeader]="true" *ngIf="this.CurrenUniversalTag.TemplateTypeId===5 " class="estilo">
+
+
+            <div class="row">
+                <div class="col-9">
+                    <div class="row">
+                        <div class="col-12"><strong>Fecha y hora:</strong> {{this.CurrenUniversalTag.CreationDate}}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-12"><strong>Producto:</strong> {{this.CurrenUniversalTag.ProductCode}}
+                            {{this.CurrenUniversalTag.ProductName}}</div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-6"><strong>Cantidad UE:</strong> {{this.CurrenUniversalTag.Quantity}}</div>
+                        <div class="col-6"><strong>Lote:</strong> {{this.CurrenUniversalTag.SupplierBatch}}</div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-12"><strong>Responsable:</strong> {{user.Names}}
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-3">
+                    <div class="circulo" style="
+                    width: 100px;
+                    height: 100px;
+                    -moz-border-radius: 50%;
+                    -webkit-border-radius: 50%;
+                    border-radius: 50%;
+                    border: 3px solid #555;
+               ">
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h4>IIIII IIII III IIIIIIIII II IIIIIIIIII III</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h5>{{this.CurrenUniversalTag.UniversalTagId}}-{{this.CurrenUniversalTag.ProductCode}}-0</h5>
+                </div>
+            </div>
+        </app-card>
+        <hr>
+        <div class="row">
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)="CancelModal()">Cancelar</button>
+                <button class="btn btn-primary event-btn" type="button" (click)="PrintTag()"
+                    [disabled]="this.onActionPrint">
+                    <span *ngIf="this.onActionPrint" class="spinner-grow spinner-grow-sm" role="status"></span>
+                    <span *ngIf="this.onActionPrint" class="load-text">Imprimiendo...</span>
+                    <span *ngIf="!this.onActionPrint" class="btn-text">Imprimir</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+
+</app-ui-modal>
+<ng2-toasty [position]="'bottom-right'"></ng2-toasty>
