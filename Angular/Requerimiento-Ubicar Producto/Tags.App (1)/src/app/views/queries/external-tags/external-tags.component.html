@@ -1,0 +1,364 @@
+<div class="row btn-page">
+    <div class="col-12">
+        <h5>Consulta Etiquetas Externas</h5>
+        <hr>
+      </div>
+    <div class="col-sm-12">
+        <ngb-accordion [closeOthers]="false" activeIds="static-1" class="gradientaccordion">
+            <ngb-panel id="static-1">
+                <ng-template ngbPanelTitle>
+                    <h4><a href="javascript:"><i class="feather icon-search float-left"></i><span>Búsqueda</span> </a></h4>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                    <form [formGroup]="formSearchExternalTag">
+                        <div class="form-row">
+
+                            <div class="form-group col-md-2">
+                                <label for="OrderNumber">Nro. Orden</label>
+                                <input type="number" class="form-control" formControlName="OrderNumber">
+
+
+                            </div>
+                            <div class="form-group col-md-5">
+                                <label for="cliente">Cliente</label>
+                                <ng-select [items]="optionsCostumers" #costumerSelect bindLabel="Name" appendTo="body"
+                                    (keyup)="searchCostumers()" bindValue="Code" labelForId="CostumerCode"
+                                    formControlName="CostumerCode" notFoundText="Digita texto a buscar...">
+                                </ng-select>
+
+                            </div>
+
+
+                            <div class="form-group col-md-5">
+                                <label for="producto">Producto</label>
+                                <ng-select [items]="optionsProducts" #productSelect bindLabel="Name" appendTo="body"
+                                    (keyup)="searchProducts()" bindValue="Code" labelForId="ProductCode"
+                                    formControlName="ProductCode" notFoundText="Digita texto a buscar...">
+                                </ng-select>
+
+                            </div>
+
+                        </div>
+                        <div class="form-row">
+
+                            <div class="form-group col-md-2">
+                                <label for="lote">Lote</label>
+                                <input type="text" class="form-control" formControlName="Batch">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="CreationDateMin">Fecha inicio</label>
+                                <input type="date" class="form-control" formControlName="CreationDateMin"
+                                    #CreationDateMin>
+
+
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="CreationDateMax">Fecha fin</label>
+                                <input type="date" class="form-control" formControlName="CreationDateMax">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="usuarioEntrega">Ubicación en Bodega</label>
+                                <ng-select [items]="optionsLocations" bindLabel="LocationName" bindValue="LocationId"
+                                    formControlName="LocationId"  appendTo="body" >
+                                </ng-select>
+                            </div>
+
+                        </div>
+                        <div class="form-row">
+
+                            <div class="form-group col-md-4">
+                                <label for="UserId">Usuario Generación</label>
+                                <ng-select [items]="optionsUsers" bindLabel="Names" bindValue="Document"
+                                    formControlName="CreationUserDocument" appendTo="body">
+                                </ng-select>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label for="BoxNumber">Número Caja</label>
+                                <input type="number" class="form-control" formControlName="BoxNumber">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="PalletNumber">Número Estiba</label>
+                                <input type="number" class="form-control" formControlName="PalletNumber">
+
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="">&nbsp;</label>
+                                <button class="btn btn-secondary btn-block" type="button"
+                                    (click)="resetFormTraslados()">Limpiar</button>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label for="">&nbsp;</label>
+                                <button class="btn btn-primary event-btn btn-block" (click)="searchQuery()"
+                                    [disabled]="this.onActiveSearch" type="button">
+                                    <span *ngIf="this.onActiveSearch" class="spinner-border spinner-border-sm"
+                                        role="status"></span>
+                                    <span *ngIf="this.onActiveSearch" class="load-text">Buscando...</span>
+                                    <span *ngIf="!this.onActiveSearch" class="btn-text">Buscar</span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </ng-template>
+            </ngb-panel>
+
+        </ngb-accordion>
+        <div class="row">
+            <div class="col-md-2">
+                <button class="btn btn-info btn-block" (click)="exportExcel()">Exportar a Excel </button>
+            </div>
+            
+        </div>
+
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+
+                
+
+                <ngx-datatable #tableExternalTags class="material expandable" [rows]="rowsTags"
+                    [columnMode]="ColumnMode.standard" [scrollbarH]="true" [headerHeight]="50" [footerHeight]="50"
+                    rowHeight="auto" [limit]="15" [selectionType]="SelectionType.single" [messages]="messegesTable">
+
+                    <!-- Row Detail Template  -->
+                    <ngx-datatable-row-detail rowHeight="80 * row.Details.length">
+                        <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+                            <div style="padding-left:35px; width: 55%;">
+
+                                <ngx-datatable class="material" [rows]="row.Details" [columnMode]="ColumnMode.standard"
+                                    [columns]="columnsDetails" [headerHeight]="50" [footerHeight]="50" rowHeight="auto"
+                                    [limit]="5" [selectionType]="SelectionType.single" [messages]="messegesTable">
+
+                                    <ngx-datatable-column prop="PackageNumber" [maxWidth]="150">
+                                        <ng-template let-column="column" ngx-datatable-header-template>
+                                            <span class="mobile-hidden">Paquete</span>
+                                        </ng-template>
+                                        <ng-template let-row="row.Details" let-value="value"
+                                            ngx-datatable-cell-template>
+                                            {{ value }}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+
+                                    <ngx-datatable-column prop="Quantity" [maxWidth]="120">
+                                        <ng-template let-column="column" ngx-datatable-header-template>
+                                            <span class="mobile-hidden">Cantidad</span>
+                                        </ng-template>
+                                        <ng-template let-row="row.Details" let-value="value"
+                                            ngx-datatable-cell-template>
+                                            {{ value }}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column prop="ProductionLineName" [width]="400">
+                                        <ng-template let-column="column" ngx-datatable-header-template>
+                                            <span class="mobile-hidden">Linea de Fabricación</span>
+                                        </ng-template>
+                                        <ng-template let-row="row.Details" let-value="value"
+                                            ngx-datatable-cell-template>
+                                            {{ value }}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column prop="Batch" [width]="250">
+                                        <ng-template let-column="column" ngx-datatable-header-template>
+                                            <span class="mobile-hidden">Lote</span>
+                                        </ng-template>
+                                        <ng-template let-row="rowsTags.Details" let-value="value"
+                                            ngx-datatable-cell-template>
+                                            {{ value }}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+
+                                </ngx-datatable>
+
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-row-detail>
+
+                    <!-- Column Templates -->
+                    <ngx-datatable-column [width]="70" [resizeable]="false" [sortable]="false" [draggable]="false"
+                        [canAutoResize]="false">
+                        <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                            <button class="btn btn-info" #ButtonDetail (click)="toggleExpandRow(row,ButtonDetail)"><i
+                                    class="fas fa-plus"></i></button>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+
+                   
+
+
+                    <ngx-datatable-column prop="OrderNumber" [width]="100">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            <span class="mobile-hidden">Nro Order</span>
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            {{ value }}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+
+                    <ngx-datatable-column prop="CustomerName" [width]="150">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            <span class="mobile-hidden">Cliente</span>
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            {{ value }}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column prop="ProductName" [width]="250">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            <span class="mobile-hidden">Producto</span>
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            {{ value }}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column prop="BarCode" [width]="150">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            <span class="mobile-hidden">Etiqueta</span>
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            {{ value }}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column prop="BoxNumber" [width]="90">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            <span class="mobile-hidden">Nro Caja</span>
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            {{ value }}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+
+                   
+
+
+                    <ngx-datatable-column prop="UnitMeasure" [width]="130">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            <span class="mobile-hidden">Cant. Caja</span>
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            {{row.Quantity}} {{ value }}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column prop="Batch" [width]="140">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            <span class="mobile-hidden">Lote</span>
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            {{ value }}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column prop="CreationDate" [width]="160">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            <span class="mobile-hidden">Fecha</span>
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            {{ value }}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column prop="Confirmed" [width]="100">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            <span class="mobile-hidden">Confirmada</span>
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            {{ value ? 'Si' : 'No' }}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+
+                    <ngx-datatable-column prop="RePrint" [width]="100">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            <span class="mobile-hidden">Reimpresión</span>
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            {{ value ? 'Si' : 'No' }}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column prop="Edition" [width]="200">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            <span class="mobile-hidden">Fecha Reimpresión</span>
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            {{ value }}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+
+                    <ngx-datatable-column prop="PalletNumber" [width]="100">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            <span class="mobile-hidden">Estiba</span>
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            {{ value }}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+
+                    <ngx-datatable-column prop="LocationName" [width]="200">
+                        <ng-template let-column="column" ngx-datatable-header-template>
+                            <span class="mobile-hidden">Ubicación de Bodega</span>
+                        </ng-template>
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                            {{ value }}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                </ngx-datatable>
+
+            </div>
+
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-12 " style="margin:auto;">
+
+                <app-card cardTitle="Totales" [options]="false">
+
+                    <ngx-datatable class="material" [rows]="rowsTotals" [columnMode]="ColumnMode.standard"
+                        [columns]="columnsDetails" [headerHeight]="50" [footerHeight]="50" rowHeight="auto"
+                        [selectionType]="SelectionType.single" [messages]="messegesTable">
+
+
+                        <ngx-datatable-column prop="Batch" [width]="300">
+                            <ng-template let-column="column" ngx-datatable-header-template>
+                                <span class="mobile-hidden">Lote</span>
+                            </ng-template>
+                            <ng-template let-row="row.Details" let-value="value" ngx-datatable-cell-template>
+                                {{ value }}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column prop="BoxQuantity" [width]="150">
+                            <ng-template let-column="column" ngx-datatable-header-template>
+                                <span class="mobile-hidden">Cantidad x Cajas</span>
+                            </ng-template>
+                            <ng-template let-row="row.Details" let-value="value" ngx-datatable-cell-template>
+                                {{ value }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column prop="ProductQuantity" [width]="150">
+                            <ng-template let-column="column" ngx-datatable-header-template>
+                                <span class="mobile-hidden">Cantidad Producto</span>
+                            </ng-template>
+                            <ng-template let-row="row.Details" let-value="value" ngx-datatable-cell-template>
+                                {{ value | number}}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+
+                    </ngx-datatable>
+                </app-card>
+            </div>
+        </div>
+    </div>
+    <ng2-toasty></ng2-toasty>
+</div>

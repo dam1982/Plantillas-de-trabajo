@@ -1,0 +1,61 @@
+<div *ngIf="this.isConfig" id="styleSelector" class="menu-styler" [ngClass]="{'open': styleSelectorToggle}">
+  <div class="style-toggler">
+    <a href="javascript:" (click)="styleSelectorToggle = !styleSelectorToggle;"></a>
+  </div>
+  <div class="style-block">
+    <h5 class="mb-2">Gradient Able Live Customizer</h5>
+    <hr class="my-0">
+    <div class="m-style-scroller">
+      <h6>Layouts</h6>
+      <div class="theme-color layout-type">
+        <a href="javascript:" [ngClass]="{'active': layoutType === 'menu-dark'}" (click)="setLayout('menu-dark')" data-value="menu-dark"><span></span><span></span></a>
+        <a href="javascript:" [ngClass]="{'active': layoutType === 'menu-light'}" (click)="setLayout('menu-light')" data-value="menu-light"><span></span><span></span></a>
+        <a href="javascript:" [ngClass]="{'active': layoutType === 'dark'}" (click)="setLayout('dark')" data-value="dark"><span></span><span></span></a>
+        <a href="javascript:" [ngClass]="{'active': layoutType === 'reset'}" (click)="setLayout('reset')" data-value="reset">Reset to Default</a>
+      </div>
+      <h6>header background</h6>
+      <div class="theme-color header-color">
+        <a href="javascript:" [ngClass]="{'active': headerBackgroundColor === 'header-blue'}" (click)="setHeaderBackground('header-blue')" data-value="header-blue"><span></span><span></span></a>
+        <a href="javascript:" [ngClass]="{'active': headerBackgroundColor === 'header-red'}" (click)="setHeaderBackground('header-red')" data-value="header-red"><span></span><span></span></a>
+        <a href="javascript:" [ngClass]="{'active': headerBackgroundColor === 'header-purple'}" (click)="setHeaderBackground('header-purple')" data-value="header-purple"><span></span><span></span></a>
+        <a href="javascript:" [ngClass]="{'active': headerBackgroundColor === 'header-info'}" (click)="setHeaderBackground('header-info')" data-value="header-info"><span></span><span></span></a>
+        <a href="javascript:" [ngClass]="{'active': headerBackgroundColor === 'header-dark'}" (click)="setHeaderBackground('header-dark')" data-value="header-dark"><span></span><span></span></a>
+        <a href="javascript:" [ngClass]="{'active': headerBackgroundColor === 'header-orenge'}" (click)="setHeaderBackground('header-orenge')" data-value="header-orenge"><span></span><span></span></a>
+        <a href="javascript:" [ngClass]="{'active': headerBackgroundColor === 'header-green'}" (click)="setHeaderBackground('header-green')" data-value="header-green"><span></span><span></span></a>
+        <a href="javascript:" [ngClass]="{'active': headerBackgroundColor === 'header-yellow'}" (click)="setHeaderBackground('header-yellow')" data-value="header-yellow"><span></span><span></span></a>
+        <a href="javascript:" [ngClass]="{'active': headerBackgroundColor === 'header-orchidgreen'}" (click)="setHeaderBackground('header-orchidgreen')" data-value="header-orchidgreen"><span></span><span></span></a>
+        <a href="javascript:" [ngClass]="{'active': headerBackgroundColor === 'header-indigogreen'}" (click)="setHeaderBackground('header-indigogreen')" data-value="header-indigogreen"><span></span><span></span></a>
+        <a href="javascript:" [ngClass]="{'active': headerBackgroundColor === 'header-darkgreen'}" (click)="setHeaderBackground('header-darkgreen')" data-value="header-darkgreen"><span></span><span></span></a>
+        <a href="javascript:" [ngClass]="{'active': headerBackgroundColor === 'header-darkblue'}" (click)="setHeaderBackground('header-darkblue')" data-value="header-darkblue"><span></span><span></span></a>
+      </div>
+      <div class="form-group mb-0" *ngIf="gradientConfig['layout'] !== 'horizontal'">
+        <div class="switch switch-primary d-inline m-r-10">
+          <input type="checkbox" id="theme-rtl" [(ngModel)]='rtlLayout' (change)="setRtlLayout($event)">
+          <label for="theme-rtl" class="cr"></label>
+        </div>
+        <label>RTL</label>
+      </div>
+      <div class="form-group mb-0" *ngIf="gradientConfig['layout'] !== 'horizontal' && !gradientConfig['boxLayout']">
+        <div class="switch switch-primary d-inline m-r-10">
+          <input type="checkbox" id="menu-fixed" [(ngModel)]='menuFixedLayout' (change)="setMenuFixedLayout($event)">
+          <label for="menu-fixed" class="cr"></label>
+        </div>
+        <label>Menu Fixed</label>
+      </div>
+      <div class="form-group mb-0" *ngIf="gradientConfig['layout'] !== 'horizontal' && !gradientConfig['boxLayout']">
+        <div class="switch switch-primary d-inline m-r-10">
+          <input type="checkbox" id="header-fixed" [(ngModel)]='headerFixedLayout' (change)="setHeaderFixedLayout($event)">
+          <label for="header-fixed" class="cr"></label>
+        </div>
+        <label>Header Fixed</label>
+      </div>
+      <div class="form-group mb-0" *ngIf="gradientConfig['layout'] !== 'horizontal'">
+        <div class="switch switch-primary d-inline m-r-10">
+          <input type="checkbox" id="box-layouts" [(ngModel)]='boxLayout' (change)="setBoxLayout($event)">
+          <label for="box-layouts" class="cr"></label>
+        </div>
+        <label>Box Layouts</label>
+      </div>
+    </div>
+  </div>
+</div>

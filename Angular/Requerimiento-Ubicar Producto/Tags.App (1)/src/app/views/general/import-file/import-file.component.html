@@ -1,0 +1,31 @@
+<app-card [hidHeader]="true">
+  <h5 class="card-title">Importar datos</h5>
+
+  <div class="row" style="margin-top: 1em;">
+    <div class=" col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 "><button type="button" class="btn btn-info btn-block"
+        (click)="clickDownloadTemplate()">Descargar Plantilla</button></div>
+    <div class=" col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 "><button type="button" class="btn btn-info btn-block"
+        (click)="clickDownloadData()">Descargar Datos</button></div>
+  </div>
+  <div class="row" style="margin-top: 1em;">
+    <div class=" col-12 col-sm-4 col-md-4  col-lg-3 col-xl-3 "> Importar Archivo </div>
+    <div class=" col-12 col-sm-8 col-md-8  col-lg-6 col-xl-7 "> <input type="file" #fileID
+        (change)="handleFileInput($event.target.files)" class="form-control" id=""></div>
+    <div class=" col-12 col-sm-12 col-md-12 col-lg-3 col-xl-2 "><button type="button" class="btn btn-success btn-block"
+        (click)="UploadFile()" [disabled]="btnDisable">Importar</button>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 1em;">
+    <div class="col-sm-3"> Log Última Carga </div>
+    <div class="col-sm-2">
+      <div class="spinner-grow text-{{stateUpload}}" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 1em;">
+    <div class="col-sm-12">
+      <textarea class="form-control" id="" rows="6">{{importTask?.Log}}</textarea>
+    </div>
+  </div>
+</app-card>

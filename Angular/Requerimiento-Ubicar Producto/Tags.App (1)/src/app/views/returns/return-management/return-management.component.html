@@ -1,0 +1,120 @@
+<div class="row btn-page">
+    <div class="col-12">
+        <h5>Devoluciones</h5>
+        <hr>
+    </div>
+    <hr>
+    <div class="col-sm-12">
+
+        <ngb-accordion [closeOthers]="true" class="gradientaccordion" [destroyOnHide]="false">
+            <ngb-panel id="static-1">
+                <ng-template ngbPanelTitle>
+                    <h4><a href="javascript:"><i class="feather icon-search float-left"></i><span> Búsqueda</span> </a>
+                    </h4>
+                </ng-template>
+                <ng-template ngbPanelContent>
+
+                    <app-dynamic-form-host #DynamicForm></app-dynamic-form-host>
+
+                    <div class="form-row justify-content-end">
+                        <div class="form-group col-md-2">
+                            <button class="btn btn-secondary btn-block" type="button"
+                                (click)="this.DynamicForm.CleanForm()">Limpiar</button>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <button class="btn btn-primary event-btn btn-block" (click)="SearchFilter()"
+                                [disabled]="this.onActionSearch" type="button">
+                                <span *ngIf="this.onActionSearch" class="spinner-border spinner-border-sm"
+                                    role="status"></span>
+                                <span *ngIf="this.onActionSearch" class="load-text">Buscando...</span>
+                                <span *ngIf="!this.onActionSearch" class="btn-text">Buscar</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+
+
+
+    </div>
+    <div class="col-12">
+        <div class="row">
+
+
+            <div class="col-md-3 col-sm-4 col-xs-12" *ngIf="AddReturnPermission">
+                <button class="btn btn-success btn-block" (click)="EditReturn(true)">
+                    Agregar
+                </button>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12" *ngIf="EditReturnPermission">
+                <button class="btn btn-info btn-block" (click)="EditReturn(false)">
+                    Editar
+                </button>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12" *ngIf="CancelReturnPermission">
+                <button class="btn btn-danger btn-block" (click)="CancelReturn()">
+                    Anular
+                </button>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+                <button class="btn btn-dark btn-block" (click)="ExportExcel()">
+                    Exportar a excel
+                </button>
+            </div>
+            <!-- </div>
+        <div class="row"> -->
+            <div class="col-md-3 col-sm-4 col-xs-12" *ngIf="ReturnPermission">
+                <button class="btn btn-info btn-block" (click)="OpenReturn()">
+                    Devolver
+                </button>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12" *ngIf="ConfirmReturnPermission">
+                <button class="btn btn-warning btn-block" (click)="ConfirmReturn()">
+                    Confirmar Devolución
+                </button>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12" *ngIf="ForwardingPermission">
+                <button class="btn btn-info btn-block" (click)="Forwarding()">
+                    Retornar PT
+                </button>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12" *ngIf="ConfirmForwardPermission">
+                <button class="btn btn-warning btn-block" (click)="ConfirmForwarding()">
+                    Confirmar Retorno PT
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="row" style="margin-top: 1em;">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <ngx-datatable #dataTable class="material" [rows]="gridMapper.DisplayRows"
+                    [columnMode]="gridMapper.ColumnMode.force" [columns]="gridMapper.Columns" [headerHeight]="50"
+                    [footerHeight]="50" rowHeight="auto" [scrollbarH]="true" [limit]="15"
+                    [selected]="gridMapper.SelectedRows" [selectionType]="gridMapper.SelectionType.single"
+                    [messages]="gridMapper.Messages" (activate)="OnActivate($event)">
+                </ngx-datatable>
+            </div>
+        </div>
+    </div>
+
+    <app-return-order #returnOrder (finishEvent)="CloseModal()">
+    </app-return-order>
+
+    <app-return #returnComponent (finishEvent)="CloseModal()">
+    </app-return>
+
+    <app-transfer-pt-edit #transferPtEdit (OnFinishEvent)="OnEditTransferPtModal($event)">
+    </app-transfer-pt-edit>
+    
+    <app-confirm-transfer-edit #confirmTransferEdit (OnFinishEvent)="OnEditTransferPtModal($event)">
+    </app-confirm-transfer-edit>
+
+
+
+</div>
+
+<ng2-toasty [position]="'bottom-right'"></ng2-toasty>

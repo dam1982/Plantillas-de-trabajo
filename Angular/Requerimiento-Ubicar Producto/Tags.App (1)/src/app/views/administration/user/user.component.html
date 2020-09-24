@@ -1,0 +1,164 @@
+<h5> Gestión de Usuarios</h5>
+<hr>
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                <button type="button" (click)="GetUser(0)" style="width: 300px;" class="btn btn-icon btn-primary"><i class="fas fa-user-plus m-r-5" ></i>Agregar</button>
+            </div>
+            
+            <div class="col-md-6">
+                <input placeholder="Buscar" class="form-control" #Name (keyup)="FillUsers(Name)" type="text">
+            </div>            
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <app-card [hidHeader]="true" *ngIf="users.length > 0">
+        <div class="card-body">
+            <div class="row" >
+                <div class="col-md-6 col-sm-12 col-xs-12" *ngFor="let user of users ; index as i">
+                    <div class="card bg-light">
+                        <div class="card-body" style="background-color: #f8f7f5; border-radius: 50px;">
+
+                            <div class="row">
+                                <div class="col-md-2 col-sm-12 col-xs-12 ">
+                                    <i class="fas fa-user " style="font-size: 46px;  color: #4099ff;"></i>
+                                </div>
+
+                                <div class="col-md-7 col-sm-5 col-xs-5" style="display: grid;">
+                                    <label class="title" ><b>{{user.Names}}</b></label>
+                                    <label class="title" style="font-style: italic;font-size: small;">{{user.Profile.ProfileName}}</label>                                    
+                                </div>
+                                <div class="col-md-3 col-sm-12 col-xs-12">
+                                    <label> <i class="fas fa-address-card" style="font-size: 16px;  color: #4099ff;"></i> {{user.Document}}</label>                                                                      
+                                </div>                               
+                            </div>
+
+                            <div class="row">                               
+                                <div class="col-md-3 col-sm-12 col-xs-12" style="display: grid;">
+                                    <label><b> {{user.Active ? 'Activo' : 'Inactivo' }}</b></label>
+                                    <div class="switch switch-warning d-inline m-r-10">
+                                        <input #Cheked type="checkbox" id="{{user.UserId}}" (click)="CheckUser(Cheked)" checked="user.Active " name="activate" [(ngModel)]="user.Active">
+                                        <label for="{{user.UserId}}" class="cr" style="margin-top: -1.5em;margin-left: 0.5em;"></label>
+                                    </div>                                    
+                                </div>
+                                <div class="col-md-4 col-sm-12 col-xs-12" style="display: grid;">
+                                    <label><b>Código Embalaje:</b> </label>
+                                    <label>{{user.Personalize1}}</label>
+                                </div>
+                                <div class="col-md-3 col-sm-12 col-xs-12" style="display: grid;">
+                                    <label><b>Usuario :</b></label> 
+                                    <label > {{user.Login}}</label>
+                                </div>
+                                <div class="col-md-2 col-sm-12 col-xs-12">
+                                    <button style="border: 0 solid rgb(255,255,255);background-color: transparent;" (click)="GetUser(user.UserId)">  <i style="font-size:30px; color: #4099ff;" class="fas fa-edit"></i> </button>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </app-card>
+</div>
+
+<!---------------------------------------------------Modal-->
+<app-ui-modal ([ngModel])="ModalWindow" #ModalWindow [containerClick]="false" [dialogClass]="'modal-xl'">
+
+    <div class="app-modal-header">
+        <b> <h5 class="modal-title">Editar Usuario</h5></b>
+        <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="gridSystemModal.hide()"><span aria-hidden="true">&times;</span></button>
+
+    </div>
+    <div class="app-modal-body">
+        <form #requestForm="ngForm">
+            <div class="form-row">
+
+                <div class="col-md-8">
+                    <b>          <label for="">Nombres *:</label></b>
+                    <input type="text" class="form-control" [(ngModel)]="User.Names" name="name" maxlength="128" required>
+                </div>
+
+                <div class="col-md-4">
+                    <b> <label for="bodegaOrigen">Documento *:</label></b>
+                    <input class="form-control" [(ngModel)]="User.Document" name="document" maxlength="16"  required>
+                </div>
+            </div>
+            <br>
+            <div class="form-row">
+
+                <div class="col-md-4">
+                    <b><label for="bodegaOrigen">Usuario *:</label></b>
+                    <input class="form-control" [(ngModel)]="User.Login" maxlength="32" name="usuario" required >
+                </div>
+                <div class="col-md-6">
+                    <b><label for="bodegaOrigen">Mail : </label></b>
+                    <input type="mail" class="form-control" [(ngModel)]="User.Mail" name="mail" maxlength="128" >
+                </div>
+                <div class="col-md-2">
+                    <b><label for="bodegaOrigen">Código Embalaje : </label></b>
+                    <input class="form-control" [(ngModel)]="User.Personalize1" maxlength="8" name="codEmbalaje" >
+                </div>
+            </div>
+            <br>
+            <div class="form-row">
+                <div class="col-md-8">
+                    <b><label >Tipo Proceso *:</label></b>
+                    <ng-select [items]="types" bindLabel="Value" bindValue="Key" [(ngModel)]="User.Personalize2" name="typesprocess"  required > </ng-select>
+                </div>
+                <div class="col-md-4" style="margin-top: 9px;">
+                    <b><label for=""> Última modificación</label></b>
+                    <p>{{User.Edition}}</p>
+                </div>
+            </div>
+            <br>
+            <div class="form-row">
+
+                <div class="col-md-5">
+                    <b><label >Perfil *</label></b>
+                    <ng-select [items]="profiles" bindLabel="ProfileName" bindValue="ProfileId" [(ngModel)]="User.Profile.ProfileId" name="profileName" required>
+                    </ng-select>
+                </div>
+                <div class="col">
+                    <b><label  style=" margin-left: 40px;">Activo </label></b>
+                    <br>
+                    <div class="switch switch-warning d-inline m-r-10" style="    margin-left: 40px;">
+                        <input type="checkbox" id="switch-w-1" checked [(ngModel)]="User.Active" name="activate" >
+                        <label for="switch-w-1" class="cr"></label>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <button type="button " class="btn btn-warning " style="margin-top: 25px; " (click)="GenerateNewPaswoord()" *ngIf="flatButtonPassword">Resetear Contraseña</button>
+                </div>
+            </div>
+            <br>
+            <div class="app-modal-footer ">
+                <div class="form-row">
+                    <div class="col-md-3 ">
+
+                    </div>
+                    <div class="col-md-3 ">
+                        <button type="button " style="width: 240px; " class="btn btn-secondary " data-dismiss="modal " (click)="ModalWindow.hide() ">Cancelar</button>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-primary btn-block" type="button" (click)="SaveUser()"
+                        [disabled]="this.onAction">
+                        <span *ngIf="this.onAction" class="spinner-grow spinner-grow-sm" role="status"></span>
+                        <span *ngIf="this.onAction" class="load-text">Grabando...</span>
+                        <span *ngIf="!this.onAction" class="btn-text">Grabar</span>
+                    </button>
+                    </div>
+                    <div class="col-md-3 ">
+
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</app-ui-modal>
+<ng2-toasty></ng2-toasty>

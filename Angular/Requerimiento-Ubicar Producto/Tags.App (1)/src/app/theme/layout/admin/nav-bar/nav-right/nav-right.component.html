@@ -1,0 +1,51 @@
+<ul class="navbar-nav ml-auto">
+  <li>
+    <div class="dropdown" ngbDropdown placement="auto">
+      <a ngbDropdownToggle href="javascript:" data-toggle="dropdown"><i class="icon feather icon-bell"></i><span class="badge bg-danger"><span class="sr-only"></span></span></a>
+      <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right notification">
+        <div class="noti-head">
+          <h6 class="d-inline-block m-b-0">Notificaciones</h6>
+          <div class="float-right">
+            
+          </div>
+        </div>
+        <ul class="noti-body">
+         
+          <li class="notification">
+            <div class="media">
+              
+              <div class="media-body">
+                <p><strong>Sistema</strong><span class="n-time text-muted"><i class="icon feather icon-clock m-r-10"></i>30 min</span></p>
+                <p>Sistema en línea</p>
+              </div>
+            </div>
+          </li>
+         
+        </ul>
+        <div class="noti-footer">
+          Plastitec
+        </div>
+      </div>
+    </div>
+  </li>
+  
+  <li>
+    <div class="dropdown drp-user" ngbDropdown placement="auto">
+      <a href="javascript:" ngbDropdownToggle data-toggle="dropdown">
+        <img src="assets/images/user/avatar-1.jpg" class="img-radius wid-40" alt="User-Profile-Image">
+      </a>
+      <span>{{user.Names}}</span>
+      <div class="dropdown-menu dropdown-menu-right profile-notification" ngbDropdownMenu>
+        <div class="pro-head">
+          <img src="assets/images/user/avatar-1.jpg" class="img-radius" alt="User-Profile-Image">
+          <span>{{user.Names}}</span>          
+        </div>
+        <ul class="pro-body">
+          <li><a href="javascript:" class="dropdown-item"><i class="feather icon-user"></i> Mi Perfil</a></li>          
+          <li><a href="javascript:" (click)="Logout()" class="dropdown-item"><i class="feather icon-log-out"></i> Cerrar Sesión</a></li>
+        </ul>
+      </div>
+    </div>
+  </li>
+</ul>
+

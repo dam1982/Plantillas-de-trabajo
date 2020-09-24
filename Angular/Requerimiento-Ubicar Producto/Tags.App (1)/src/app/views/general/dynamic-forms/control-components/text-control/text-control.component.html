@@ -1,0 +1,6 @@
+<div class="form-group col-md-{{definition.Width}}" [formGroup]="form">
+    <label for="textInput">{{ definition.Title }}</label>
+    <input [type]="definition.CustomType" class="form-control" [id]="definition.FieldName"
+        [maxlength]="definition.MaxValue" [required]="definition.Required" [formControlName]="definition.FieldName"
+        autocomplete="off">
+</div>

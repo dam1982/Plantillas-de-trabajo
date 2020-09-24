@@ -1,0 +1,86 @@
+<h5> Gestión de Perfiles</h5>
+<hr>
+
+<div class="row">
+    <div class="col-sm-12">
+        <form action="javascript:">
+            <div class="row">
+                <div class=" col-md-3">
+                    <button type="button" class="btn btn-success btn-block" data-tog-gle="modal" (click)="addProfile(gridSystemModal2)">Agregar</button>
+                </div>
+                <div class=" col-md-3">
+                    <button type="button" class="btn btn-primary" data-tog-gle="modal" (click)="Edit(gridSystemModal2)">Editar</button>
+                </div>
+                <div class=" col-md-2">
+                </div>
+                <div class=" col-md-4">
+                    <input class="form-control" type="text" (keyup)="FilterTableRows($event)" placeholder="Buscar">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<hr>
+<ngx-datatable #dataTable class="material" [rows]="gridMapperProfile.DisplayRows" [columnMode]="gridMapperProfile.ColumnMode.force" [columns]="gridMapperProfile.Columns" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="15" [selected]="gridMapperProfile.SelectedRows"
+    (click)="GetProfile()" [selectionType]="gridMapperProfile.SelectionType.single" [messages]="gridMapperProfile.Messages">
+</ngx-datatable>
+<app-ui-modal #gridSystemModal2 [hideFooter]="true" [dialogClass]="'modal-dialog modal-xl'" style="width: 2000; ">
+    <div class="app-modal-header">
+        <h5 class="modal-title">{{titulo}}</h5>
+    </div>
+    <div class="app-modal-body">
+        <app-card [hidHeader]="true">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="">Perfil Id *</label>
+                            <input #ProfileId autocomplete="true" type="text" class="form-control" id="ProfileId" value="" placeholder="" name="IdRequest" [(ngModel)]="profile.ProfileId" [readonly]="anular">
+                        </div>
+                        <div class="col-md-8">
+                            <label for="">Perfil *</label>
+                            <input #ProfileName autocomplete="true" type="text" class="form-control" id="ProfileName" value="" placeholder="" name="ProfileName" [(ngModel)]="profile.ProfileName">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <h3>Permisos</h3>
+            <br>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-md-4" *ngFor="let item of this.res | keyvalue">
+                            <div>
+                                <label for="{{item}}" class="cr"><b>{{item.key}} </b></label>
+                            </div>
+                            <div *ngFor="let detail of item.value">
+                                <div class="form-group">
+                                    <div class="checkbox checkbox-fill d-inline">
+                                        <input type="checkbox" name="checkbox-fill-ch{{detail.PermissionId}}" id="checkbox-fill-ch{{detail.PermissionId}}" [(ngModel)]="detail.checked" (ngModelChange)="onChange($event,detail)">
+                                        <label for="checkbox-fill-ch{{detail.PermissionId}}" id="checkbox-fill-ch{{detail.PermissionId}}" class="cr">{{detail.Type}} </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" (click)="close(gridSystemModal2)">Cerrar</button>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-success btn-block" data-toggle="modal" (click)="CreateProfile(gridSystemModal2,ProfileId,ProfileName)">Grabar</button>
+                </div>
+                <div class="col-md-3">
+                </div>
+            </div>
+        </app-card>
+    </div>
+</app-ui-modal>
+<ng2-toasty></ng2-toasty>

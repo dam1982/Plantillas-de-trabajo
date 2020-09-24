@@ -1,0 +1,14 @@
+::ng-deep .green-row {
+  background: #00c851;
+  /* &:hover {
+    background: blue;
+  }
+  &.active {
+    color: black;
+    background: rebeccapurple;
+  } */
+}
+
+::ng-deep .yellow-row {
+  background: #ffbb33;
+}

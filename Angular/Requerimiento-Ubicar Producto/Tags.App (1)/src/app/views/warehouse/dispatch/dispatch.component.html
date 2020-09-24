@@ -1,0 +1,117 @@
+<app-ui-modal ([ngModel])="ModalWindowDispatch" #ModalWindowDispatch class="ModalSchema" [hideFooter]="true"
+    [containerClick]="false" [dialogClass]="'modal-xl'">
+    <div class="app-modal-header">
+        <h5 class="modal-title">{{ModalWindowDispatch.title}}</h5>
+        <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="Finish()"><span
+                aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body">
+        <app-card [hidHeader]="true">
+            <div class="row">
+                <div class=" col-md-2 col-sm-6 col-xs-12">
+                    <strong>Nro Alistamiento:</strong> {{this.business.CurrentEnlistment.EnlistmentNumber}}
+                </div>
+                <div class=" col-md-2 col-sm-6 col-xs-12">
+                    <strong>Order:</strong> {{this.business.CurrentEnlistment.OrderNumber}}
+                </div>
+                <div class=" col-md-4 col-sm-12 col-xs-12">
+                    <strong>Cliente:</strong> {{this.business.CurrentEnlistment.CustomerName}}
+                </div>
+                <div class=" col-md-4 col-sm-12 col-xs-12">
+                    <strong>Producto:</strong> {{this.business.CurrentEnlistment.ProductName}}
+                </div>
+            </div>
+            <hr>
+
+            <div class="row" *ngIf="!manualDispatchCheck">
+                <div class=" col-md-4 col-sm-6 col-xs-12">
+                    <label for="">Etiqueta*</label>
+                    <input type="text" class="form-control" #Tag="ngModel" [(ngModel)]="FieldTag" name="Tag"
+                        (keyup.enter)="SaveDispatch()" required>
+
+                </div>
+                <div class="col-md-2 col-sm-3 col-xs-12" style="margin-top: 2em;">
+                    <button class="btn btn-info" type="button" (click)="SaveDispatch()"
+                        [disabled]="this.onActionConfirm">
+                        <span *ngIf="this.onActionConfirm" class="spinner-grow spinner-grow-sm" role="status"></span>
+                        <span *ngIf="this.onActionConfirm" class="load-text">Confirmando...</span>
+                        <span *ngIf="!this.onActionConfirm" class="btn-text">Confirmar</span>
+                    </button>
+                </div>
+            </div>
+
+            <div *ngIf="ManualDispatchPermission && isDispatch">
+                <div class="row">
+                    <div class="col-12">
+                        <label for="manualDispatchCheck">¿Despacho Manual?</label>
+                        <div class="switch switch-primary d-inline m-r-10">
+                            <input type="checkbox" id="manualDispatchCheck" name="manualDispatchCheck"
+                                [(ngModel)]="manualDispatchCheck" #manualDispatch="ngModel"
+                                (change)="manualDispatchCheckChange()">
+                            <label for="manualDispatchCheck" class="cr"
+                                style="margin-top: -0.5em;margin-left: 1.5em;"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="manualDispatchCheck">
+                    <div class="col-5">
+                        <label for="Users">Usuario Despacho</label>
+                        <ng-select [items]="users" name="Users" #Users="ngModel" bindLabel="Names" bindValue="Document"
+                            [(ngModel)]="this.manualDispatchObject.DispatchUserDocument">
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-xl-8 col-md-12 col-sm-12 col-xs-12" style="margin-top: 1em;">
+                    <ngx-datatable #dataTable class="material" [rows]="gridMapper.DisplayRows" [rowClass]="getRowClass"
+                        [columnMode]="gridMapper.ColumnMode.force" [columns]="gridMapper.Columns" [headerHeight]="50"
+                        [footerHeight]="50" rowHeight="auto" [limit]="15" [messages]="gridMapper.Messages"
+                        [selected]="gridMapper.SelectedRows" [selectionType]="gridMapper.SelectionType.checkbox"
+                        [selectAllRowsOnPage]="false">
+                    </ngx-datatable>
+
+                </div>
+            </div>
+            <div class="row" style="margin-top: 1em;">
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    Cant. Item: {{this.infoQuantity.Items}}
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    Cant. Items Verificados: {{this.infoQuantity.ItemsVerified}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    Cant. Unds: {{this.infoQuantity.units}}
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    Cant. Items Despachados: {{this.infoQuantity.ItemsDispatched}}
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 1em;">
+                <div class="col-12">
+                    <label for="">Observaciones:</label>
+                    <textarea class="form-control" rows="3" name="Observations"
+                        [(ngModel)]="this.manualDispatchObject.Observations" #Observations="ngModel"
+                        [required]="manualDispatchCheck"></textarea>
+                </div>
+            </div>
+
+        </app-card>
+
+        <div class="row">
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="Finish()">Cerrar</button>
+                <button class="btn btn-primary event-btn" type="button" (click)="FinishButton()"
+                    [disabled]="this.onActionSave">
+                    <span *ngIf="this.onActionSave" class="spinner-grow spinner-grow-sm" role="status"></span>
+                    <span *ngIf="this.onActionSave" class="load-text">Terminando...</span>
+                    <span *ngIf="!this.onActionSave" class="btn-text">Terminar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</app-ui-modal>

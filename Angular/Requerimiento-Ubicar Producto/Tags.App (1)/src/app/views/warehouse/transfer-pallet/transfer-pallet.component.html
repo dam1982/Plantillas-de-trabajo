@@ -1,0 +1,63 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <app-card cardTitle="Trasladar Estiba" [options]="false">
+            <form #uiForm="ngForm">
+                <div class="form-row">
+                    <div class="form-group col-12">
+                        <label >Etiqueta Estiba *</label>
+                        <input type="number" class="form-control" name="palletTag" [(ngModel)]="palletTagText" maxlength="16"
+                            autocomplete="off" #palletTag="ngModel" appAutofocus>
+                        <br />
+                    </div>
+                    <div class="form-group  col-12">
+                        <label for="location">Ubicación *</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-primary" type="button" (click)="GetSuggestedLocations(location)"
+                                    title="Consultar Ubicaciones Sugeridas">
+                                    <i class="fas fa-retweet" *ngIf="!onAction"></i>
+                                    <span *ngIf="onAction" class="spinner-border spinner-border-sm"
+                                        role="status"></span>
+                                </button>
+                            </div>
+                            <input class="form-control" name="location" [(ngModel)]="locationText" maxlength="64"
+                                autocomplete="off" #location="ngModel" (keyup.enter)="SearchLocation(location)"
+                                appAutofocus>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary d-none d-sm-block" [hidden]="" type="button"
+                                    (click)="SearchLocation(location)" title="Consultar Ubicaciones">
+                                    <i class="fas fa-search" *ngIf="!onAction"></i>
+                                    <span *ngIf="onAction" class="spinner-border spinner-border-sm"
+                                        role="status"></span>
+                                </button>
+                            </div>
+
+                        </div>
+                        <br />
+                        <ul class="selectList">
+                            <li *ngFor="let location of locations" [class.selected]="location === selectedLocation"
+                                (click)="selectedLocation=location"
+                                [style.background-color]="location.Available ? 'none':'tomato' ">
+                                <span class="badge"></span> {{location.LocationName}}
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </form>
+            <hr>
+        </app-card>
+    </div>
+
+    <div class="col-sm-12" style="text-align: center;">
+        <button type=" button" class="btn btn-secondary" data-dismiss="modal" (click)="Cancel()">Cancelar</button>
+        &nbsp;&nbsp;
+        <button class="btn btn-primary event-btn" type="button" (click)="UpdateLocation()" [disabled]="this.onAction">
+            <span *ngIf="this.onAction" class="spinner-grow spinner-grow-sm" role="status"></span>
+            <span *ngIf="this.onAction" class="load-text">Trasladando...</span>
+            <span *ngIf="!this.onAction" class="btn-text">Trasladar</span>
+        </button>
+    </div>
+</div>
+
+<ng2-toasty [position]="'bottom-right'"></ng2-toasty>

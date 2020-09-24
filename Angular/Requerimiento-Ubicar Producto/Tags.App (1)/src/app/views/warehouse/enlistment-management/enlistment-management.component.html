@@ -1,0 +1,100 @@
+<div class="row btn-page">
+    <div class="col-12">
+        <h5>Alistamiento</h5>
+        <hr>
+    </div>
+    <hr>
+    <div class="col-sm-12">
+
+        <ngb-accordion [closeOthers]="true" activeIds="static-1" class="gradientaccordion" [destroyOnHide]="false">
+            <ngb-panel id="static-1">
+                <ng-template ngbPanelTitle>
+                    <h4><a href="javascript:"><i class="feather icon-search float-left"></i><span> Búsqueda</span> </a>
+                    </h4>
+                </ng-template>
+                <ng-template ngbPanelContent>
+
+                    <app-dynamic-form-host #DynamicForm></app-dynamic-form-host>
+
+                    <div class="form-row justify-content-end">
+                        <div class="form-group col-md-2">
+                            <button class="btn btn-secondary btn-block" type="button"
+                                (click)="this.DynamicForm.CleanForm()">Limpiar</button>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <button class="btn btn-primary event-btn btn-block" (click)="SearchFilter()"
+                                [disabled]="this.onActiveSearch" type="button">
+                                <span *ngIf="this.onActiveSearch" class="spinner-border spinner-border-sm"
+                                    role="status"></span>
+                                <span *ngIf="this.onActiveSearch" class="load-text">Buscando...</span>
+                                <span *ngIf="!this.onActiveSearch" class="btn-text">Buscar</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+
+
+
+    </div>
+    <div class="col-12">
+        <div class="row">
+
+
+            <div class="col-md-2 col-sm-4 col-xs-12">
+                <button class="btn btn-success btn-block" (click)="EditEnlistment(true)">
+                    Agregar
+                </button>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-12">
+                <button class="btn btn-info btn-block" (click)="EditEnlistment(false)">
+                    Editar
+                </button>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-12">
+                <button class="btn btn-danger btn-block" (click)="CancelEnlistment()">
+                    Anular
+                </button>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-12" *ngIf="VerifyEnlistmentPermission">
+                <button class="btn btn-warning btn-block" (click)="OpenDispatch(false)">
+                    Verificar
+                </button>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-12" *ngIf="DispatchPermission">
+                <button class="btn btn-success btn-block" (click)="OpenDispatch(true)">
+                    Despachar
+                </button>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-12">
+                <button class="btn btn-dark btn-block" (click)="ExportExcel()">
+                    Exportar a excel
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="row" style="margin-top: 1em;">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <ngx-datatable #dataTable class="material" [rows]="gridMapper.DisplayRows"
+                    [columnMode]="gridMapper.ColumnMode.force" [columns]="gridMapper.Columns" [headerHeight]="50"
+                    [footerHeight]="50" rowHeight="auto" [limit]="15" [scrollbarH]="true"
+                    [selected]="gridMapper.SelectedRows" [selectionType]="gridMapper.SelectionType.single"
+                    [messages]="gridMapper.Messages" (activate)="OnActivate($event)"></ngx-datatable>
+
+            </div>
+        </div>
+    </div>
+
+    <app-enlistment-order #enlistmentOrder (finishEvent)="CloseModal()">
+    </app-enlistment-order>
+
+    <app-dispatch #dispatchComponent (finishEvent)="CloseModal()">
+    </app-dispatch>
+
+</div>
+
+<ng2-toasty [position]="'bottom-right'"></ng2-toasty>

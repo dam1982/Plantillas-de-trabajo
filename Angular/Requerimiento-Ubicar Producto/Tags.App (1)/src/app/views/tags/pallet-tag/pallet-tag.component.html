@@ -1,0 +1,78 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <app-card cardTitle="Etiqueta Estiba" [options]="false">
+            <form #uiForm="ngForm">
+                <div class="form-row">
+                    <div class="form-group col-6">
+                        <label for="externalTag">Etiqueta Externa *</label>
+                        <input class="form-control" name="externalTag" [(ngModel)]="externalTagText" maxlength="64" autocomplete="off"
+                            #externalTag="ngModel" (keyup)="AddExternalTag($event)" appAutofocus>
+                        <br />
+                        <app-card cardTitle="Etiquetas Leídas: {{displayTags.length}}" [options]="false">
+                            <div *ngFor="let item of displayTags">
+                                {{item}}
+                            </div>
+                        </app-card>
+                    </div>
+                    <div class="form-group  col-6">
+                        <label for="location">Ubicación *</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-primary" type="button" (click)="GetSuggestedLocations(location)" title="Consultar Ubicaciones Sugeridas">
+                                    <i class="fas fa-retweet" *ngIf="!onAction"></i>
+                                    <span *ngIf="onAction" class="spinner-border spinner-border-sm"
+                                        role="status"></span>
+                                </button>
+                            </div>
+                            <input class="form-control" name="location" [(ngModel)]="locationText" maxlength="64" autocomplete="off"
+                            #location="ngModel" (keyup.enter)="SearchLocation(location)" appAutofocus>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary d-none d-sm-block" [hidden]="" type="button" (click)="SearchLocation(location)" title="Consultar Ubicaciones">
+                                    <i class="fas fa-search" *ngIf="!onAction"></i>
+                                    <span *ngIf="onAction" class="spinner-border spinner-border-sm"
+                                        role="status"></span>
+                                </button>
+                            </div>
+                            
+                        </div>
+
+
+
+                       
+                        <br />
+
+                        <ul class="selectList">
+                            <li *ngFor="let location of locations" [class.selected]="location === selectedLocation"
+                                (click)="selectedLocation=location" [style.background-color]="location.Available ? 'none':'tomato' ">
+                                <span class="badge"></span> {{location.LocationName}}
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <div class="form-group col-12">
+                        <label for="rePrint" style="width: 100%;">Reimpresión?</label>
+                        <div class="switch switch-primary d-inline m-r-10">
+                            <input type="checkbox" id="rePrint" name="rePrint" [(ngModel)]="rePrintCheck"
+                                #rePrint="ngModel">
+                            <label for="rePrint" class="cr" style="margin-top: -0.5em;margin-left: 1.5em;"></label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <hr>
+        </app-card>
+    </div>
+
+    <div class="col-sm-12" style="text-align: center;">
+        <button type=" button" class="btn btn-secondary" data-dismiss="modal" (click)="Cancel()">Cancelar</button>
+        &nbsp;&nbsp;
+        <button class="btn btn-primary event-btn" type="button" (click)="SaveTags()" [disabled]="this.onAction">
+            <span *ngIf="this.onAction" class="spinner-grow spinner-grow-sm" role="status"></span>
+            <span *ngIf="this.onAction" class="load-text">Generando...</span>
+            <span *ngIf="!this.onAction" class="btn-text">Generar Etiqueta</span>
+        </button>
+    </div>
+</div>
+
+<ng2-toasty [position]="'bottom-right'"></ng2-toasty>

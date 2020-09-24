@@ -1,0 +1,92 @@
+<app-ui-modal ([ngModel])="ModalWindow" #ModalWindow class="ModalSchema" [hideFooter]="true" [containerClick]="false"
+    [dialogClass]="'modal-xl'">
+    <div class="app-modal-header">
+        <h5 class="modal-title">{{ModalWindow.title}}</h5>
+        <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="Finish()"><span
+                aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body">
+        <app-card [hidHeader]="true">
+            <div class="row">
+                <div class="col-12">
+                    Nro Desasignación: {{this.businessOrder.CurrentDeallocation.DeallocationNumber}}
+                </div>
+            </div>
+            <hr>
+            <form #DeallocationForm="ngForm">
+                <div class="row">
+                    <div class=" col-md-4 col-sm-3 col-xs-12">
+                        <label for="">Nro Orden *</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="OrderNumber"
+                                (keyup.enter)="GetProducts(OrderNumber.value)" #OrderNumber="ngModel"
+                                [(ngModel)]="this.businessOrder.CurrentDeallocation.OrderNumber" required>
+                            <div class="input-group-append">
+                                <button class="btn btn-info btn-outline" (click)="GetProducts(OrderNumber.value)"
+                                    type="button" [disabled]="this.onActionProducts">
+                                    <span *ngIf="this.onActionProducts" class="spinner-grow spinner-grow-sm"
+                                        role="status"></span>
+                                    <span *ngIf="!this.onActionProducts" class="btn-text"><i
+                                            class="fas fa-search"></i></span>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" col-md-8 col-sm-5 col-xs-12">
+                        <label for="">Producto*</label>
+                        <ng-select [items]="products" bindLabel="Name" bindValue="Code" name="Product"
+                            #Product="ngModel" [(ngModel)]="this.businessOrder.CurrentDeallocation.ProductCode"
+                            notFoundText="No se encontraron productos." appendTo="body" required></ng-select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class=" col-md-4 col-sm-5 col-xs-12">
+                        <label for="">Motivo*</label>
+                        <ng-select [items]="reasons" bindLabel="Value" bindValue="Key" name="Reason" #Reason="ngModel"
+                            [(ngModel)]="this.businessOrder.CurrentDeallocation.ReasonId"
+                            notFoundText="No se encontraron motivos." appendTo="body" required></ng-select>
+                    </div>
+                    <div class=" col-md-4 col-sm-5 col-xs-12">
+                        <label for="">Tipo*</label>
+                        <ng-select [items]="storageTypes" bindLabel="Value" bindValue="Key" name="StorageType"
+                            #StorageType="ngModel" [(ngModel)]="this.businessOrder.CurrentDeallocation.StorageTypeId"
+                            notFoundText="No se encontraron tipos." appendTo="body" required></ng-select>
+                    </div>
+                    <div class=" col-md-4 col-sm-4 col-xs-12">
+                        <label for="">Numeracion*</label>
+                        <input type="text" class="form-control" name="Numeration" #Numeration="ngModel"
+                            [(ngModel)]="this.businessOrder.CurrentDeallocation.Numeration" required>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 1em;">
+                    <div class="col-12">
+                        <label for="">Observaciones:</label>
+                        <textarea class="form-control" rows="3" name="Observations"
+                            [(ngModel)]="this.businessOrder.CurrentDeallocation.Observations"
+                            #Observations="ngModel"></textarea>
+                    </div>
+                </div>
+
+            </form>
+
+        </app-card>
+
+
+        <hr>
+        <div class="row">
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)="Finish()">Cancelar</button>
+                <button class="btn btn-primary event-btn" type="button" (click)="SaveOrder()"
+                    [disabled]="this.onActionSave">
+                    <span *ngIf="this.onActionSave" class="spinner-grow spinner-grow-sm" role="status"></span>
+                    <span *ngIf="this.onActionSave" class="load-text">Guardando...</span>
+                    <span *ngIf="!this.onActionSave" class="btn-text">Guardar</span>
+                </button>
+            </div>
+        </div>
+
+
+    </div>
+</app-ui-modal>

@@ -1,0 +1,149 @@
+<div class="row btn-page">
+    <div class="col-12">
+        <h5>Traslados Producto Terminado</h5>
+        <hr>
+    </div>
+    <div class="col-sm-12">
+        <ngb-accordion [closeOthers]="false" activeIds="static-1" class="gradientaccordion">
+            <ngb-panel id="static-1">
+                <ng-template ngbPanelTitle>
+                    <h4><a href="javascript:"><i class="feather icon-search float-left"></i><span>Búsqueda</span> </a>
+                    </h4>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                    <form #QueryTransferForm="ngForm">
+                        <div class="form-row">
+
+                            <div class="form-group col-md-2">
+                                <label for="numTraslado">Nro Traslado</label>
+                                <input type="number" class="form-control" name="Id" #Id="ngModel"
+                                    [(ngModel)]="CurrentQueryTransfer.Id">
+                            </div>
+
+                            <div class="form-group col-md-5">
+                                <label for="cliente">Cliente</label>
+                                <ng-select [items]="optionsCustomers" appendTo="body" name="CustomerSelect"
+                                    #CustomerSelect="ngModel" [(ngModel)]="CurrentQueryTransfer.CustomerCode"
+                                    bindLabel="Name" bindValue="Code" (keyup)="GetCustomers()"
+                                    notFoundText="Digita texto a buscar...">
+                                </ng-select>
+
+                            </div>
+
+
+                            <div class="form-group col-md-5">
+                                <label for="producto">Producto</label>
+                                <ng-select [items]="optionsProducts" required appendTo="body" name="ProductSelect"
+                                    #ProductSelect="ngModel" bindLabel="Name" bindValue="Code"
+                                    [(ngModel)]="CurrentQueryTransfer.ProductCode" (keyup)="GetProducts()"
+                                    notFoundText="Digita texto a buscar...">
+                                </ng-select>
+
+                            </div>
+
+                        </div>
+                        <div class="form-row">
+
+                            <div class="form-group col-md-2">
+                                <label for="lote">Lote</label>
+                                <input type="text" class="form-control" name="Batch" #Batch="ngModel"
+                                    [(ngModel)]="CurrentQueryTransfer.Batch">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="fechaInicio">Fecha inicio</label>
+                                <input type="date" class="form-control" #DeliveryDateInput="ngModel" name="DeliveryDate"
+                                    [(ngModel)]="CurrentQueryTransfer.TransactionDateMin">
+
+
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="fechaFin">Fecha fin</label>
+                                <input type="date" class="form-control" #ReceiptDateInput="ngModel" name="ReceiptDate"
+                                    [(ngModel)]="CurrentQueryTransfer.TransactionDateMax">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="usuarioEntrega">Usuario Entrega</label>
+                                <ng-select [items]="optionsUsers" appendTo="body" bindLabel="Names" bindValue="Document"
+                                    #DeliveryUserDocument="ngModel" name="DeliveryUserDocument"
+                                    [(ngModel)]="CurrentQueryTransfer.DeliveryUserDocument">
+                                </ng-select>
+                            </div>
+
+                        </div>
+                        <div class="form-row">
+
+                            <div class="form-group col-md-4">
+                                <label for="usuarioRecibe">Usuario Recibe</label>
+                                <ng-select [items]="optionsUsers" appendTo="body" bindLabel="Names" bindValue="Document"
+                                    #ReceiptUserDocument="ngModel" name="ReceiptUserDocument"
+                                    [(ngModel)]="CurrentQueryTransfer.ReceiptUserDocument">
+                                </ng-select>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="estado">Estado</label>
+                                <select [(ngModel)]="CurrentQueryTransfer.StateId" name="StateId" #StateId="ngModel"
+                                    class="form-control">
+                                    <option [value]="op.Key" *ngFor="let op of optionsStates;let i = index">{{op.Value}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="">&nbsp;</label>
+                                <button class="btn btn-secondary btn-block" type="button"
+                                    (click)="CleanForm()">Limpiar</button>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="">&nbsp;</label>
+                                <button class="btn btn-primary event-btn btn-block" (click)="GetTransfersValidation()"
+                                    [disabled]="this.onActiveSearch" type="button">
+                                    <span *ngIf="this.onActiveSearch" class="spinner-border spinner-border-sm"
+                                        role="status"></span>
+                                    <span *ngIf="this.onActiveSearch" class="load-text">Cargando...</span>
+                                    <span *ngIf="!this.onActiveSearch" class="btn-text">Buscar</span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </ng-template>
+            </ngb-panel>
+
+        </ngb-accordion>
+
+        <div class="row">
+            <div class="col-md-2">
+                <button class="btn btn-success btn-block" (click)="EditTransfer(true)">Agregar</button>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-info btn-block" (click)="EditTransfer(false)">Editar</button>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-dark btn-block" (click)="exportExcel()">Exportar a Excel </button>
+            </div>
+
+        </div>
+
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+
+
+                <ngx-datatable #dataTable class="material" [rows]="gridMapper.DisplayRows"
+                    [columnMode]="gridMapper.ColumnMode.flex" [columns]="gridMapper.Columns" [headerHeight]="50"
+                    [footerHeight]="50" rowHeight="auto" [limit]="15" [selected]="gridMapper.SelectedRows"
+                    [selectionType]="gridMapper.SelectionType.single" [messages]="gridMapper.Messages"
+                    (activate)="OnActivate($event)"></ngx-datatable>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<app-transfer-pt-edit #transferPtEdit (OnFinishEvent)="OnCloseEditModal($event)">
+</app-transfer-pt-edit>
+
+
+<ng2-toasty [position]="'bottom-right'"></ng2-toasty>

@@ -1,0 +1,7 @@
+<div class="form-row form-group col-md-{{definition.Width}}" [formGroup]="form">
+    <label style="width: 100%;">{{ definition.Title }}</label>
+    <input type="date" style="width: 49%; margin-right: 1%;" class="form-control" [formControlName]="definition.FieldName + 'Min'"
+        [required]="definition.Required"   [id]="definition.FieldName + 'Min'" (change)="OnDateMinChange($event)">
+    <input type="date" style="width: 50%;" class="form-control" [formControlName]="definition.FieldName + 'Max'"
+        [required]="definition.Required" (change)="OnDateMaxChange($event)">
+</div>
